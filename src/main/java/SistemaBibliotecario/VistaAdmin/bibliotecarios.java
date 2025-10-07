@@ -32,7 +32,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtDni = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -41,7 +41,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         jTextField3 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
@@ -101,7 +101,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel5.setText("Dni");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 17, -1, 10));
-        jPanel4.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 138, -1));
+        jPanel4.add(txtDni, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 138, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel6.setText("Nombre");
@@ -125,7 +125,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         jLabel11.setText("Apellido Paterno");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
         jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, 138, -1));
-        jPanel4.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 138, -1));
+        jPanel4.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 138, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel13.setText("Telefono");
@@ -186,7 +186,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel12.setText("Total de Bibliotecarios");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 250, -1, -1));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 250, 138, -1));
+        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 242, 138, 30));
 
         jPanel2.setBackground(new java.awt.Color(19, 38, 76));
 
@@ -308,15 +308,15 @@ public class bibliotecarios extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField txtDni;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
