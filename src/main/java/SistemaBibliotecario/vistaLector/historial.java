@@ -10,12 +10,12 @@ import SistemaBibliotecario.VistaLector.*;
  *
  * @author User
  */
-public class inicio extends javax.swing.JPanel {
+public class historial extends javax.swing.JPanel {
 
     /**
      * Creates new form vista
      */
-    public inicio() {
+    public historial() {
         initComponents();
     }
 
@@ -32,25 +32,20 @@ public class inicio extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        btnSolicitarRenovacion = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblTusPrestamos = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        btnVerLibros = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblRecomendados = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         btnLibros = new javax.swing.JButton();
         btnMisPrestamos = new javax.swing.JButton();
-        btnInicio = new javax.swing.JButton();
         btnHistorial = new javax.swing.JButton();
+        btnInicio = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblHistorial = new javax.swing.JTable();
+        btnEliminar = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
+        txtTotalHistorial = new javax.swing.JTextField();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -63,83 +58,17 @@ public class inicio extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Inicio");
+        jLabel2.setText("Historial");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 8, -1, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 900, 30));
 
-        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel5.setText("TUS PRESTAMOS");
-        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
-
-        btnSolicitarRenovacion.setBackground(new java.awt.Color(19, 38, 76));
-        btnSolicitarRenovacion.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        btnSolicitarRenovacion.setForeground(new java.awt.Color(255, 255, 255));
-        btnSolicitarRenovacion.setText("SOLICITAR RENOVACION");
-        jPanel4.add(btnSolicitarRenovacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 280, 50));
-
-        tblTusPrestamos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tblTusPrestamos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "LIBRO", "FECHA"
-            }
-        ));
-        jScrollPane1.setViewportView(tblTusPrestamos);
-
-        jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 340, 150));
-
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 380, 320));
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel9.setText("RECOMENDADOS PARA TI");
-        jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
-
-        btnVerLibros.setBackground(new java.awt.Color(19, 38, 76));
-        btnVerLibros.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        btnVerLibros.setForeground(new java.awt.Color(255, 255, 255));
-        btnVerLibros.setText("VER MAS LIBROS");
-        jPanel5.add(btnVerLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 240, 200, 50));
-
-        tblRecomendados.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        tblRecomendados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "LIBRO", "CATEGORIA"
-            }
-        ));
-        jScrollPane2.setViewportView(tblRecomendados);
-
-        jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 370, 150));
-
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 180, 400, 320));
-
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel6.setText("BIENVENIDO LUIS");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, -1, -1));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 50, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel7.setText("TU ACTIVIDAD RESIENTE");
+        jLabel7.setText("HISTORIAL DE LECTURA");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(19, 38, 76));
@@ -162,22 +91,17 @@ public class inicio extends javax.swing.JPanel {
         btnMisPrestamos.setText("MIS PRESTAMOS");
         jPanel2.add(btnMisPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
 
-        btnInicio.setBackground(new java.awt.Color(0, 0, 0));
+        btnHistorial.setBackground(new java.awt.Color(0, 0, 0));
+        btnHistorial.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnHistorial.setForeground(new java.awt.Color(255, 255, 255));
+        btnHistorial.setText("HISTORIAL");
+        jPanel2.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
+
+        btnInicio.setBackground(new java.awt.Color(0, 51, 102));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("INICIO");
         jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
-
-        btnHistorial.setBackground(new java.awt.Color(0, 51, 102));
-        btnHistorial.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        btnHistorial.setForeground(new java.awt.Color(255, 255, 255));
-        btnHistorial.setText("HISTORIAL");
-        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistorialActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,6 +113,45 @@ public class inicio extends javax.swing.JPanel {
         jPanel2.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
+
+        tblHistorial.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tblHistorial.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "LIBRO", "FECHA PRESTAMO", "FECHA DEVOLUCION", "ESTADO"
+            }
+        ));
+        jScrollPane1.setViewportView(tblHistorial);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 770, 250));
+
+        btnEliminar.setBackground(new java.awt.Color(19, 38, 76));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 440, 160, 40));
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel12.setText("Total Historial:");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 150, -1, -1));
+        jPanel1.add(txtTotalHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 150, 70, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -210,34 +173,29 @@ public class inicio extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnLibrosActionPerformed
 
-    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnHistorialActionPerformed
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnLibros;
     private javax.swing.JButton btnMisPrestamos;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnSolicitarRenovacion;
-    private javax.swing.JButton btnVerLibros;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tblRecomendados;
-    private javax.swing.JTable tblTusPrestamos;
+    private javax.swing.JTable tblHistorial;
+    private javax.swing.JTextField txtTotalHistorial;
     // End of variables declaration//GEN-END:variables
 }
