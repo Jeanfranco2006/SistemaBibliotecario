@@ -4,7 +4,6 @@
  */
 package SistemaBibliotecario.vistaLector;
 
-import SistemaBibliotecario.vistaLector.*;
 
 /**
  *

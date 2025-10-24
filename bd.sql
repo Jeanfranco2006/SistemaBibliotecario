@@ -1,5 +1,3 @@
-CREATE DATABASE biblioteca;
-USE biblioteca;
 
 -- Tabla persona
 CREATE TABLE persona (
