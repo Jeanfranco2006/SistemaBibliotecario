@@ -222,8 +222,6 @@ public class usuarios extends javax.swing.JPanel {
         jScrollPane1.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 890, 460));
-
-        jTextField7.setText("Buscar....");
         jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 180, 390, 30));
 
         jButton5.setBackground(new java.awt.Color(19, 38, 76));
