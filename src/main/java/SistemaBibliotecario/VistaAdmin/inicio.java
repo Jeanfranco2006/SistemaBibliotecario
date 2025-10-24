@@ -4,6 +4,8 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
+import SistemaBibliotecario.VistaLogin.login;
+
 /**
  *
  * @author User
@@ -50,12 +52,12 @@ public class inicio extends javax.swing.JPanel {
         jLabel18 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnBibliotecarios = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -97,7 +99,7 @@ public class inicio extends javax.swing.JPanel {
         jLabel13.setText("1250");
         jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 61, -1, -1));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, -1, -1));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 250, 140));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -110,7 +112,7 @@ public class inicio extends javax.swing.JPanel {
         jLabel11.setText("1250");
         jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 55, -1, -1));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 130, -1, -1));
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 130, 240, 140));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel6.setText("BIENVENIDO ADMINISTRADOR ");
@@ -184,22 +186,27 @@ public class inicio extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(19, 38, 76));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton1.setBackground(new java.awt.Color(0, 51, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("BIBLIOTECARIOS");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBibliotecarios.setBackground(new java.awt.Color(0, 51, 102));
+        btnBibliotecarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnBibliotecarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnBibliotecarios.setText("BIBLIOTECARIOS");
+        btnBibliotecarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBibliotecariosActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, 240, 80));
+        jPanel2.add(btnBibliotecarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, 240, 80));
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("USUARIOS");
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
+        btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
+        btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsuarios.setText("USUARIOS");
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
 
         jButton3.setBackground(new java.awt.Color(0, 0, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -207,20 +214,30 @@ public class inicio extends javax.swing.JPanel {
         jButton3.setText("INICIO");
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
 
-        jButton4.setBackground(new java.awt.Color(0, 51, 102));
-        jButton4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("REPORTES");
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
+        btnReportes.setBackground(new java.awt.Color(0, 51, 102));
+        btnReportes.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setText("REPORTES");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("BiblioSys");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 30, -1, -1));
 
-        jButton9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton9.setText("SALIR");
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
+        btnSalir.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
@@ -240,17 +257,59 @@ public class inicio extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnBibliotecariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBibliotecariosActionPerformed
+        // Crear una nueva ventana JFrame que contendrá el panel "bibliotecarios"
+    javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Bibliotecarios");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new bibliotecarios()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();
+    }//GEN-LAST:event_btnBibliotecariosActionPerformed
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+     javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Usuarios");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new usuarios()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+       javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new reportes()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose(); // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+       login view = new login();  
+    view.setLocationRelativeTo(null); // Centrar la ventana
+    view.setVisible(true); // Mostrar el login
+
+    // Cerrar la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnBibliotecarios;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -277,4 +336,6 @@ public class inicio extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     // End of variables declaration//GEN-END:variables
+
+ 
 }

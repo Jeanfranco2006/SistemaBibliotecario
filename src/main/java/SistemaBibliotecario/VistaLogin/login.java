@@ -2,10 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package SistemaBibliotecario.vistaLogin;
+package SistemaBibliotecario.VistaLogin;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import SistemaBibliotecario.vistaBlibliotecario.*;
+import SistemaBibliotecario.VistaAdmin.*;
+import SistemaBibliotecario.vistaLector.*;
+
+import SistemaBibliotecario.Dao.UsuarioDAO;
+import SistemaBibliotecario.Modelos.Usuario;
 
 /**
  *
@@ -36,7 +44,7 @@ public class login extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
+        txtDni = new javax.swing.JTextField();
         txtContrasena = new javax.swing.JPasswordField();
         btnIngresar = new javax.swing.JButton();
         btnRegistrarse = new javax.swing.JButton();
@@ -63,8 +71,8 @@ public class login extends javax.swing.JFrame {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
         jLabel2.setText("Usuario");
 
-        txtUsuario.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        txtUsuario.setForeground(new java.awt.Color(0, 51, 153));
+        txtDni.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
+        txtDni.setForeground(new java.awt.Color(0, 51, 153));
 
         txtContrasena.setText("jPasswordField1");
 
@@ -72,6 +80,11 @@ public class login extends javax.swing.JFrame {
         btnIngresar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
         btnIngresar.setText("INGRESAR");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         btnRegistrarse.setBackground(new java.awt.Color(19, 38, 76));
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
@@ -103,7 +116,7 @@ public class login extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(100, 100, 100))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
@@ -130,7 +143,7 @@ public class login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(112, 112, 112)
                 .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(59, 59, 59)
@@ -160,6 +173,66 @@ public class login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        String dni = txtDni.getText().trim();
+    String contrasena = new String(txtContrasena.getPassword()).trim();
+
+    if (dni.isEmpty() || contrasena.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    UsuarioDAO usuarioDAO = new UsuarioDAO();
+    Usuario usuario = usuarioDAO.validarLogin(dni, contrasena);
+
+    if (usuario == null) {
+        JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+JOptionPane.showMessageDialog(this,
+    "Bienvenido " + usuario.getRol() + "!",
+    "Acceso concedido",
+    JOptionPane.INFORMATION_MESSAGE);
+
+
+    // Redirigir según el rol del usuario
+    switch (usuario.getRol().toLowerCase()) {
+    case "administrador": {
+        JFrame frame = new JFrame("Administrador");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new SistemaBibliotecario.VistaAdmin.inicio());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        break;
+    }
+    case "bibliotecario": {
+        JFrame frame = new JFrame("Bibliotecario");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.gestion_libros());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        break;
+    }
+    case "lector": {
+        JFrame frame = new JFrame("Lector");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new SistemaBibliotecario.vistaLector.inicio());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        break;
+    }
+    default:
+        JOptionPane.showMessageDialog(this, "Rol no reconocido: " + usuario.getRol(), "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+}
+
+this.dispose(); // Cierra el login// Cierra el login
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -207,6 +280,6 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPasswordField txtContrasena;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtDni;
     // End of variables declaration//GEN-END:variables
 }

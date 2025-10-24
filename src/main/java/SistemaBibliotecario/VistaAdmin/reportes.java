@@ -4,6 +4,8 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
+import SistemaBibliotecario.VistaLogin.login;
+
 /**
  *
  * @author User
@@ -63,9 +65,9 @@ public class reportes extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnBibliotecarios = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
+        btnInicio = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
@@ -220,25 +222,35 @@ public class reportes extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(19, 38, 76));
 
-        jButton1.setBackground(new java.awt.Color(0, 51, 102));
-        jButton1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("BIBLIOTECARIOS");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBibliotecarios.setBackground(new java.awt.Color(0, 51, 102));
+        btnBibliotecarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnBibliotecarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnBibliotecarios.setText("BIBLIOTECARIOS");
+        btnBibliotecarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBibliotecariosActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("USUARIOS");
+        btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
+        btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsuarios.setText("USUARIOS");
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 102));
-        jButton3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("INICIO");
+        btnInicio.setBackground(new java.awt.Color(0, 51, 102));
+        btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnInicio.setForeground(new java.awt.Color(255, 255, 255));
+        btnInicio.setText("INICIO");
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicioActionPerformed(evt);
+            }
+        });
 
         jButton4.setBackground(new java.awt.Color(0, 0, 0));
         jButton4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -251,6 +263,11 @@ public class reportes extends javax.swing.JPanel {
 
         jButton9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jButton9.setText("SALIR");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -264,9 +281,9 @@ public class reportes extends javax.swing.JPanel {
                         .addGap(95, 95, 95))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBibliotecarios, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30))))
@@ -277,11 +294,11 @@ public class reportes extends javax.swing.JPanel {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
                 .addGap(42, 42, 42)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBibliotecarios, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
@@ -306,15 +323,56 @@ public class reportes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnBibliotecariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBibliotecariosActionPerformed
+ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Bibliotecarios");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new bibliotecarios()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_btnBibliotecariosActionPerformed
+
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+ javax.swing.JFrame frame = new javax.swing.JFrame("Inicio");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new inicio()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Usuarios");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new usuarios()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+login view = new login();  
+    view.setLocationRelativeTo(null); // Centrar la ventana
+    view.setVisible(true); // Mostrar el login
+
+    // Cerrar la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnBibliotecarios;
+    private javax.swing.JButton btnInicio;
+    private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;

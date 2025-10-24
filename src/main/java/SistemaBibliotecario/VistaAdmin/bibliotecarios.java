@@ -4,6 +4,20 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import SistemaBibliotecario.Conexion.ConexionMySQL;
+import SistemaBibliotecario.Dao.BibliotecarioDAO;
+import SistemaBibliotecario.VistaLogin.login;
+
 /**
  *
  * @author User
@@ -15,6 +29,8 @@ public class bibliotecarios extends javax.swing.JPanel {
      */
     public bibliotecarios() {
         initComponents();
+        cargarBibliotecarios();
+        mostrarTotalBibliotecarios();
     }
 
     /**
@@ -36,33 +52,34 @@ public class bibliotecarios extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtApellidoP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtApellidoM = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        tblBibliotecarios = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         jTextField7 = new javax.swing.JTextField();
-        jButton7 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnUsuarios = new javax.swing.JButton();
+        btnInicio = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        lblTotalBibliotecarios = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -114,34 +131,34 @@ public class bibliotecarios extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel9.setText("Email");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, -1, -1));
-        jPanel4.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 138, -1));
+        jPanel4.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 138, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel10.setText("Apellido Materno");
         jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, -1, -1));
-        jPanel4.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 138, -1));
+        jPanel4.add(txtApellidoP, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 138, -1));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel11.setText("Apellido Paterno");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
-        jPanel4.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, 138, -1));
+        jPanel4.add(txtApellidoM, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 40, 138, -1));
         jPanel4.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 138, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel13.setText("Telefono");
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
-        jPanel4.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 138, -1));
-        jPanel4.add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 190, -1));
+        jPanel4.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 138, -1));
+        jPanel4.add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 190, -1));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel14.setText("Contraseña");
         jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
-        jPanel4.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 138, -1));
+        jPanel4.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 138, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 770, 130));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblBibliotecarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tblBibliotecarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -152,43 +169,63 @@ public class bibliotecarios extends javax.swing.JPanel {
                 "Nombre", "Apellidos", "Email", "Fecha Ingreso", "Ultimo Acceso"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblBibliotecarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblBibliotecariosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblBibliotecarios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 880, 390));
 
-        jButton5.setBackground(new java.awt.Color(19, 38, 76));
-        jButton5.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Buscar");
-        jPanel1.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, -1, -1));
+        btnBuscar.setBackground(new java.awt.Color(19, 38, 76));
+        btnBuscar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, -1, -1));
 
-        jButton6.setBackground(new java.awt.Color(19, 38, 76));
-        jButton6.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Agregar");
-        jPanel1.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
+        btnAgregar.setBackground(new java.awt.Color(19, 38, 76));
+        btnAgregar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, -1, -1));
 
-        jButton8.setBackground(new java.awt.Color(19, 38, 76));
-        jButton8.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton8.setForeground(new java.awt.Color(255, 255, 255));
-        jButton8.setText("Actualizar");
-        jPanel1.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, -1, -1));
+        btnActualizar.setBackground(new java.awt.Color(19, 38, 76));
+        btnActualizar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, -1, -1));
 
         jTextField7.setText("Buscar....");
         jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 390, 30));
 
-        jButton7.setBackground(new java.awt.Color(19, 38, 76));
-        jButton7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Eliminar");
-        jPanel1.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, -1, -1));
+        btnEliminar.setBackground(new java.awt.Color(19, 38, 76));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel12.setText("Total de Bibliotecarios");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 250, -1, -1));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 242, 138, 30));
 
         jPanel2.setBackground(new java.awt.Color(19, 38, 76));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setBackground(new java.awt.Color(0, 0, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -199,67 +236,72 @@ public class bibliotecarios extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, 240, 80));
 
-        jButton2.setBackground(new java.awt.Color(0, 51, 102));
-        jButton2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("USUARIOS");
+        btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
+        btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnUsuarios.setText("USUARIOS");
+        btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUsuariosActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 102));
-        jButton3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("INICIO");
+        btnInicio.setBackground(new java.awt.Color(0, 51, 102));
+        btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnInicio.setForeground(new java.awt.Color(255, 255, 255));
+        btnInicio.setText("INICIO");
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicioActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
 
-        jButton4.setBackground(new java.awt.Color(0, 51, 102));
-        jButton4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("REPORTES");
+        btnReportes.setBackground(new java.awt.Color(0, 51, 102));
+        btnReportes.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setText("REPORTES");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReportesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("BiblioSys");
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 30, -1, -1));
 
         jButton9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jButton9.setText("SALIR");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(95, 95, 95))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30))))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(jLabel1)
-                .addGap(42, 42, 42)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
-        );
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
+
+        btnLimpiar.setBackground(new java.awt.Color(19, 38, 76));
+        btnLimpiar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, -1, -1));
+
+        lblTotalBibliotecarios.setBackground(new java.awt.Color(255, 255, 255));
+        lblTotalBibliotecarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTotalBibliotecarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(lblTotalBibliotecarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 250, 130, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -279,16 +321,323 @@ public class bibliotecarios extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+       javax.swing.JFrame frame = new javax.swing.JFrame("Inicio");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new inicio()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_btnInicioActionPerformed
+
+    private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
+ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Usuarios");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new usuarios()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();         // TODO add your handling code here:
+    }//GEN-LAST:event_btnUsuariosActionPerformed
+
+    private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
+        javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new reportes()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();  // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportesActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        login view = new login();  
+    view.setLocationRelativeTo(null); // Centrar la ventana
+    view.setVisible(true); // Mostrar el login
+
+    // Cerrar la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+       String dni = txtDni.getText().trim();
+    String nombre = txtNombre.getText().trim();
+    String apellidoP = txtApellidoP.getText().trim();
+    String apellidoM = txtApellidoM.getText().trim();
+    String direccion = txtDireccion.getText().trim();
+    String telefono = txtTelefono.getText().trim();
+    String email = txtEmail.getText().trim();
+    String contrasena = txtContrasena.getText().trim();
+    String rol = "bibliotecario"; // Rol por defecto
+
+    if (dni.isEmpty() || nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() ||
+        direccion.isEmpty() || telefono.isEmpty() || email.isEmpty() || contrasena.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    Connection conn = null;
+    PreparedStatement psPersona = null;
+    PreparedStatement psUsuario = null;
+    ResultSet rs = null;
+
+    try {
+        conn = ConexionMySQL.getInstancia().getConexion();
+        conn.setAutoCommit(false); // 🔒 inicia transacción
+
+        // 1️⃣ Insertar persona
+        String sqlPersona = "INSERT INTO persona (dni, nombre, apellido_p, apellido_m, direccion, telefono, email) "
+                          + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        psPersona = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
+        psPersona.setString(1, dni);
+        psPersona.setString(2, nombre);
+        psPersona.setString(3, apellidoP);
+        psPersona.setString(4, apellidoM);
+        psPersona.setString(5, direccion);
+        psPersona.setString(6, telefono);
+        psPersona.setString(7, email);
+        psPersona.executeUpdate();
+
+        // Obtener id_persona generado
+        rs = psPersona.getGeneratedKeys();
+        int idPersona = 0;
+        if (rs.next()) {
+            idPersona = rs.getInt(1);
+        }
+
+        // 2️⃣ Insertar usuario
+        String sqlUsuario = "INSERT INTO usuario (id_persona, contrasena, rol) VALUES (?, ?, ?)";
+        psUsuario = conn.prepareStatement(sqlUsuario);
+        psUsuario.setInt(1, idPersona);
+        psUsuario.setString(2, contrasena);
+        psUsuario.setString(3, rol);
+        psUsuario.executeUpdate();
+
+        conn.commit(); // ✅ Confirmar transacción
+        JOptionPane.showMessageDialog(this, "✅ Bibliotecario agregado correctamente.");
+
+        // Limpiar campos
+        txtDni.setText("");
+        txtNombre.setText("");
+        txtApellidoP.setText("");
+        txtApellidoM.setText("");
+        txtDireccion.setText("");
+        txtTelefono.setText("");
+        txtEmail.setText("");
+        txtContrasena.setText("");
+
+        cargarBibliotecarios();
+        mostrarTotalBibliotecarios();
+
+    } catch (SQLException e) {
+        try {
+            if (conn != null) conn.rollback(); // ❌ revertir si hay error
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(this, "❌ Error al agregar bibliotecario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (psPersona != null) psPersona.close();
+            if (psUsuario != null) psUsuario.close();
+            if (conn != null) conn.setAutoCommit(true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+       int fila = tblBibliotecarios.getSelectedRow();
+    if (fila < 0) {
+        JOptionPane.showMessageDialog(this, "Seleccione un bibliotecario de la tabla para actualizar.");
+        return;
+    }
+
+    String nombre = txtNombre.getText().trim();
+    String apellidoP = txtApellidoP.getText().trim();
+    String apellidoM = txtApellidoM.getText().trim();
+    String email = txtEmail.getText().trim();
+
+    try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
+        String sql = "UPDATE persona p " +
+                     "JOIN usuario u ON p.id_persona = u.id_persona " +
+                     "SET p.nombre=?, p.apellido_p=?, p.apellido_m=?, p.email=? " +
+                     "WHERE p.nombre=? AND p.apellido_p=? AND p.apellido_m=?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, nombre);
+        ps.setString(2, apellidoP);
+        ps.setString(3, apellidoM);
+        ps.setString(4, email);
+        ps.setString(5, tblBibliotecarios.getValueAt(fila, 0).toString());
+        String[] apellidos = tblBibliotecarios.getValueAt(fila, 1).toString().split(" ");
+        ps.setString(6, apellidos[0]);
+        ps.setString(7, apellidos.length >= 2 ? apellidos[1] : "");
+
+        int filasAfectadas = ps.executeUpdate();
+
+        if (filasAfectadas > 0) {
+            JOptionPane.showMessageDialog(this, "✅ Datos actualizados correctamente.");
+            cargarBibliotecarios(); // Recarga la tabla
+        } else {
+            JOptionPane.showMessageDialog(this, "⚠️ No se encontró el registro a actualizar.");
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "❌ Error al actualizar: " + e.getMessage());
+    } // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void tblBibliotecariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBibliotecariosMouseClicked
+       int fila = tblBibliotecarios.getSelectedRow();
+    if (fila >= 0) {
+        String email = tblBibliotecarios.getValueAt(fila, 2).toString();
+
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
+            String sql = """
+                SELECT p.dni, p.nombre, p.apellido_p, p.apellido_m, 
+                       p.direccion, p.telefono, p.email, u.contrasena
+                FROM persona p
+                JOIN usuario u ON p.id_persona = u.id_persona
+                WHERE p.email = ?
+            """;
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                txtDni.setText(rs.getString("dni"));
+                txtNombre.setText(rs.getString("nombre"));
+                txtApellidoP.setText(rs.getString("apellido_p"));
+                txtApellidoM.setText(rs.getString("apellido_m"));
+                txtDireccion.setText(rs.getString("direccion"));
+                txtTelefono.setText(rs.getString("telefono"));
+                txtEmail.setText(rs.getString("email"));
+                txtContrasena.setText(rs.getString("contrasena"));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "❌ Error al cargar datos: " + e.getMessage());
+        }
+    } // TODO add your handling code here:
+    }//GEN-LAST:event_tblBibliotecariosMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+          int fila = tblBibliotecarios.getSelectedRow();
+    if (fila == -1) {
+        JOptionPane.showMessageDialog(this, "⚠️ Selecciona un bibliotecario para eliminar.");
+        return;
+    }
+
+    String email = tblBibliotecarios.getValueAt(fila, 2).toString();
+
+    int confirmar = JOptionPane.showConfirmDialog(
+        this,
+        "¿Estás seguro de eliminar al bibliotecario con email: " + email + "?",
+        "Confirmar eliminación",
+        JOptionPane.YES_NO_OPTION
+    );
+
+    if (confirmar == JOptionPane.YES_OPTION) {
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
+            conn.setAutoCommit(false);
+
+            // 1️⃣ Eliminar primero de usuario (porque depende de persona)
+            String sqlUsuario = """
+                DELETE FROM usuario 
+                WHERE id_persona = (SELECT id_persona FROM persona WHERE email = ?)
+            """;
+            PreparedStatement psUsuario = conn.prepareStatement(sqlUsuario);
+            psUsuario.setString(1, email);
+            psUsuario.executeUpdate();
+
+            // 2️⃣ Luego eliminar de persona
+            String sqlPersona = "DELETE FROM persona WHERE email = ?";
+            PreparedStatement psPersona = conn.prepareStatement(sqlPersona);
+            psPersona.setString(1, email);
+            psPersona.executeUpdate();
+
+            conn.commit();
+            JOptionPane.showMessageDialog(this, "✅ Bibliotecario eliminado correctamente.");
+
+            // 3️⃣ Refrescar tabla
+            cargarBibliotecarios();
+            mostrarTotalBibliotecarios();
+
+            // 4️⃣ Limpiar campos
+            limpiarCampos();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "❌ Error al eliminar: " + e.getMessage());
+        }
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiarCampos();
+    tblBibliotecarios.clearSelection(); // Quita la selección de la tabla
+    JOptionPane.showMessageDialog(this, "🧹 Campos limpiados correctamente."); // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+    private void cargarBibliotecarios() {
+    DefaultTableModel model = (DefaultTableModel) tblBibliotecarios.getModel();
+    model.setRowCount(0); // limpia la tabla
+
+    BibliotecarioDAO dao = new BibliotecarioDAO();
+    List<Object[]> lista = dao.listarBibliotecarios();
+
+    for (Object[] fila : lista) {
+        model.addRow(fila);
+    }
+}
+
+private void limpiarCampos() {
+    txtDni.setText("");
+    txtNombre.setText("");
+    txtApellidoP.setText("");
+    txtApellidoM.setText("");
+    txtDireccion.setText("");
+    txtTelefono.setText("");
+    txtEmail.setText("");
+    txtContrasena.setText("");
+}
+
+private void mostrarTotalBibliotecarios() {
+    String sql = "SELECT COUNT(*) FROM usuario WHERE rol = 'bibliotecario'";
+    try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+
+        if (rs.next()) {
+            int total = rs.getInt(1);
+            lblTotalBibliotecarios.setText(String.valueOf(total));
+            lblTotalBibliotecarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Centrar texto
+        }
+    } catch (SQLException e) {
+        System.err.println("❌ Error al contar bibliotecarios: " + e.getMessage());
+    }
+}
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnInicio;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnReportes;
+    private javax.swing.JButton btnUsuarios;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -307,16 +656,16 @@ public class bibliotecarios extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel lblTotalBibliotecarios;
+    private javax.swing.JTable tblBibliotecarios;
+    private javax.swing.JTextField txtApellidoM;
+    private javax.swing.JTextField txtApellidoP;
+    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtDni;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

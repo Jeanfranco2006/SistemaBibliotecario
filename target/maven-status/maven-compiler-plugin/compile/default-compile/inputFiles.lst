@@ -1,6 +1,9 @@
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\com\mycompany\sistemabibliotecario\SistemaBibliotecario.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Conexion\ConexionMySQL.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Conexion\TestConexion.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\BibliotecarioDAO.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\PersonaDAO.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\UsuarioDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Categoria.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\DetallePrestamo.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Libro.java

@@ -36,8 +36,15 @@ public class ConexionMySQL {
 
     // Devuelve la conexión activa
     public Connection getConexion() {
-        return conexion;
+    try {
+        return DriverManager.getConnection(URL, USUARIO, CLAVE);
+    } catch (SQLException e) {
+        System.err.println("Error al obtener conexión: " + e.getMessage());
+        return null;
     }
+}
+
+
 
     // Método opcional para cerrar la conexión
     public void cerrarConexion() {
