@@ -1,42 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package SistemaBibliotecario.Modelos;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
-/**
- *
- * @author User
- */
 public class Libro {
-    private int id_libro;
+    private int idLibro;
     private String isbn;
     private String titulo;
     private int stock;
     private String autor;
-    private int anio_publicacion;
-    private LocalDateTime fecha_creacion;
-    private int id_categoria;
+    private int anioPublicacion;
+    private int idCategoria;
+    private Timestamp fechaCreacion;
+    private Timestamp fechaActualizacion;
 
-    public Libro() {
-    }
+    public Libro() {}
 
-    public Libro(int id_libro, String isbn, String titulo, int stock, String autor,
-                 int anio_publicacion, LocalDateTime fecha_creacion, int id_categoria) {
-        this.id_libro = id_libro;
+    public Libro(int idLibro, String isbn, String titulo, int stock, String autor,
+                 int anioPublicacion, int idCategoria, Timestamp fechaCreacion, Timestamp fechaActualizacion) {
+        this.idLibro = idLibro;
         this.isbn = isbn;
         this.titulo = titulo;
         this.stock = stock;
         this.autor = autor;
-        this.anio_publicacion = anio_publicacion;
-        this.fecha_creacion = fecha_creacion;
-        this.id_categoria = id_categoria;
+        this.anioPublicacion = anioPublicacion;
+        this.idCategoria = idCategoria;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public int getId_libro() { return id_libro; }
-    public void setId_libro(int id_libro) { this.id_libro = id_libro; }
+    // Getters y setters
+    public int getIdLibro() { return idLibro; }
+    public void setIdLibro(int idLibro) { this.idLibro = idLibro; }
 
     public String getIsbn() { return isbn; }
     public void setIsbn(String isbn) { this.isbn = isbn; }
@@ -50,12 +44,15 @@ public class Libro {
     public String getAutor() { return autor; }
     public void setAutor(String autor) { this.autor = autor; }
 
-    public int getAnio_publicacion() { return anio_publicacion; }
-    public void setAnio_publicacion(int anio_publicacion) { this.anio_publicacion = anio_publicacion; }
+    public int getAnioPublicacion() { return anioPublicacion; }
+    public void setAnioPublicacion(int anioPublicacion) { this.anioPublicacion = anioPublicacion; }
 
-    public LocalDateTime getFecha_creacion() { return fecha_creacion; }
-    public void setFecha_creacion(LocalDateTime fecha_creacion) { this.fecha_creacion = fecha_creacion; }
+    public int getIdCategoria() { return idCategoria; }
+    public void setIdCategoria(int idCategoria) { this.idCategoria = idCategoria; }
 
-    public int getId_categoria() { return id_categoria; }
-    public void setId_categoria(int id_categoria) { this.id_categoria = id_categoria; }
+    public Timestamp getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(Timestamp fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public Timestamp getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 }

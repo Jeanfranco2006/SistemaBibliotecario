@@ -1,40 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package SistemaBibliotecario.Modelos;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
-/**
- *
- * @author User
- */
 public class Multa {
-    private int id_multa;
-    private int id_prestamo;
-    private double monto;
-    private LocalDateTime fecha_pago;
+    private int idMulta;
+    private int idPrestamo;
+    private BigDecimal monto;
+    private Timestamp fechaPago;
+    private Timestamp fechaCreacion;
+    private Timestamp fechaActualizacion;
 
-    public Multa() {
-    }
+    public Multa() {}
 
-    public Multa(int id_multa, int id_prestamo, double monto, LocalDateTime fecha_pago) {
-        this.id_multa = id_multa;
-        this.id_prestamo = id_prestamo;
+    public Multa(int idMulta, int idPrestamo, BigDecimal monto, Timestamp fechaPago,
+                 Timestamp fechaCreacion, Timestamp fechaActualizacion) {
+        this.idMulta = idMulta;
+        this.idPrestamo = idPrestamo;
         this.monto = monto;
-        this.fecha_pago = fecha_pago;
+        this.fechaPago = fechaPago;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public int getId_multa() { return id_multa; }
-    public void setId_multa(int id_multa) { this.id_multa = id_multa; }
+    // Getters y setters
+    public int getIdMulta() { return idMulta; }
+    public void setIdMulta(int idMulta) { this.idMulta = idMulta; }
 
-    public int getId_prestamo() { return id_prestamo; }
-    public void setId_prestamo(int id_prestamo) { this.id_prestamo = id_prestamo; }
+    public int getIdPrestamo() { return idPrestamo; }
+    public void setIdPrestamo(int idPrestamo) { this.idPrestamo = idPrestamo; }
 
-    public double getMonto() { return monto; }
-    public void setMonto(double monto) { this.monto = monto; }
+    public BigDecimal getMonto() { return monto; }
+    public void setMonto(BigDecimal monto) { this.monto = monto; }
 
-    public LocalDateTime getFecha_pago() { return fecha_pago; }
-    public void setFecha_pago(LocalDateTime fecha_pago) { this.fecha_pago = fecha_pago; }
+    public Timestamp getFechaPago() { return fechaPago; }
+    public void setFechaPago(Timestamp fechaPago) { this.fechaPago = fechaPago; }
+
+    public Timestamp getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(Timestamp fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public Timestamp getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 }

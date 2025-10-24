@@ -1,46 +1,48 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package SistemaBibliotecario.Modelos;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
-/**
- *
- * @author User
- */
 public class Reserva {
-    private int id_reserva;
-    private int id_usuario;
-    private int id_libro;
-    private LocalDateTime fecha_reserva;
+    private int idReserva;
+    private int idUsuario;
+    private int idLibro;
+    private Timestamp fechaReserva;
     private String estado;
+    private Timestamp fechaCreacion;
+    private Timestamp fechaActualizacion;
 
-    public Reserva() {
-    }
+    public Reserva() {}
 
-    public Reserva(int id_reserva, int id_usuario, int id_libro,
-                   LocalDateTime fecha_reserva, String estado) {
-        this.id_reserva = id_reserva;
-        this.id_usuario = id_usuario;
-        this.id_libro = id_libro;
-        this.fecha_reserva = fecha_reserva;
+    public Reserva(int idReserva, int idUsuario, int idLibro, Timestamp fechaReserva,
+                   String estado, Timestamp fechaCreacion, Timestamp fechaActualizacion) {
+        this.idReserva = idReserva;
+        this.idUsuario = idUsuario;
+        this.idLibro = idLibro;
+        this.fechaReserva = fechaReserva;
         this.estado = estado;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public int getId_reserva() { return id_reserva; }
-    public void setId_reserva(int id_reserva) { this.id_reserva = id_reserva; }
+    // Getters y setters
+    public int getIdReserva() { return idReserva; }
+    public void setIdReserva(int idReserva) { this.idReserva = idReserva; }
 
-    public int getId_usuario() { return id_usuario; }
-    public void setId_usuario(int id_usuario) { this.id_usuario = id_usuario; }
+    public int getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 
-    public int getId_libro() { return id_libro; }
-    public void setId_libro(int id_libro) { this.id_libro = id_libro; }
+    public int getIdLibro() { return idLibro; }
+    public void setIdLibro(int idLibro) { this.idLibro = idLibro; }
 
-    public LocalDateTime getFecha_reserva() { return fecha_reserva; }
-    public void setFecha_reserva(LocalDateTime fecha_reserva) { this.fecha_reserva = fecha_reserva; }
+    public Timestamp getFechaReserva() { return fechaReserva; }
+    public void setFechaReserva(Timestamp fechaReserva) { this.fechaReserva = fechaReserva; }
 
     public String getEstado() { return estado; }
     public void setEstado(String estado) { this.estado = estado; }
+
+    public Timestamp getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(Timestamp fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public Timestamp getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 }

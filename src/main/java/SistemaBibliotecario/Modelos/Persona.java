@@ -1,40 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package SistemaBibliotecario.Modelos;
 
-/**
- *
- * @author User
- */
+import java.sql.Timestamp;
+
 public class Persona {
-    private int id_persona;
+    private int idPersona;
     private String dni;
     private String nombre;
-    private String apellido_p;
-    private String apellido_m;
+    private String apellidoP;
+    private String apellidoM;
     private String direccion;
     private String telefono;
     private String email;
+    private Timestamp fechaCreacion;
+    private Timestamp fechaActualizacion;
 
-    public Persona() {
-    }
+    public Persona() {}
 
-    public Persona(int id_persona, String dni, String nombre, String apellido_p, String apellido_m,
-                   String direccion, String telefono, String email) {
-        this.id_persona = id_persona;
+    public Persona(int idPersona, String dni, String nombre, String apellidoP, String apellidoM,
+                   String direccion, String telefono, String email, Timestamp fechaCreacion, Timestamp fechaActualizacion) {
+        this.idPersona = idPersona;
         this.dni = dni;
         this.nombre = nombre;
-        this.apellido_p = apellido_p;
-        this.apellido_m = apellido_m;
+        this.apellidoP = apellidoP;
+        this.apellidoM = apellidoM;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public int getId_persona() { return id_persona; }
-    public void setId_persona(int id_persona) { this.id_persona = id_persona; }
+    // Getters y setters
+    public int getIdPersona() { return idPersona; }
+    public void setIdPersona(int idPersona) { this.idPersona = idPersona; }
 
     public String getDni() { return dni; }
     public void setDni(String dni) { this.dni = dni; }
@@ -42,11 +40,11 @@ public class Persona {
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getApellido_p() { return apellido_p; }
-    public void setApellido_p(String apellido_p) { this.apellido_p = apellido_p; }
+    public String getApellidoP() { return apellidoP; }
+    public void setApellidoP(String apellidoP) { this.apellidoP = apellidoP; }
 
-    public String getApellido_m() { return apellido_m; }
-    public void setApellido_m(String apellido_m) { this.apellido_m = apellido_m; }
+    public String getApellidoM() { return apellidoM; }
+    public void setApellidoM(String apellidoM) { this.apellidoM = apellidoM; }
 
     public String getDireccion() { return direccion; }
     public void setDireccion(String direccion) { this.direccion = direccion; }
@@ -56,4 +54,10 @@ public class Persona {
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+
+    public Timestamp getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(Timestamp fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public Timestamp getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 }

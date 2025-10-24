@@ -1,38 +1,43 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package SistemaBibliotecario.Modelos;
 
-/**
- *
- * @author User
- */
+import java.sql.Timestamp;
+
 public class Usuario {
-    private int id_usuario;
-    private int id_persona;
+    private int idUsuario;
+    private int idPersona;
     private String contrasena;
-    private String rol; // administrador, bibliotecario, lector
+    private String rol;
+    private Timestamp fechaCreacion;
+    private Timestamp fechaActualizacion;
 
-    public Usuario() {
-    }
+    public Usuario() {}
 
-    public Usuario(int id_usuario, int id_persona, String contrasena, String rol) {
-        this.id_usuario = id_usuario;
-        this.id_persona = id_persona;
+    public Usuario(int idUsuario, int idPersona, String contrasena, String rol,
+                   Timestamp fechaCreacion, Timestamp fechaActualizacion) {
+        this.idUsuario = idUsuario;
+        this.idPersona = idPersona;
         this.contrasena = contrasena;
         this.rol = rol;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaActualizacion = fechaActualizacion;
     }
 
-    public int getId_usuario() { return id_usuario; }
-    public void setId_usuario(int id_usuario) { this.id_usuario = id_usuario; }
+    // Getters y setters
+    public int getIdUsuario() { return idUsuario; }
+    public void setIdUsuario(int idUsuario) { this.idUsuario = idUsuario; }
 
-    public int getId_persona() { return id_persona; }
-    public void setId_persona(int id_persona) { this.id_persona = id_persona; }
+    public int getIdPersona() { return idPersona; }
+    public void setIdPersona(int idPersona) { this.idPersona = idPersona; }
 
     public String getContrasena() { return contrasena; }
     public void setContrasena(String contrasena) { this.contrasena = contrasena; }
 
     public String getRol() { return rol; }
     public void setRol(String rol) { this.rol = rol; }
+
+    public Timestamp getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(Timestamp fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public Timestamp getFechaActualizacion() { return fechaActualizacion; }
+    public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
 }
