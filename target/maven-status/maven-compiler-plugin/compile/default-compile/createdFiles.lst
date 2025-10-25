@@ -1,11 +1,11 @@
 SistemaBibliotecario\Modelos\Reserva.class
 SistemaBibliotecario\Modelos\DetallePrestamo.class
-SistemaBibliotecario\Modelos\Persona.class
 SistemaBibliotecario\Modelos\Categoria.class
-SistemaBibliotecario\Modelos\Libro.class
 SistemaBibliotecario\Modelos\Prestamo.class
-SistemaBibliotecario\Modelos\Usuario.class
 SistemaBibliotecario\VistaLogin\login.class
 SistemaBibliotecario\Modelos\Multa.class
+SistemaBibliotecario\Modelos\Persona.class
+SistemaBibliotecario\Modelos\Libro.class
+SistemaBibliotecario\Modelos\Usuario.class
 com\mycompany\sistemabibliotecario\SistemaBibliotecario.class
 SistemaBibliotecario\VistaLogin\login$1.class

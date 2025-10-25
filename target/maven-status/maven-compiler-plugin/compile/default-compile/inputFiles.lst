@@ -2,6 +2,8 @@ C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\com\
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Conexion\ConexionMySQL.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Conexion\TestConexion.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\BibliotecarioDAO.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\LectorDAO.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\LibroDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\PersonaDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\UsuarioDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Categoria.java
@@ -16,10 +18,10 @@ C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\Sist
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\VistaAdmin\inicio.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\VistaAdmin\reportes.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\VistaAdmin\usuarios.java
-C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\gestion_libros.java
-C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\gestion_prestamos.java
-C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\gestion_reportes.java
-C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\gestion_usuario.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\libros.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\prestamos.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\reportes.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaBlibliotecario\usuarios.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaLector\historial.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaLector\inicio.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\vistaLector\libros.java

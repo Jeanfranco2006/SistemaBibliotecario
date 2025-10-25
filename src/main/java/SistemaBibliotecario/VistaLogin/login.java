@@ -211,7 +211,7 @@ JOptionPane.showMessageDialog(this,
     case "bibliotecario": {
         JFrame frame = new JFrame("Bibliotecario");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.gestion_libros());
+        frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.libros());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

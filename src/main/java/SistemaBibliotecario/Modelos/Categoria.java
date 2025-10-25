@@ -29,4 +29,10 @@ public class Categoria {
 
     public Timestamp getFechaActualizacion() { return fechaActualizacion; }
     public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
+
+    // ✅ AGREGAR ESTE MÉTODO PARA QUE SE MUESTRE BIEN EN EL COMBOBOX
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

@@ -35,27 +35,24 @@ public class reportes extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jButton6 = new javax.swing.JButton();
+        jdcDesdePrestamos = new com.toedter.calendar.JDateChooser();
+        jdcHastaPrestamos = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbxReportePrestamos = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jDateChooser3 = new com.toedter.calendar.JDateChooser();
-        jDateChooser5 = new com.toedter.calendar.JDateChooser();
-        jButton7 = new javax.swing.JButton();
+        jdcDesdeLibros = new com.toedter.calendar.JDateChooser();
+        jdcHastaLibro = new com.toedter.calendar.JDateChooser();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jrtbnMenosPrestados = new javax.swing.JRadioButton();
+        cbxCategoria = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        jrbtnPopulares = new javax.swing.JRadioButton();
         jPanel6 = new javax.swing.JPanel();
-        jDateChooser4 = new com.toedter.calendar.JDateChooser();
-        jDateChooser6 = new com.toedter.calendar.JDateChooser();
-        jButton5 = new javax.swing.JButton();
+        jdcDesdeusuarios = new com.toedter.calendar.JDateChooser();
+        jdcHastausuarios = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -71,6 +68,7 @@ public class reportes extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        btnGenerarReporte = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("VISTA BIBLIOTECARIOS");
@@ -112,14 +110,8 @@ public class reportes extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel6.setText("Hasta");
         jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, 20));
-        jPanel4.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
-        jPanel4.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
-
-        jButton6.setBackground(new java.awt.Color(19, 38, 76));
-        jButton6.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("Generar Reporte");
-        jPanel4.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
+        jPanel4.add(jdcDesdePrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        jPanel4.add(jdcHastaPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 102));
@@ -130,8 +122,8 @@ public class reportes extends javax.swing.JPanel {
         jLabel11.setText("Desde");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 20));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vencidos", "Devueltos" }));
-        jPanel4.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 120, -1));
+        cbxReportePrestamos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vencidos", "Devueltos" }));
+        jPanel4.add(cbxReportePrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 120, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 710, 100));
 
@@ -142,14 +134,8 @@ public class reportes extends javax.swing.JPanel {
         jLabel7.setForeground(new java.awt.Color(0, 0, 102));
         jLabel7.setText("Reporte de Libros");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 120, 20));
-        jPanel5.add(jDateChooser3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
-        jPanel5.add(jDateChooser5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
-
-        jButton7.setBackground(new java.awt.Color(19, 38, 76));
-        jButton7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(255, 255, 255));
-        jButton7.setText("Generar Reporte");
-        jPanel5.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, -1, -1));
+        jPanel5.add(jdcDesdeLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        jPanel5.add(jdcHastaLibro, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel13.setText("Desde");
@@ -159,31 +145,25 @@ public class reportes extends javax.swing.JPanel {
         jLabel14.setText("Categoria");
         jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 70, 20));
 
-        jRadioButton1.setText("Menos prestados");
-        jPanel5.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
+        jrtbnMenosPrestados.setText("Menos prestados");
+        jPanel5.add(jrtbnMenosPrestados, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terror", "Comedia", "Romance" }));
-        jPanel5.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 120, -1));
+        cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terror", "Comedia", "Romance" }));
+        jPanel5.add(cbxCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 120, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel15.setText("Hasta");
         jPanel5.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 30, -1, 20));
 
-        jRadioButton3.setText("Mas populares");
-        jPanel5.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+        jrbtnPopulares.setText("Mas populares");
+        jPanel5.add(jrbtnPopulares, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 710, 100));
 
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel6.add(jDateChooser4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
-        jPanel6.add(jDateChooser6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
-
-        jButton5.setBackground(new java.awt.Color(19, 38, 76));
-        jButton5.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Generar Reporte");
-        jPanel6.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, -1, -1));
+        jPanel6.add(jdcDesdeusuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
+        jPanel6.add(jdcHastausuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel12.setText("Desde");
@@ -308,6 +288,17 @@ public class reportes extends javax.swing.JPanel {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
+        btnGenerarReporte.setBackground(new java.awt.Color(19, 38, 76));
+        btnGenerarReporte.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReporte.setText("Generar Reporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 410, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -368,24 +359,20 @@ login view = new login();
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
 
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBibliotecarios;
+    private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnUsuarios;
+    private javax.swing.JComboBox<String> cbxCategoria;
+    private javax.swing.JComboBox<String> cbxReportePrestamos;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
-    private com.toedter.calendar.JDateChooser jDateChooser3;
-    private com.toedter.calendar.JDateChooser jDateChooser4;
-    private com.toedter.calendar.JDateChooser jDateChooser5;
-    private com.toedter.calendar.JDateChooser jDateChooser6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -411,7 +398,13 @@ login view = new login();
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton3;
+    private com.toedter.calendar.JDateChooser jdcDesdeLibros;
+    private com.toedter.calendar.JDateChooser jdcDesdePrestamos;
+    private com.toedter.calendar.JDateChooser jdcDesdeusuarios;
+    private com.toedter.calendar.JDateChooser jdcHastaLibro;
+    private com.toedter.calendar.JDateChooser jdcHastaPrestamos;
+    private com.toedter.calendar.JDateChooser jdcHastausuarios;
+    private javax.swing.JRadioButton jrbtnPopulares;
+    private javax.swing.JRadioButton jrtbnMenosPrestados;
     // End of variables declaration//GEN-END:variables
 }
