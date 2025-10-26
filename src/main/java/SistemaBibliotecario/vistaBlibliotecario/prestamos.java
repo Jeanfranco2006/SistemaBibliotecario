@@ -4,6 +4,14 @@
  */
 package SistemaBibliotecario.vistaBlibliotecario;
 
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import SistemaBibliotecario.Dao.PrestamoDAO;
+import SistemaBibliotecario.Modelos.Prestamo;
+import SistemaBibliotecario.Modelos.SesionActual;
 
 /**
  *
@@ -16,6 +24,7 @@ public class prestamos extends javax.swing.JPanel {
      */
     public prestamos() {
         initComponents();
+        mostrarTablaPrestamos();
     }
 
     /**
@@ -165,12 +174,22 @@ public class prestamos extends javax.swing.JPanel {
         btnRegistrarDevolucion.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnRegistrarDevolucion.setForeground(new java.awt.Color(19, 38, 76));
         btnRegistrarDevolucion.setText("+ Registrar Devolución");
+        btnRegistrarDevolucion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarDevolucionActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRegistrarDevolucion, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 50, -1, -1));
 
         btnRegistrarNPrestamo.setBackground(new java.awt.Color(19, 38, 76));
         btnRegistrarNPrestamo.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnRegistrarNPrestamo.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarNPrestamo.setText("+ Registrar Nuevo Prestamo");
+        btnRegistrarNPrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarNPrestamoActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRegistrarNPrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, -1, -1));
 
         cbxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Item 2", "Item 3", "Item 4" }));
@@ -235,7 +254,68 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
+    private void btnRegistrarNPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarNPrestamoActionPerformed
+     String dniBibliotecario = SesionActual.dni;
+    String dniUsuario = JOptionPane.showInputDialog(this, "Ingrese el DNI del lector:");
+    String isbnLibro = JOptionPane.showInputDialog(this, "Ingrese el ISBN del libro:");
 
+    if (dniUsuario == null || isbnLibro == null || dniUsuario.trim().isEmpty() || isbnLibro.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Operación cancelada o datos vacíos.");
+        return;
+    }
+
+    PrestamoDAO prestamoDAO = new PrestamoDAO();
+    boolean exito = prestamoDAO.registrarPrestamo(dniUsuario, isbnLibro, dniBibliotecario);
+
+    if (exito) {
+        mostrarTablaPrestamos(); // ← Esto ahora mostrará solo los préstamos del bibliotecario actual
+        JOptionPane.showMessageDialog(this, "✅ Préstamo registrado correctamente.");
+    } else {
+        JOptionPane.showMessageDialog(this, "❌ No se pudo registrar el préstamo.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+   
+    }//GEN-LAST:event_btnRegistrarNPrestamoActionPerformed
+
+    private void btnRegistrarDevolucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarDevolucionActionPerformed
+        
+        
+    }//GEN-LAST:event_btnRegistrarDevolucionActionPerformed
+
+    public void mostrarTablaPrestamos() {
+    try {
+        PrestamoDAO prestamoDAO = new PrestamoDAO();
+        
+        // Obtener préstamos solo del bibliotecario en sesión
+        List<Prestamo> listaPrestamos = prestamoDAO.obtenerPrestamosPorBibliotecario(SesionActual.dni);
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblPrestamosActuales.getModel();
+        modelo.setRowCount(0); // Limpiar tabla antes de agregar nuevos datos
+        
+        for (Prestamo prestamo : listaPrestamos) {
+            Object[] fila = {
+                prestamo.getDniLector(),
+                prestamo.getNombresLector(),
+                prestamo.getTituloLibro(),
+                prestamo.getIsbn(),
+                prestamo.getFechaPrestamo(),
+                prestamo.getFechaDevolucion(),
+                prestamo.getEstado()
+            };
+            modelo.addRow(fila);
+        }
+        
+        // Mostrar mensaje informativo
+        JOptionPane.showMessageDialog(this, 
+            "Se encontraron " + listaPrestamos.size() + " préstamos realizados por usted.",
+            "Información", 
+            JOptionPane.INFORMATION_MESSAGE);
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar los préstamos: " + e.getMessage(), 
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnLibros;

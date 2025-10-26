@@ -11,6 +11,12 @@ public class Prestamo {
     private String estado;
     private Timestamp fechaCreacion;
     private Timestamp fechaActualizacion;
+    
+    // Nuevos atributos para mostrar en la tabla
+    private String dniLector;
+    private String nombresLector;
+    private String tituloLibro;
+    private String isbn;
 
     public Prestamo() {}
 
@@ -27,7 +33,7 @@ public class Prestamo {
         this.fechaActualizacion = fechaActualizacion;
     }
 
-    // Getters y setters
+    // Getters y setters existentes
     public int getIdPrestamo() { return idPrestamo; }
     public void setIdPrestamo(int idPrestamo) { this.idPrestamo = idPrestamo; }
 
@@ -51,4 +57,17 @@ public class Prestamo {
 
     public Timestamp getFechaActualizacion() { return fechaActualizacion; }
     public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
+
+    // Nuevos getters y setters para los campos de visualización
+    public String getDniLector() { return dniLector; }
+    public void setDniLector(String dniLector) { this.dniLector = dniLector; }
+
+    public String getNombresLector() { return nombresLector; }
+    public void setNombresLector(String nombresLector) { this.nombresLector = nombresLector; }
+
+    public String getTituloLibro() { return tituloLibro; }
+    public void setTituloLibro(String tituloLibro) { this.tituloLibro = tituloLibro; }
+
+    public String getIsbn() { return isbn; }
+    public void setIsbn(String isbn) { this.isbn = isbn; }
 }

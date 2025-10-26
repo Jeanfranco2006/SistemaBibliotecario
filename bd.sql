@@ -60,6 +60,17 @@ CREATE TABLE prestamo (
   FOREIGN KEY (id_bibliotecario) REFERENCES usuario(id_usuario)
 );
 
+create table devolucion (
+  id_devolucion INT PRIMARY KEY AUTO_INCREMENT,
+  id_prestamo INT NOT NULL,
+  id_bibliotecario INT NOT NULL,
+  estado VARCHAR(15) NOT NULL,
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_prestamo) REFERENCES prestamo(id_prestamo),
+  FOREIGN KEY (id_bibliotecario) REFERENCES usuario(id_usuario)
+)
+
 -- Tabla detalle_prestamo
 CREATE TABLE detalle_prestamo (
   id_prestamo INT NOT NULL,
@@ -83,6 +94,7 @@ CREATE TABLE reserva (
   FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
   FOREIGN KEY (id_libro) REFERENCES libro(id_libro)
 );
+
 
 -- Tabla multa
 CREATE TABLE multa (

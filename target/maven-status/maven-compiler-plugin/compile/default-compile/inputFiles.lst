@@ -5,6 +5,7 @@ C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\Sist
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\LectorDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\LibroDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\PersonaDAO.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\PrestamoDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Dao\UsuarioDAO.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Categoria.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\DetallePrestamo.java
@@ -13,6 +14,7 @@ C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\Sist
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Persona.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Prestamo.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Reserva.java
+C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\SesionActual.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\Modelos\Usuario.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\VistaAdmin\bibliotecarios.java
 C:\Users\User\Documents\NetBeansProjects\SistemaBibliotecario\src\main\java\SistemaBibliotecario\VistaAdmin\inicio.java
