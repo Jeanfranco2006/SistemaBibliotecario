@@ -7,6 +7,7 @@ package SistemaBibliotecario.vistaBlibliotecario;
 import SistemaBibliotecario.Conexion.ConexionMySQL;
 import SistemaBibliotecario.Dao.BibliotecarioDAO;
 import SistemaBibliotecario.Dao.LectorDAO;
+import SistemaBibliotecario.VistaLogin.login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +22,15 @@ import javax.swing.table.DefaultTableModel;
  * @author User
  */
 public class usuarios extends javax.swing.JPanel {
+private LectorDAO lectorDAO;
 
     /**
      * Creates new form usuarios
      */
     public usuarios() {
         initComponents();
-         cargarUsuarios(); // ✅ Cargar datos al iniciar
+        lectorDAO = new LectorDAO();
+         cargarLectores(); // ✅ Cargar datos al iniciar
         mostrarTotalLector(); 
     }
 
@@ -136,6 +139,11 @@ public class usuarios extends javax.swing.JPanel {
 
         btnSalir.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
 
         btnLibros.setBackground(new java.awt.Color(0, 51, 102));
@@ -167,35 +175,31 @@ public class usuarios extends javax.swing.JPanel {
         tblUsuarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Dni", "Nombres ", "Email", "Direccion"
+                "Nombres ", "Apellidos", "Email", "Fecha Creación", "Ultimo Acceso"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, true, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblUsuarios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 880, 390));
 
-        jTextField7.setText("Buscar usuario....");
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
@@ -207,6 +211,11 @@ public class usuarios extends javax.swing.JPanel {
         btnLimpiar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 190, -1, -1));
 
         btnBuscar.setBackground(new java.awt.Color(19, 38, 76));
@@ -275,12 +284,22 @@ public class usuarios extends javax.swing.JPanel {
         btnActualizar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
         btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, -1, -1));
 
         btnEliminar.setBackground(new java.awt.Color(19, 38, 76));
         btnEliminar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, -1, -1));
 
         lblTotalLectores.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -404,7 +423,7 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de prestamos");
         txtEmail.setText("");
         txtContrasena.setText("");
 
-        cargarUsuarios();
+        cargarLectores();
         mostrarTotalLector();
 
     } catch (SQLException e) {
@@ -438,15 +457,97 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
-private void cargarUsuarios() {
-    DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
-    model.setRowCount(0); // limpia la tabla
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        login view = new login();
+        view.setLocationRelativeTo(null); // Centrar la ventana
+        view.setVisible(true); // Mostrar el login
 
-    LectorDAO dao = new LectorDAO();
-    List<Object[]> lista = dao.listarLector();
+        // Cerrar la ventana actual
+        javax.swing.SwingUtilities.getWindowAncestor(this).dispose();  // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
 
-    for (Object[] fila : lista) {
-        model.addRow(fila);
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+        try {
+        int filaSeleccionada = tblUsuarios.getSelectedRow();
+        
+        if (filaSeleccionada >= 0) {
+            // Obtener el EMAIL de la fila seleccionada (columna 2)
+            String email = tblUsuarios.getValueAt(filaSeleccionada, 2).toString();
+            
+            // Buscar datos completos por EMAIL
+            buscarDatosCompletosPorEmail(email);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al seleccionar usuario: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_tblUsuariosMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    
+    private void buscarDatosCompletosPorEmail(String email) {
+    try {
+        Object[] usuarioCompleto = lectorDAO.obtenerUsuarioCompletoPorEmail(email);
+        
+        if (usuarioCompleto != null) {
+            // Llenar los campos de texto
+            txtDni.setText(usuarioCompleto[0].toString());
+            txtNombre.setText(usuarioCompleto[1].toString());
+            txtApellidoP.setText(usuarioCompleto[2].toString());
+            txtApellidoM.setText(usuarioCompleto[3].toString());
+            txtDireccion.setText(usuarioCompleto[4].toString());
+            txtTelefono.setText(usuarioCompleto[5].toString());
+            txtEmail.setText(usuarioCompleto[6].toString());
+            
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontraron los datos completos del usuario.", 
+                "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar datos del usuario: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+// Método para cargar los lectores (actualizado)
+private void cargarLectores() {
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        
+        List<Object[]> lectores = lectorDAO.listarLector();
+        
+        if (lectores.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay usuarios lectores registrados.", 
+                "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Object[] lector : lectores) {
+                // Crear nueva fila con solo las 5 columnas visibles
+                Object[] filaMostrar = new Object[5];
+                filaMostrar[0] = lector[1]; // Nombre (posición 1 del array del DAO)
+                filaMostrar[1] = lector[2]; // Apellidos (posición 2)
+                filaMostrar[2] = lector[3]; // Email (posición 3) - ¡IMPORTANTE para la búsqueda!
+                filaMostrar[3] = lector[4]; // Fecha Creación (posición 4)
+                filaMostrar[4] = lector[5]; // Último Acceso (posición 5)
+                
+                model.addRow(filaMostrar);
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
     }
 }
 

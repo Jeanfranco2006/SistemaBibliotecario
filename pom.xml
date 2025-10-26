@@ -21,6 +21,24 @@
   <artifactId>mysql-connector-j</artifactId>
   <version>9.3.0</version>
 </dependency>
+<!-- Apache POI para Excel -->
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi</artifactId>
+        <version>5.2.4</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>5.2.4</version>
+    </dependency>
+    
+    <!-- Para evitar conflictos de logging -->
+    <dependency>
+        <groupId>org.apache.logging.log4j</groupId>
+        <artifactId>log4j-core</artifactId>
+        <version>2.20.0</version>
+    </dependency>
 
 
     </dependencies>

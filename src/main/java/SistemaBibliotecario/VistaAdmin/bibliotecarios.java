@@ -23,12 +23,14 @@ import SistemaBibliotecario.VistaLogin.login;
  * @author User
  */
 public class bibliotecarios extends javax.swing.JPanel {
+      private BibliotecarioDAO bibliotecarioDAO;
 
     /**
      * Creates new form bibliotecarios
      */
     public bibliotecarios() {
         initComponents();
+        bibliotecarioDAO = new BibliotecarioDAO(); // Inicializar el DAO
         cargarBibliotecarios();
         mostrarTotalBibliotecarios();
     }
@@ -182,6 +184,11 @@ public class bibliotecarios extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, -1, -1));
 
         btnAgregar.setBackground(new java.awt.Color(19, 38, 76));
@@ -205,8 +212,6 @@ public class bibliotecarios extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 190, -1, -1));
-
-        jTextField7.setText("Buscar....");
         jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, 390, 30));
 
         btnEliminar.setBackground(new java.awt.Color(19, 38, 76));
@@ -587,6 +592,51 @@ public class bibliotecarios extends javax.swing.JPanel {
     tblBibliotecarios.clearSelection(); // Quita la selección de la tabla
     JOptionPane.showMessageDialog(this, "🧹 Campos limpiados correctamente."); // TODO add your handling code here:
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String criterio = jTextField7.getText().trim();
+    
+    if (criterio.isEmpty()) {
+        cargarBibliotecarios(); // Si está vacío, mostrar todos
+        return;
+    }
+    
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblBibliotecarios.getModel();
+        model.setRowCount(0);
+        
+        BibliotecarioDAO dao = new BibliotecarioDAO();
+        List<Object[]> bibliotecarios = dao.buscarBibliotecarioPorDniEmailNombre(criterio);
+        
+        if (bibliotecarios.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "No se encontraron bibliotecarios con: " + criterio, 
+                "Búsqueda", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Object[] bibliotecario : bibliotecarios) {
+                // Crear nueva fila con solo las 5 columnas visibles
+                Object[] filaMostrar = new Object[5];
+                filaMostrar[0] = bibliotecario[1]; // Nombre
+                filaMostrar[1] = bibliotecario[2]; // Apellidos
+                filaMostrar[2] = bibliotecario[3]; // Email
+                filaMostrar[3] = bibliotecario[4]; // Fecha Ingreso
+                filaMostrar[4] = bibliotecario[5]; // Último Acceso
+                
+                model.addRow(filaMostrar);
+            }
+            
+            JOptionPane.showMessageDialog(this, 
+                "Se encontraron " + bibliotecarios.size() + " bibliotecario(s)", 
+                "Búsqueda exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
     private void cargarBibliotecarios() {
     DefaultTableModel model = (DefaultTableModel) tblBibliotecarios.getModel();
     model.setRowCount(0); // limpia la tabla
@@ -594,8 +644,16 @@ public class bibliotecarios extends javax.swing.JPanel {
     BibliotecarioDAO dao = new BibliotecarioDAO();
     List<Object[]> lista = dao.listarBibliotecarios();
 
-    for (Object[] fila : lista) {
-        model.addRow(fila);
+    for (Object[] bibliotecario : lista) {
+        // Crear nueva fila con solo las 5 columnas visibles
+        Object[] filaMostrar = new Object[5];
+        filaMostrar[0] = bibliotecario[1]; // Nombre
+        filaMostrar[1] = bibliotecario[2]; // Apellidos
+        filaMostrar[2] = bibliotecario[3]; // Email
+        filaMostrar[3] = bibliotecario[4]; // Fecha Ingreso
+        filaMostrar[4] = bibliotecario[5]; // Último Acceso
+        
+        model.addRow(filaMostrar);
     }
 }
 

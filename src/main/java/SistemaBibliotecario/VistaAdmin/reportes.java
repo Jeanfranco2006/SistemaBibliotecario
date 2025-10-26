@@ -4,6 +4,14 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+import SistemaBibliotecario.Dao.ReporteDAO;
 import SistemaBibliotecario.VistaLogin.login;
 
 /**
@@ -17,6 +25,10 @@ public class reportes extends javax.swing.JPanel {
      */
     public reportes() {
         initComponents();
+        inicializarComboboxEstados(); // ✅ ESTA LÍNEA FALTA
+        inicializarComboboxCategorias();
+
+    
     }
 
     /**
@@ -39,7 +51,8 @@ public class reportes extends javax.swing.JPanel {
         jdcHastaPrestamos = new com.toedter.calendar.JDateChooser();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        cbxReportePrestamos = new javax.swing.JComboBox<>();
+        cbxEstadoPrestamos = new javax.swing.JComboBox<>();
+        btnGenerarReportePrestamo = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jdcDesdeLibros = new com.toedter.calendar.JDateChooser();
@@ -50,12 +63,14 @@ public class reportes extends javax.swing.JPanel {
         cbxCategoria = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         jrbtnPopulares = new javax.swing.JRadioButton();
+        btnGenerarReporteLibros = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jdcDesdeusuarios = new com.toedter.calendar.JDateChooser();
         jdcHastausuarios = new com.toedter.calendar.JDateChooser();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        btnGenerarReporteUsuarios = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
@@ -68,7 +83,6 @@ public class reportes extends javax.swing.JPanel {
         jButton4 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
-        btnGenerarReporte = new javax.swing.JButton();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("VISTA BIBLIOTECARIOS");
@@ -122,8 +136,18 @@ public class reportes extends javax.swing.JPanel {
         jLabel11.setText("Desde");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, -1, 20));
 
-        cbxReportePrestamos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vencidos", "Devueltos" }));
-        jPanel4.add(cbxReportePrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 120, -1));
+        jPanel4.add(cbxEstadoPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 120, -1));
+
+        btnGenerarReportePrestamo.setBackground(new java.awt.Color(19, 38, 76));
+        btnGenerarReportePrestamo.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnGenerarReportePrestamo.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReportePrestamo.setText("Generar Reporte");
+        btnGenerarReportePrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReportePrestamoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnGenerarReportePrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 190, 50));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 710, 100));
 
@@ -148,7 +172,6 @@ public class reportes extends javax.swing.JPanel {
         jrtbnMenosPrestados.setText("Menos prestados");
         jPanel5.add(jrtbnMenosPrestados, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
-        cbxCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Terror", "Comedia", "Romance" }));
         jPanel5.add(cbxCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, 120, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -157,6 +180,17 @@ public class reportes extends javax.swing.JPanel {
 
         jrbtnPopulares.setText("Mas populares");
         jPanel5.add(jrbtnPopulares, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+
+        btnGenerarReporteLibros.setBackground(new java.awt.Color(19, 38, 76));
+        btnGenerarReporteLibros.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnGenerarReporteLibros.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReporteLibros.setText("Generar Reporte");
+        btnGenerarReporteLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteLibrosActionPerformed(evt);
+            }
+        });
+        jPanel5.add(btnGenerarReporteLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 40, 190, 50));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 190, 710, 100));
 
@@ -178,7 +212,18 @@ public class reportes extends javax.swing.JPanel {
         jLabel16.setText("Reporte de Usuarios");
         jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 20));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 320, 710, 80));
+        btnGenerarReporteUsuarios.setBackground(new java.awt.Color(19, 38, 76));
+        btnGenerarReporteUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnGenerarReporteUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReporteUsuarios.setText("Generar Reporte");
+        btnGenerarReporteUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteUsuariosActionPerformed(evt);
+            }
+        });
+        jPanel6.add(btnGenerarReporteUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 190, 50));
+
+        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 300, 710, 80));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel8.setText("Informes Recientes");
@@ -288,17 +333,6 @@ public class reportes extends javax.swing.JPanel {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
-        btnGenerarReporte.setBackground(new java.awt.Color(19, 38, 76));
-        btnGenerarReporte.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        btnGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
-        btnGenerarReporte.setText("Generar Reporte");
-        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerarReporteActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 410, -1, -1));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -360,17 +394,355 @@ login view = new login();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
-        // TODO add your handling code here:
+      // Validar fechas
+        
     }//GEN-LAST:event_btnGenerarReporteActionPerformed
+
+    private void btnGenerarReportePrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportePrestamoActionPerformed
+        // Validar fechas
+    if (jdcDesdePrestamos.getDate() == null || jdcHastaPrestamos.getDate() == null) {
+        JOptionPane.showMessageDialog(this, 
+            "Por favor, seleccione ambas fechas (desde y hasta).", 
+            "Fechas requeridas", 
+            JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+    
+    // Obtener valores
+    Date fechaDesde = jdcDesdePrestamos.getDate();
+    Date fechaHasta = jdcHastaPrestamos.getDate();
+    
+    // Validar rango de fechas
+    if (fechaDesde.after(fechaHasta)) {
+        JOptionPane.showMessageDialog(this, 
+            "La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.", 
+            "Fechas inválidas", 
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // ✅ USAR cbxEstadoPrestamos (con "s" al final)
+    String estado = "";
+    if (cbxEstadoPrestamos.getSelectedItem() != null) {
+        estado = cbxEstadoPrestamos.getSelectedItem().toString().toLowerCase();
+    }
+    
+    // Si es "todos", usar null para traer todos los estados
+    if (estado.equals("todos")) {
+        estado = null;
+    }
+    
+    // Generar reporte
+    generarReporteExcel(fechaDesde, fechaHasta, estado);
+
+    }//GEN-LAST:event_btnGenerarReportePrestamoActionPerformed
+
+    private void btnGenerarReporteLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteLibrosActionPerformed
+     try {
+        // Validar fechas
+        if (jdcDesdeLibros.getDate() == null || jdcHastaLibro.getDate() == null) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione ambas fechas para el reporte de libros.", 
+                "Fechas requeridas", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Date fechaDesde = jdcDesdeLibros.getDate();
+        Date fechaHasta = jdcHastaLibro.getDate();
+        
+        // Validar rango de fechas
+        if (fechaDesde.after(fechaHasta)) {
+            JOptionPane.showMessageDialog(this, 
+                "La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.", 
+                "Fechas inválidas", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Validar que se haya seleccionado un tipo de reporte
+        if (!jrbtnPopulares.isSelected() && !jrtbnMenosPrestados.isSelected()) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un tipo de reporte (Más populares o Menos prestados).", 
+                "Tipo requerido", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        // Obtener la categoría seleccionada
+        String categoria = null;
+        if (cbxCategoria.getSelectedItem() != null && !cbxCategoria.getSelectedItem().toString().equals("Todas")) {
+            categoria = cbxCategoria.getSelectedItem().toString();
+        }
+        
+        boolean esPopular = jrbtnPopulares.isSelected();
+        
+        ReporteDAO reporteDAO = new ReporteDAO();
+        
+        // Seleccionar ubicación para guardar
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar reporte de libros");
+        
+        String nombreArchivo = esPopular ? "reporte_libros_populares.xlsx" : "reporte_libros_menos_prestados.xlsx";
+        fileChooser.setSelectedFile(new java.io.File(nombreArchivo));
+        
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            String rutaArchivo = fileToSave.getAbsolutePath();
+            
+            if (!rutaArchivo.toLowerCase().endsWith(".xlsx")) {
+                rutaArchivo += ".xlsx";
+            }
+            
+            boolean exito = reporteDAO.generarReporteLibrosExcel(fechaDesde, fechaHasta, esPopular, categoria, rutaArchivo);
+            
+            String tipoReporte = esPopular ? "Libros Más Populares" : "Libros Menos Prestados";
+            String infoCategoria = categoria != null ? "Categoría: " + categoria : "Todas las categorías";
+            
+            if (exito) {
+                JOptionPane.showMessageDialog(this, 
+                    "✅ Reporte de " + tipoReporte + " generado exitosamente!\n" +
+                    "📍 Ubicación: " + rutaArchivo + "\n" +
+                    "📅 Período: " + new SimpleDateFormat("dd/MM/yyyy").format(fechaDesde) + 
+                    " a " + new SimpleDateFormat("dd/MM/yyyy").format(fechaHasta) + "\n" +
+                    "📚 " + infoCategoria, 
+                    "Reporte completado", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "❌ Error al generar el reporte de libros.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "❌ Error al generar reporte de libros: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+    
+    }//GEN-LAST:event_btnGenerarReporteLibrosActionPerformed
+
+    private void btnGenerarReporteUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteUsuariosActionPerformed
+   try {
+        // Validar fechas
+        if (jdcDesdeusuarios.getDate() == null || jdcHastausuarios.getDate() == null) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione ambas fechas para el reporte de usuarios.", 
+                "Fechas requeridas", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Date fechaDesde = jdcDesdeusuarios.getDate();
+        Date fechaHasta = jdcHastausuarios.getDate();
+        
+        // Validar rango de fechas
+        if (fechaDesde.after(fechaHasta)) {
+            JOptionPane.showMessageDialog(this, 
+                "La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.", 
+                "Fechas inválidas", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Opciones de reporte
+        String[] opcionesReporte = {"Todos los Usuarios Registrados", "Estadísticas de Préstamos (Solo Lectores)"};
+        int tipoReporte = JOptionPane.showOptionDialog(this,
+            "¿Qué tipo de reporte de usuarios deseas generar?",
+            "Seleccionar Reporte de Usuarios",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opcionesReporte,
+            opcionesReporte[0]);
+        
+        if (tipoReporte == -1) return; // Si cancela
+        
+        String rolFiltro = "todos";
+        
+        // Si selecciona "Todos los usuarios", preguntar por filtro de rol
+        if (tipoReporte == 0) {
+            String[] opcionesRol = {"Todos los roles", "Solo Lectores", "Solo Bibliotecarios", "Solo Administradores"};
+            int rolSeleccionado = JOptionPane.showOptionDialog(this,
+                "¿Qué rol deseas incluir en el reporte?",
+                "Filtrar por Rol",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcionesRol,
+                opcionesRol[0]);
+            
+            switch (rolSeleccionado) {
+                case 0: rolFiltro = "todos"; break;
+                case 1: rolFiltro = "lector"; break;
+                case 2: rolFiltro = "bibliotecario"; break;
+                case 3: rolFiltro = "administrador"; break;
+                default: rolFiltro = "todos";
+            }
+        }
+        
+        ReporteDAO reporteDAO = new ReporteDAO();
+        
+        // Seleccionar ubicación para guardar
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar reporte de usuarios");
+        
+        String nombreArchivo = tipoReporte == 0 ? "reporte_usuarios_registrados.xlsx" : "reporte_estadisticas_usuarios.xlsx";
+        fileChooser.setSelectedFile(new java.io.File(nombreArchivo));
+        
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            String rutaArchivo = fileToSave.getAbsolutePath();
+            
+            if (!rutaArchivo.toLowerCase().endsWith(".xlsx")) {
+                rutaArchivo += ".xlsx";
+            }
+            
+            // tipoReporte + 1 porque en el DAO 1=Todos usuarios, 2=Estadísticas
+            boolean exito = reporteDAO.generarReporteUsuariosExcel(fechaDesde, fechaHasta, tipoReporte + 1, rolFiltro, rutaArchivo);
+            
+            String tipoReporteStr = tipoReporte == 0 ? "Usuarios Registrados" : "Estadísticas de Préstamos por Usuario";
+            String infoRol = tipoReporte == 0 ? "Rol: " + (rolFiltro.equals("todos") ? "Todos" : rolFiltro) : "(Solo lectores)";
+            
+            if (exito) {
+                JOptionPane.showMessageDialog(this, 
+                    "✅ Reporte de " + tipoReporteStr + " generado exitosamente!\n" +
+                    "📍 Ubicación: " + rutaArchivo + "\n" +
+                    "📅 Período: " + new SimpleDateFormat("dd/MM/yyyy").format(fechaDesde) + 
+                    " a " + new SimpleDateFormat("dd/MM/yyyy").format(fechaHasta) + "\n" +
+                    "👥 " + infoRol, 
+                    "Reporte completado", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "❌ Error al generar el reporte de usuarios.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "❌ Error al generar reporte de usuarios: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+   
+    }//GEN-LAST:event_btnGenerarReporteUsuariosActionPerformed
+    private void generarReporteExcel(Date fechaDesde, Date fechaHasta, String estado) {
+    try {
+        ReporteDAO reporteDAO = new ReporteDAO();
+        
+        // Seleccionar ubicación para guardar
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar reporte de préstamos");
+        fileChooser.setSelectedFile(new java.io.File("reporte_prestamos.xlsx"));
+        
+        int userSelection = fileChooser.showSaveDialog(this);
+        
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            java.io.File fileToSave = fileChooser.getSelectedFile();
+            String rutaArchivo = fileToSave.getAbsolutePath();
+            
+            if (!rutaArchivo.toLowerCase().endsWith(".xlsx")) {
+                rutaArchivo += ".xlsx";
+            }
+            
+            boolean exito = reporteDAO.generarReportePrestamosExcelTotal(fechaDesde, fechaHasta, estado, rutaArchivo);
+            
+            // Mensaje personalizado según el estado
+            String estadoMensaje = (estado == null) ? "Todos los estados" : estado;
+            
+            if (exito) {
+                JOptionPane.showMessageDialog(this, 
+                    "✅ Reporte generado exitosamente!\n" +
+                    "📍 Ubicación: " + rutaArchivo + "\n" +
+                    "📅 Período: " + new SimpleDateFormat("dd/MM/yyyy").format(fechaDesde) + 
+                    " a " + new SimpleDateFormat("dd/MM/yyyy").format(fechaHasta) + "\n" +
+                    "📊 Estado: " + estadoMensaje, 
+                    "Reporte completado", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "❌ Error al generar el reporte.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, 
+            "❌ Error al generar Excel: " + e.getMessage(), 
+            "Error", 
+            JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+
+private void inicializarComboboxCategorias() {
+    try {
+        cbxCategoria.removeAllItems();
+        cbxCategoria.addItem("Todas"); // Opción por defecto
+        
+        // ✅ Obtener categorías de la base de datos
+        ReporteDAO reporteDAO = new ReporteDAO();
+        List<String> categorias = reporteDAO.obtenerTodasLasCategorias();
+        
+        // ✅ Agregar categorías REALES de la BD al combobox
+        for (String categoria : categorias) {
+            cbxCategoria.addItem(categoria);
+        }
+        
+        cbxCategoria.setSelectedIndex(0);
+        
+        // ✅ Debug: mostrar en consola lo que se cargó
+        System.out.println("✅ Categorías cargadas desde BD:");
+        for (int i = 0; i < cbxCategoria.getItemCount(); i++) {
+            System.out.println("   " + (i + 1) + ". " + cbxCategoria.getItemAt(i));
+        }
+        
+    } catch (Exception e) {
+        System.err.println("❌ Error al cargar categorías: " + e.getMessage());
+        e.printStackTrace();
+        
+        
+    }
+}
+
+private void inicializarComboboxEstados() {
+    // ✅ Usar el nombre correcto: cbxEstadoPrestamos
+    cbxEstadoPrestamos.removeAllItems();
+    
+    // Agregar estados
+    cbxEstadoPrestamos.addItem("Todos");
+    cbxEstadoPrestamos.addItem("Activo");
+    cbxEstadoPrestamos.addItem("Devuelto");
+    cbxEstadoPrestamos.addItem("Vencido");
+    
+    // Seleccionar "Todos" por defecto
+    cbxEstadoPrestamos.setSelectedIndex(0);
+}
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBibliotecarios;
-    private javax.swing.JButton btnGenerarReporte;
+    private javax.swing.JButton btnGenerarReporteLibros;
+    private javax.swing.JButton btnGenerarReportePrestamo;
+    private javax.swing.JButton btnGenerarReporteUsuarios;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JComboBox<String> cbxCategoria;
-    private javax.swing.JComboBox<String> cbxReportePrestamos;
+    private javax.swing.JComboBox<String> cbxEstadoPrestamos;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;

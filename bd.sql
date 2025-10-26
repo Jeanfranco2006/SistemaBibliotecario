@@ -60,16 +60,6 @@ CREATE TABLE prestamo (
   FOREIGN KEY (id_bibliotecario) REFERENCES usuario(id_usuario)
 );
 
-create table devolucion (
-  id_devolucion INT PRIMARY KEY AUTO_INCREMENT,
-  id_prestamo INT NOT NULL,
-  id_bibliotecario INT NOT NULL,
-  estado VARCHAR(15) NOT NULL,
-  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (id_prestamo) REFERENCES prestamo(id_prestamo),
-  FOREIGN KEY (id_bibliotecario) REFERENCES usuario(id_usuario)
-)
 
 -- Tabla detalle_prestamo
 CREATE TABLE detalle_prestamo (
@@ -106,6 +96,33 @@ CREATE TABLE multa (
   fecha_actualizacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (id_prestamo) REFERENCES prestamo(id_prestamo)
 );
+
+
+
+INSERT INTO persona (dni, nombre, apellido_p, apellido_m, direccion, telefono, email)
+VALUES
+('12345678', 'Carlos', 'Ramírez', 'Gómez', 'Av. Los Olivos 123', '987654321', 'carlos.ramirez@example.com'),
+('23456789', 'María', 'Torres', 'Pérez', 'Jr. San Martín 456', '912345678', 'maria.torres@example.com'),
+('34567890', 'Luis', 'Fernández', 'Rojas', 'Calle Lima 789', '998877665', 'luis.fernandez@example.com'),
+('45678901', 'Ana', 'Mendoza', 'Castro', 'Av. Arequipa 321', '976543210', 'ana.mendoza@example.com'),
+('56789012', 'Jorge', 'Sánchez', 'Flores', 'Jr. Grau 654', '934561278', 'jorge.sanchez@example.com');
+
+INSERT INTO usuario (id_persona, contrasena, rol)
+VALUES
+(1, 'admin123', 'administrador'),
+(2, 'biblio456', 'bibliotecario'),
+(3, 'lector789', 'lector'),
+(4, 'lector101', 'lector'),
+(5, 'bibliotecario202', 'bibliotecario');
+
+
+INSERT INTO categoria (id_categoria, nombre)
+VALUES
+(1, 'Literatura Infantil'),
+(2, 'Novela'),
+(3, 'Ciencia Ficción'),
+(4, 'Clásicos'),
+(5, 'Misterio');
 
 
 INSERT INTO libro (isbn, titulo, stock, autor, anio_publicacion, id_categoria)

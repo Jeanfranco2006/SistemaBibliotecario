@@ -4,6 +4,17 @@
  */
 package SistemaBibliotecario.vistaBlibliotecario;
 
+import java.io.File;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
+import SistemaBibliotecario.Dao.ReporteDAO;
+import SistemaBibliotecario.Modelos.Prestamo;
+import SistemaBibliotecario.Modelos.SesionActual;
+
 /**
  *
  * @author User
@@ -32,14 +43,14 @@ public class reportes extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        btnGenerarReporteP = new javax.swing.JButton();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
+        btnGenerarReportePrestamo = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
+        jDateChooserDesdePrestamos = new com.toedter.calendar.JDateChooser();
+        jDateChooserHastaPrestamos = new com.toedter.calendar.JDateChooser();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        btnGenerarReporteL = new javax.swing.JButton();
+        btnGenerarReporteLibros = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jRadioButton1 = new javax.swing.JRadioButton();
@@ -79,23 +90,24 @@ public class reportes extends javax.swing.JPanel {
         jLabel5.setText("REPORTES DE PRÉSTAMOS");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        btnGenerarReporteP.setBackground(new java.awt.Color(19, 38, 76));
-        btnGenerarReporteP.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        btnGenerarReporteP.setForeground(new java.awt.Color(255, 255, 255));
-        btnGenerarReporteP.setText("GENERAR REPORTE");
-        jPanel4.add(btnGenerarReporteP, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 280, 50));
-
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
-        jPanel4.add(jSpinner1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, -1, -1));
-
-        jSpinner2.setModel(new javax.swing.SpinnerDateModel());
-        jPanel4.add(jSpinner2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
+        btnGenerarReportePrestamo.setBackground(new java.awt.Color(19, 38, 76));
+        btnGenerarReportePrestamo.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnGenerarReportePrestamo.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReportePrestamo.setText("GENERAR REPORTE");
+        btnGenerarReportePrestamo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReportePrestamoActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnGenerarReportePrestamo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 280, 50));
 
         jLabel10.setText("HASTA:");
-        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, -1, -1));
+        jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, -1, -1));
 
         jLabel11.setText("DESDE:");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, -1));
+        jPanel4.add(jDateChooserDesdePrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, 230, 40));
+        jPanel4.add(jDateChooserHastaPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 230, 40));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 180, 380, 320));
 
@@ -106,16 +118,16 @@ public class reportes extends javax.swing.JPanel {
         jLabel9.setText("REPORTES DE LIBROS");
         jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
 
-        btnGenerarReporteL.setBackground(new java.awt.Color(19, 38, 76));
-        btnGenerarReporteL.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        btnGenerarReporteL.setForeground(new java.awt.Color(255, 255, 255));
-        btnGenerarReporteL.setText("GENERAR REPORTE");
-        btnGenerarReporteL.addActionListener(new java.awt.event.ActionListener() {
+        btnGenerarReporteLibros.setBackground(new java.awt.Color(19, 38, 76));
+        btnGenerarReporteLibros.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        btnGenerarReporteLibros.setForeground(new java.awt.Color(255, 255, 255));
+        btnGenerarReporteLibros.setText("GENERAR REPORTE");
+        btnGenerarReporteLibros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerarReporteLActionPerformed(evt);
+                btnGenerarReporteLibrosActionPerformed(evt);
             }
         });
-        jPanel5.add(btnGenerarReporteL, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 280, 50));
+        jPanel5.add(btnGenerarReporteLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 280, 50));
 
         jLabel3.setText("Categoría");
         jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, -1, -1));
@@ -223,9 +235,10 @@ public class reportes extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGenerarReporteLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteLActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGenerarReporteLActionPerformed
+    private void btnGenerarReporteLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteLibrosActionPerformed
+
+
+    }//GEN-LAST:event_btnGenerarReporteLibrosActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         // TODO add your handling code here:
@@ -267,10 +280,87 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Prestamos");
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnPrestamosActionPerformed
 
+    private void btnGenerarReportePrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReportePrestamoActionPerformed
+ try {
+        // Obtener fechas de los JDateChooser (no JCalendar)
+        Date fechaDesde = jDateChooserDesdePrestamos.getDate();
+        Date fechaHasta = jDateChooserHastaPrestamos.getDate();
+        
+        if (fechaDesde == null || fechaHasta == null) {
+            JOptionPane.showMessageDialog(this, "⚠️ Por favor, seleccione ambas fechas.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (fechaDesde.after(fechaHasta)) {
+            JOptionPane.showMessageDialog(this, "⚠️ La fecha 'Desde' no puede ser mayor que la fecha 'Hasta'.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Obtener el DNI del bibliotecario logueado (debes tener una clase SesionActual)
+        String dniBibliotecario = SesionActual.dni; // Ajusta según tu implementación
+        
+        if (dniBibliotecario == null || dniBibliotecario.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "❌ No se pudo identificar al bibliotecario.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Seleccionar ubicación para guardar el archivo
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar reporte de préstamos");
+        fileChooser.setSelectedFile(new File("reporte_prestamos.xlsx"));
+        
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        
+        String rutaArchivo = fileChooser.getSelectedFile().getAbsolutePath();
+        if (!rutaArchivo.toLowerCase().endsWith(".xlsx")) {
+            rutaArchivo += ".xlsx";
+        }
+        
+        // Generar el reporte Excel usando el DAO corregido
+        ReporteDAO reporteDAO = new ReporteDAO();
+        boolean exito = reporteDAO.generarReportePrestamosExcel(fechaDesde, fechaHasta, dniBibliotecario, rutaArchivo);
+        
+        if (exito) {
+            // Obtener estadísticas para mostrar en el mensaje
+            List<Prestamo> prestamos = reporteDAO.obtenerPrestamosPorFechaYBibliotecario(fechaDesde, fechaHasta, dniBibliotecario);
+            long totalPrestamos = prestamos.size();
+            long prestamosActivos = prestamos.stream().filter(p -> "activo".equals(p.getEstado())).count();
+            long prestamosDevueltos = prestamos.stream().filter(p -> "devuelto".equals(p.getEstado())).count();
+            long prestamosVencidos = prestamos.stream().filter(p -> "vencido".equals(p.getEstado())).count();
+            
+            String estadisticas = String.format(
+                "ESTADÍSTICAS DEL REPORTE:\n" +
+                "Total de Préstamos: %d\n" +
+                "Préstamos Activos: %d\n" +
+                "Préstamos Devueltos: %d\n" +
+                "Préstamos Vencidos: %d",
+                totalPrestamos, prestamosActivos, prestamosDevueltos, prestamosVencidos
+            );
+            
+            JOptionPane.showMessageDialog(this, 
+                "✅ Reporte Excel generado exitosamente:\n" + rutaArchivo + 
+                "\n\n" + estadisticas,
+                "Reporte Generado", 
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "❌ Error al generar el reporte.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "❌ Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+
+
+    }//GEN-LAST:event_btnGenerarReportePrestamoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGenerarReporteL;
-    private javax.swing.JButton btnGenerarReporteP;
+    private javax.swing.JButton btnGenerarReporteLibros;
+    private javax.swing.JButton btnGenerarReportePrestamo;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnLibros;
     private javax.swing.JButton btnPrestamos;
@@ -278,6 +368,8 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Prestamos");
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JComboBox<String> jComboBox1;
+    private com.toedter.calendar.JDateChooser jDateChooserDesdePrestamos;
+    private com.toedter.calendar.JDateChooser jDateChooserHastaPrestamos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -296,7 +388,5 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Prestamos");
     private javax.swing.JPanel jPanel5;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JSpinner jSpinner2;
     // End of variables declaration//GEN-END:variables
 }

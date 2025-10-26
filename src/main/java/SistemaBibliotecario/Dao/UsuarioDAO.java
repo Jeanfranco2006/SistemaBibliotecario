@@ -65,4 +65,23 @@ public class UsuarioDAO {
             return false;
         }
     }
+
+    public boolean actualizarUltimoAcceso(String dni) {
+    String sql = "UPDATE usuario u " +
+                 "INNER JOIN persona p ON u.id_persona = p.id_persona " +
+                 "SET u.ultimo_acceso = NOW() " +
+                 "WHERE p.dni = ?";
+    
+    try (Connection con = ConexionMySQL.getInstancia().getConexion();
+         PreparedStatement ps = con.prepareStatement(sql)) {
+        
+        ps.setString(1, dni);
+        int filasAfectadas = ps.executeUpdate();
+        return filasAfectadas > 0;
+        
+    } catch (SQLException e) {
+        System.err.println("❌ Error al actualizar último acceso: " + e.getMessage());
+        return false;
+    }
+}
 }

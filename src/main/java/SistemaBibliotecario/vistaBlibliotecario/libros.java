@@ -11,6 +11,7 @@ import javax.swing.table.DefaultTableModel;
 
 import SistemaBibliotecario.Dao.LibroDAO;
 import SistemaBibliotecario.Modelos.Categoria;
+import SistemaBibliotecario.VistaLogin.login;
 
 /**
  *
@@ -129,6 +130,11 @@ private LibroDAO libroDAO;
 
         btnSalir.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnSalir.setText("SALIR");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
 
         btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
@@ -173,17 +179,24 @@ private LibroDAO libroDAO;
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Isbn", "Titulo", "Autor", "Categoria", "Stock", "Fecha Ingreso"
+                "Isbn", "Titulo", "Categoria", "Autor", "Stock", "Fecha Ingreso"
             }
         ));
         tblLibros.addMouseListener(new java.awt.event.MouseAdapter() {
-            
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblLibrosMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                tblLibrosMouseExited(evt);
+            }
         });
         jScrollPane1.setViewportView(tblLibros);
+        if (tblLibros.getColumnModel().getColumnCount() > 0) {
+            tblLibros.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 890, 370));
 
-        jTextField7.setText("Buscar libros....");
         jTextField7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField7ActionPerformed(evt);
@@ -559,6 +572,15 @@ limpiarCampos();    }//GEN-LAST:event_btnLimpiarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tblLibrosMouseExited
 
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        login view = new login();
+        view.setLocationRelativeTo(null); // Centrar la ventana
+        view.setVisible(true); // Mostrar el login
+
+        // Cerrar la ventana actual
+        javax.swing.SwingUtilities.getWindowAncestor(this).dispose(); // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
+
     private void cargarCategorias() {
         try {
             cbxCategoria.removeAllItems();
@@ -610,8 +632,8 @@ private void tblLibrosMouseClicked(java.awt.event.MouseEvent evt) {
         // Obtener datos de la fila seleccionada
         String isbn = model.getValueAt(selectedRow, 0).toString();
         String titulo = model.getValueAt(selectedRow, 1).toString();
-        String autor = model.getValueAt(selectedRow, 2).toString();
-        String categoriaNombre = model.getValueAt(selectedRow, 3).toString();
+        String categoriaNombre = model.getValueAt(selectedRow, 2).toString();
+        String autor = model.getValueAt(selectedRow, 3).toString();
         String stock = model.getValueAt(selectedRow, 4).toString();
         
         // Llenar los campos con los datos del libro seleccionado

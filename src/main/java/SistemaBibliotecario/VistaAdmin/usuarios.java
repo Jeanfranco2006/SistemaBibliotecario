@@ -4,19 +4,28 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import SistemaBibliotecario.Dao.LectorDAO;
 import SistemaBibliotecario.VistaLogin.login;
+import java.util.List;
 
 /**
  *
  * @author User
  */
 public class usuarios extends javax.swing.JPanel {
+private LectorDAO lectorDAO;
 
     /**
      * Creates new form usuarios
      */
     public usuarios() {
         initComponents();
+    lectorDAO = new LectorDAO();
+    cargarLectores();
+    mostrarTotalUsuarios();
     }
 
     /**
@@ -236,6 +245,11 @@ public class usuarios extends javax.swing.JPanel {
                 "Nombre", "Apellidos", "Email", "Fecha Creación ", "Ultimo Acceso"
             }
         ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 890, 460));
@@ -245,6 +259,11 @@ public class usuarios extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 180, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -308,6 +327,161 @@ login view = new login();
     // Cerrar la ventana actual
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+                buscarLectores();
+// TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
+try {
+        int filaSeleccionada = tblUsuarios.getSelectedRow();
+        
+        if (filaSeleccionada >= 0) {
+            // Obtener el EMAIL de la fila seleccionada (columna 2)
+            String email = tblUsuarios.getValueAt(filaSeleccionada, 2).toString();
+            
+            // Buscar datos completos por EMAIL
+            buscarDatosCompletosPorEmail(email);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al seleccionar usuario: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }
+//GEN-LAST:event_tblUsuariosMouseClicked
+
+  private void buscarDatosCompletosPorEmail(String email) {
+    try {
+        Object[] usuarioCompleto = lectorDAO.obtenerUsuarioCompletoPorEmail(email);
+        
+        if (usuarioCompleto != null) {
+            // Llenar los campos de texto
+            txtDni.setText(usuarioCompleto[0].toString());
+            txtNombre.setText(usuarioCompleto[1].toString());
+            txtApellidoP.setText(usuarioCompleto[2].toString());
+            txtApellidoM.setText(usuarioCompleto[3].toString());
+            txtDireccion.setText(usuarioCompleto[4].toString());
+            txtTelefono.setText(usuarioCompleto[5].toString());
+            txtEmail.setText(usuarioCompleto[6].toString());
+            
+            // Hacer los campos de solo lectura
+            setCamposSoloLectura();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontraron los datos completos del usuario.", 
+                "Información", JOptionPane.INFORMATION_MESSAGE);
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar datos del usuario: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
+private void setCamposSoloLectura() {
+    txtDni.setEditable(false);
+    txtNombre.setEditable(false);
+    txtApellidoP.setEditable(false);
+    txtApellidoM.setEditable(false);
+    txtDireccion.setEditable(false);
+    txtTelefono.setEditable(false);
+    txtEmail.setEditable(false);
+}
+
+    // Método para cargar los lectores en la tabla
+// Método para cargar los lectores (actualizado)
+private void cargarLectores() {
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        
+        List<Object[]> lectores = lectorDAO.listarLector();
+        
+        if (lectores.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay usuarios lectores registrados.", 
+                "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Object[] lector : lectores) {
+                // Crear nueva fila con solo las 5 columnas visibles
+                Object[] filaMostrar = new Object[5];
+                filaMostrar[0] = lector[1]; // Nombre (posición 1 del array del DAO)
+                filaMostrar[1] = lector[2]; // Apellidos (posición 2)
+                filaMostrar[2] = lector[3]; // Email (posición 3) - ¡IMPORTANTE para la búsqueda!
+                filaMostrar[3] = lector[4]; // Fecha Creación (posición 4)
+                filaMostrar[4] = lector[5]; // Último Acceso (posición 5)
+                
+                model.addRow(filaMostrar);
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar usuarios: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+
+// Método para mostrar el total de usuarios
+private void mostrarTotalUsuarios() {
+    try {
+        List<Object[]> lectores = lectorDAO.listarLector();
+        int total = lectores.size();
+        jTextField9.setText(String.valueOf(total));
+    } catch (Exception e) {
+        jTextField9.setText("0");
+        System.err.println("Error al contar usuarios: " + e.getMessage());
+    }
+}
+
+// Método para buscar lectores (si quieres implementar el botón Buscar)
+private void buscarLectores() {
+    String criterio = jTextField7.getText().trim();
+    
+    if (criterio.isEmpty()) {
+        cargarLectores();
+        return;
+    }
+    
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+        model.setRowCount(0);
+        
+        List<Object[]> lectores = lectorDAO.buscarLectorPorDniEmailNombre(criterio);
+        
+        if (lectores.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "No se encontraron usuarios con: " + criterio, 
+                "Búsqueda", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Object[] lector : lectores) {
+                // Crear nueva fila solo con las columnas que quieres mostrar
+                Object[] filaMostrar = new Object[5];
+                filaMostrar[0] = lector[1]; // Nombre
+                filaMostrar[1] = lector[2]; // Apellidos
+                filaMostrar[2] = lector[3]; // Email
+                filaMostrar[3] = lector[4]; // Fecha Creación
+                filaMostrar[4] = lector[5]; // Último Acceso
+                
+                model.addRow(filaMostrar);
+            }
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+// Método para configurar las columnas de la tabla
+private void configurarTabla() {
+    DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+    model.setColumnIdentifiers(new String[]{
+        "Nombre", 
+        "Apellidos", 
+        "Email", 
+        "Fecha Creación", 
+        "Último Acceso"
+    });
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

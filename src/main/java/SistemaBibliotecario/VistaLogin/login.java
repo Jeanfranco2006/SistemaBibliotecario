@@ -190,14 +190,21 @@ public class login extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
+    
+    // ✅ ACTUALIZAR ÚLTIMO ACCESO - AGREGAR ESTO
+    boolean accesoActualizado = usuarioDAO.actualizarUltimoAcceso(dni);
+    if (!accesoActualizado) {
+        System.err.println("⚠️ No se pudo actualizar el último acceso, pero el login continúa");
+    }
+    
     // 🟢 Guardar usuario en sesión
-SesionActual.dni = txtDni.getText().trim();
-SesionActual.rol = usuario.getRol();
+    SesionActual.dni = txtDni.getText().trim();
+    SesionActual.rol = usuario.getRol();
 
-JOptionPane.showMessageDialog(this,
-    "Bienvenido " + usuario.getRol() + "!",
-    "Acceso concedido",
-    JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(this,
+        "Bienvenido " + usuario.getRol() + "!",
+        "Acceso concedido",
+        JOptionPane.INFORMATION_MESSAGE);
 
 
     // Redirigir según el rol del usuario
@@ -234,7 +241,7 @@ JOptionPane.showMessageDialog(this,
         return;
 }
 
-this.dispose(); // Cierra el login// Cierra el login
+this.dispose(); // Cierra el login // Cierra el login// Cierra el login
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
