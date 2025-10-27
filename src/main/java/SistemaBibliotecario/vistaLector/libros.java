@@ -129,13 +129,13 @@ public class libros extends javax.swing.JPanel {
                 btnLibrosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, 240, 80));
+        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
 
         btnMisPrestamos.setBackground(new java.awt.Color(0, 51, 102));
         btnMisPrestamos.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnMisPrestamos.setForeground(new java.awt.Color(255, 255, 255));
         btnMisPrestamos.setText("MIS PRESTAMOS");
-        jPanel2.add(btnMisPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
+        jPanel2.add(btnMisPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 240, 80));
 
         btnInicio.setBackground(new java.awt.Color(0, 51, 102));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -147,7 +147,7 @@ public class libros extends javax.swing.JPanel {
         btnHistorial.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnHistorial.setForeground(new java.awt.Color(255, 255, 255));
         btnHistorial.setText("HISTORIAL");
-        jPanel2.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
+        jPanel2.add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

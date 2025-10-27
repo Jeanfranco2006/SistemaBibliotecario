@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import SistemaBibliotecario.Conexion.ConexionMySQL;
+import SistemaBibliotecario.Modelos.Libro;
 
 public class LibroDAO {
     
@@ -167,6 +168,210 @@ public Object[] buscarLibroPorISBN(String isbn) {
     
     return null;
 }
+
+    public List<Libro> obtenerLibrosDisponibles() {
+    List<Libro> libros = new ArrayList<>();
+    String sql = "SELECT l.id_libro, l.isbn, l.titulo, l.stock, l.autor, " +
+                 "l.anio_publicacion, l.id_categoria, l.fecha_creacion, l.fecha_actualizacion " +
+                 "FROM libro l WHERE l.stock > 0 ORDER BY l.titulo";
+    
+    try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        
+        while (rs.next()) {
+            Libro libro = new Libro();
+            libro.setIdLibro(rs.getInt("id_libro"));
+            libro.setIsbn(rs.getString("isbn"));
+            libro.setTitulo(rs.getString("titulo"));
+            libro.setStock(rs.getInt("stock"));
+            libro.setAutor(rs.getString("autor"));
+            libro.setAnioPublicacion(rs.getInt("anio_publicacion"));
+            libro.setIdCategoria(rs.getInt("id_categoria"));
+            libro.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
+            libro.setFechaActualizacion(rs.getTimestamp("fecha_actualizacion"));
+            
+            libros.add(libro);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al obtener libros disponibles: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return libros;
+}
+
+public List<Object[]> obtenerLibrosDisponiblesConCategoria() {
+    List<Object[]> libros = new ArrayList<>();
+    String sql = "SELECT l.isbn, l.titulo, l.autor, l.stock, l.anio_publicacion, c.nombre as categoria " +
+                 "FROM libro l LEFT JOIN categoria c ON l.id_categoria = c.id_categoria " +
+                 "WHERE l.stock > 0 ORDER BY l.titulo";
+    
+    try (Connection conn = ConexionMySQL.getInstancia().getConexion();
+         PreparedStatement ps = conn.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        
+        while (rs.next()) {
+            Object[] fila = {
+                rs.getString("isbn"),
+                rs.getString("titulo"),
+                rs.getString("autor"),
+                rs.getInt("anio_publicacion"),
+                rs.getInt("stock"),
+                rs.getString("categoria")  // Nombre real de la categoría
+            };
+            libros.add(fila);
+        }
+    } catch (SQLException e) {
+        System.err.println("Error al obtener libros disponibles: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return libros;
+}
+
+
+public int contarLectoresActivos() {
+        int total = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexionMySQL.getInstancia().getConexion();
+
+            // Consulta: cuenta los usuarios con rol lector que tienen préstamos activos
+            String sql = """
+                SELECT COUNT(DISTINCT u.id_usuario) AS total
+                FROM usuario u
+                INNER JOIN prestamo p ON u.id_usuario = p.id_usuario
+                WHERE u.rol = 'lector' and u.ultimo_acceso is not null
+            """;
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al contar lectores activos: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+
+        return total;
+    }
+
+  // Método que devuelve el número de préstamos vigentes (activos o vencidos)
+    public int contarPrestamosVigentes() {
+        int total = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexionMySQL.getInstancia().getConexion();
+
+            // Consulta: cuenta los préstamos con estado activo o vencido
+            String sql = """
+                SELECT COUNT(*) AS total
+                FROM prestamo
+                WHERE estado IN ('activo', 'vencido')
+            """;
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al contar préstamos vigentes: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+
+        return total;
+    }
+
+  public int contarLibros() {
+        int total = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexionMySQL.getInstancia().getConexion();
+            String sql = "SELECT SUM(stock) AS total FROM libro"; // ✅ suma todas las existencias
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Error al contar libros: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+
+        return total;
+    }
+  
+    public int contarLibrosPorISBN() {
+        int total = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexionMySQL.getInstancia().getConexion();
+            String sql = "SELECT COUNT(DISTINCT isbn) AS total FROM libro";
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.err.println("❌ Error al contar libros por ISBN: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+
+        return total;
+    }
 
 
 }

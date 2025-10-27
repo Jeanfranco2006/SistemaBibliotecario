@@ -602,4 +602,43 @@ public List<Prestamo> buscarPrestamos(String criterio, String valor) {
     }
     return prestamos;
 }
+
+
+ public int contarPrestamosVigentes() {
+        int total = 0;
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexionMySQL.getInstancia().getConexion();
+
+            // Consulta: cuenta los préstamos con estado activo o vencido
+            String sql = """
+                SELECT COUNT(*) AS total
+                FROM prestamo
+                WHERE estado IN ('activo', 'vencido')
+            """;
+
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getInt("total");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("❌ Error al contar préstamos vigentes: " + e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+
+        return total;
+    }
 }

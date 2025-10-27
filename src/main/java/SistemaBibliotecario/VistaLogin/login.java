@@ -27,7 +27,7 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
-       
+       setLocationRelativeTo(this);
     }
     
 
@@ -75,8 +75,6 @@ public class login extends javax.swing.JFrame {
         txtDni.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
         txtDni.setForeground(new java.awt.Color(0, 51, 153));
 
-        txtContrasena.setText("jPasswordField1");
-
         btnIngresar.setBackground(new java.awt.Color(19, 38, 76));
         btnIngresar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
@@ -91,6 +89,11 @@ public class login extends javax.swing.JFrame {
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         btnRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrarse.setText("REGISTRARSE");
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarseActionPerformed(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo.jpeg"))); // NOI18N
 
@@ -221,7 +224,7 @@ public class login extends javax.swing.JFrame {
     case "bibliotecario": {
         JFrame frame = new JFrame("Bibliotecario");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.libros());
+        frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.inicio());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -243,6 +246,20 @@ public class login extends javax.swing.JFrame {
 
 this.dispose(); // Cierra el login // Cierra el login// Cierra el login
     }//GEN-LAST:event_btnIngresarActionPerformed
+
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
+    // Crear nueva ventana de registro
+    javax.swing.JFrame frame = new javax.swing.JFrame("Registro");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new Register()); // agrega el panel
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setVisible(true);
+
+    // Cierra la ventana actual usando el botón que disparó el evento
+    javax.swing.SwingUtilities.getWindowAncestor((java.awt.Component) evt.getSource()).dispose();
+}
+                                              
 
     /**
      * @param args the command line arguments

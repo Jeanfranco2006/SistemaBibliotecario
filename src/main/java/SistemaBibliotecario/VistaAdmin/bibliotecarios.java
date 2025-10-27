@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import SistemaBibliotecario.Conexion.ConexionMySQL;
 import SistemaBibliotecario.Dao.BibliotecarioDAO;
+import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.VistaLogin.login;
 
 /**
@@ -33,6 +34,12 @@ public class bibliotecarios extends javax.swing.JPanel {
         bibliotecarioDAO = new BibliotecarioDAO(); // Inicializar el DAO
         cargarBibliotecarios();
         mostrarTotalBibliotecarios();
+        
+        if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
+        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
+    } else {
+        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
+    }
     }
 
     /**
@@ -80,6 +87,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         btnReportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
+        lblNombreBibliotecario = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         lblTotalBibliotecarios = new javax.swing.JLabel();
 
@@ -241,7 +249,7 @@ public class bibliotecarios extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, 240, 80));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
 
         btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
         btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -252,7 +260,7 @@ public class bibliotecarios extends javax.swing.JPanel {
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 240, 80));
 
         btnInicio.setBackground(new java.awt.Color(0, 51, 102));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -274,7 +282,7 @@ public class bibliotecarios extends javax.swing.JPanel {
                 btnReportesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -289,6 +297,13 @@ public class bibliotecarios extends javax.swing.JPanel {
             }
         });
         jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
+
+        lblNombreBibliotecario.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        lblNombreBibliotecario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreBibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreBibliotecario.setText("                                ");
+        lblNombreBibliotecario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(lblNombreBibliotecario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 569, 240, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
@@ -715,6 +730,7 @@ private void mostrarTotalBibliotecarios() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblNombreBibliotecario;
     private javax.swing.JLabel lblTotalBibliotecarios;
     private javax.swing.JTable tblBibliotecarios;
     private javax.swing.JTextField txtApellidoM;

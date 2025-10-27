@@ -4,15 +4,26 @@
  */
 package SistemaBibliotecario.vistaBlibliotecario;
 
+import java.awt.BorderLayout;
 import java.util.List;
-
+import javax.swing.SwingUtilities;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import SistemaBibliotecario.Dao.LectorDAO;
+import SistemaBibliotecario.Dao.LibroDAO;
 import SistemaBibliotecario.Dao.PrestamoDAO;
+import SistemaBibliotecario.Modelos.Libro;
 import SistemaBibliotecario.Modelos.Prestamo;
 import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.VistaLogin.login;
+import java.awt.Frame;
 
 /**
  *
@@ -26,6 +37,12 @@ public class prestamos extends javax.swing.JPanel {
     public prestamos() {
         initComponents();
         mostrarTablaPrestamos();
+        
+        if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
+        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
+    } else {
+        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
+    }
     }
 
     /**
@@ -47,6 +64,7 @@ public class prestamos extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
         btnLibros = new javax.swing.JButton();
+        lblNombreBibliotecario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -79,7 +97,7 @@ public class prestamos extends javax.swing.JPanel {
                 btnPrestamosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 240, 80));
+        jPanel2.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
         btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -90,12 +108,17 @@ public class prestamos extends javax.swing.JPanel {
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 240, 80));
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
 
         btnInicio.setBackground(new java.awt.Color(0, 51, 102));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("INICIO");
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicioActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
 
         btnReportes.setBackground(new java.awt.Color(0, 51, 102));
@@ -107,7 +130,7 @@ public class prestamos extends javax.swing.JPanel {
                 btnReportesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 240, 80));
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,7 +155,14 @@ public class prestamos extends javax.swing.JPanel {
                 btnLibrosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 240, 80));
+        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 240, 80));
+
+        lblNombreBibliotecario.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        lblNombreBibliotecario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreBibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreBibliotecario.setText("                                ");
+        lblNombreBibliotecario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(lblNombreBibliotecario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 569, 240, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
@@ -297,20 +327,91 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnRegistrarNPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarNPrestamoActionPerformed
-     String dniBibliotecario = SesionActual.dni;
+       String dniBibliotecario = SesionActual.dni;
     String dniUsuario = JOptionPane.showInputDialog(this, "Ingrese el DNI del lector:");
-    String isbnLibro = JOptionPane.showInputDialog(this, "Ingrese el ISBN del libro:");
-
-    if (dniUsuario == null || isbnLibro == null || dniUsuario.trim().isEmpty() || isbnLibro.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Operación cancelada o datos vacíos.");
+    
+    if (dniUsuario == null || dniUsuario.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Operación cancelada o DNI vacío.");
         return;
     }
 
+    // SOLUCIÓN PARA JPanel - obtener la ventana padre
+    java.awt.Window parentWindow = javax.swing.SwingUtilities.getWindowAncestor(this);
+    JDialog dialog = new JDialog((Frame) parentWindow, "Seleccionar Libro", true);
+    dialog.setLayout(new BorderLayout());
+    dialog.setSize(700, 400);
+    dialog.setLocationRelativeTo(parentWindow); // Usar parentWindow aquí también
+
+    // Modelo de tabla
+    String[] columnNames = {"ISBN", "Título", "Autor", "Año", "Stock", "Categoría"};
+    DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    JTable table = new JTable(model);
+    table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    JScrollPane scrollPane = new JScrollPane(table);
+    
+    // Botones
+    JPanel panelBotones = new JPanel();
+    JButton btnSeleccionar = new JButton("Seleccionar");
+    JButton btnCancelar = new JButton("Cancelar");
+    panelBotones.add(btnSeleccionar);
+    panelBotones.add(btnCancelar);
+
+    dialog.add(scrollPane, BorderLayout.CENTER);
+    dialog.add(panelBotones, BorderLayout.SOUTH);
+
+    // Cargar libros
+    cargarLibrosDisponibles(model);
+
+    final String[] isbnSeleccionado = new String[1];
+
+    btnSeleccionar.addActionListener(e -> {
+        int filaSeleccionada = table.getSelectedRow();
+        if (filaSeleccionada == -1) {
+            JOptionPane.showMessageDialog(dialog, "Por favor, seleccione un libro.");
+            return;
+        }
+        isbnSeleccionado[0] = model.getValueAt(filaSeleccionada, 0).toString();
+        dialog.dispose();
+    });
+
+    btnCancelar.addActionListener(e -> {
+        isbnSeleccionado[0] = null;
+        dialog.dispose();
+    });
+
+    // Doble clic
+    table.addMouseListener(new java.awt.event.MouseAdapter() {
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (evt.getClickCount() == 2) {
+                int row = table.rowAtPoint(evt.getPoint());
+                if (row >= 0) {
+                    isbnSeleccionado[0] = model.getValueAt(row, 0).toString();
+                    dialog.dispose();
+                }
+            }
+        }
+    });
+
+    dialog.setVisible(true);
+
+    if (isbnSeleccionado[0] == null) {
+        JOptionPane.showMessageDialog(this, "Operación cancelada.");
+        return;
+    }
+
+    // Registrar préstamo
     PrestamoDAO prestamoDAO = new PrestamoDAO();
-    boolean exito = prestamoDAO.registrarPrestamo(dniUsuario, isbnLibro, dniBibliotecario);
+    boolean exito = prestamoDAO.registrarPrestamo(dniUsuario, isbnSeleccionado[0], dniBibliotecario);
 
     if (exito) {
-        mostrarTablaPrestamos(); // ← Esto ahora mostrará solo los préstamos del bibliotecario actual
+        mostrarTablaPrestamos();
         JOptionPane.showMessageDialog(this, "✅ Préstamo registrado correctamente.");
     } else {
         JOptionPane.showMessageDialog(this, "❌ No se pudo registrar el préstamo.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -406,6 +507,42 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
         
     }//GEN-LAST:event_btnRegistrarDevolucionActionPerformed
 
+  private void cargarLibrosDisponibles(DefaultTableModel model) {
+    try {
+        LibroDAO libroDAO = new LibroDAO();
+        java.util.List<Object[]> librosDisponibles = libroDAO.obtenerLibrosDisponiblesConCategoria();
+        
+        // Limpiar la tabla
+        model.setRowCount(0);
+        
+        // Llenar la tabla directamente con los arrays de objetos
+        for (Object[] libro : librosDisponibles) {
+            model.addRow(libro);
+        }
+        
+        if (librosDisponibles.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No hay libros disponibles en este momento.");
+        }
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar los libros: " + e.getMessage(), 
+                                    "Error", JOptionPane.ERROR_MESSAGE);
+        e.printStackTrace();
+    }
+}
+
+private String obtenerNombreCategoria(int idCategoria) {
+    // Implementar esta método según tu base de datos
+    // Ejemplo simple - deberías adaptarlo a tu sistema
+    try {
+        String sql = "SELECT nombre FROM categorias WHERE id_categoria = ?";
+        // Aquí tu código para ejecutar la consulta y obtener el nombre
+        return "Categoría " + idCategoria; // Placeholder
+    } catch (Exception e) {
+        return "Desconocida";
+    }
+}
+
     private void btnVerTodosLosPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerTodosLosPrestamosActionPerformed
     mostrarTodosLosPrestamos();
 
@@ -433,6 +570,18 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
     // Cerrar la ventana actual
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose(); // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+         javax.swing.JFrame frame = new javax.swing.JFrame("ventana de inicio");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.inicio()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose(); // TODO add your handling code here:
+    }//GEN-LAST:event_btnInicioActionPerformed
 
     public void mostrarTablaPrestamos() {
     try {
@@ -488,6 +637,8 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
         System.out.println("=================================");
     }
 }
+
+
 
 // Método auxiliar para obtener el ID del préstamo desde la fila seleccionada
 private int obtenerIdPrestamoDesdeFila(int filaSeleccionada) {
@@ -611,6 +762,7 @@ private void cargarPrestamosEnTabla(List<Prestamo> listaPrestamos, String titulo
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblNombreBibliotecario;
     private javax.swing.JTable tblPrestamosActuales;
     private javax.swing.JTextField txtBuscarPrestamos;
     // End of variables declaration//GEN-END:variables

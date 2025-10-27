@@ -9,8 +9,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import SistemaBibliotecario.Dao.LectorDAO;
 import SistemaBibliotecario.Dao.LibroDAO;
 import SistemaBibliotecario.Modelos.Categoria;
+import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.VistaLogin.login;
 
 /**
@@ -28,6 +30,13 @@ private LibroDAO libroDAO;
         cargarCategorias();
     cargarLibros();
     agregarListenerTabla();
+    actualizarEstadisticas();
+if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
+        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
+    } else {
+        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
+    }
+
     }
 
     /**
@@ -49,6 +58,7 @@ private LibroDAO libroDAO;
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
+        lblNombreBibliotecario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -61,19 +71,21 @@ private LibroDAO libroDAO;
         jLabel17 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtStock = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
         txtAutor = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txtAñoPublicacion = new javax.swing.JTextField();
         cbxCategoria = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
         btnCategoria = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        jbltotalLibros = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("GESTION DE BIBLIOTECARIOS");
@@ -93,7 +105,7 @@ private LibroDAO libroDAO;
                 btnPrestamosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 240, 80));
+        jPanel2.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         btnLibros.setBackground(new java.awt.Color(0, 0, 0));
         btnLibros.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -104,13 +116,18 @@ private LibroDAO libroDAO;
                 btnLibrosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 240, 80));
+        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 240, 80));
 
         btnInicio.setBackground(new java.awt.Color(0, 51, 102));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("INICIO");
-        jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicioActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 240, 80));
 
         btnReportes.setBackground(new java.awt.Color(0, 51, 102));
         btnReportes.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -121,7 +138,7 @@ private LibroDAO libroDAO;
                 btnReportesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 240, 80));
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -146,7 +163,14 @@ private LibroDAO libroDAO;
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 240, 80));
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
+
+        lblNombreBibliotecario.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        lblNombreBibliotecario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreBibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreBibliotecario.setText("                                ");
+        lblNombreBibliotecario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(lblNombreBibliotecario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 569, 240, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
@@ -220,10 +244,6 @@ private LibroDAO libroDAO;
         jLabel8.setText("Año de publicacion");
         jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, -1, -1));
         jPanel5.add(txtStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 160, -1));
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel12.setText("Categoria");
-        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
         jPanel5.add(txtAutor, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 160, -1));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -237,6 +257,10 @@ private LibroDAO libroDAO;
         jPanel5.add(txtAñoPublicacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 70, -1));
 
         jPanel5.add(cbxCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 140, -1));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel13.setText("Categoria");
+        jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 510, 120));
 
@@ -305,6 +329,14 @@ private LibroDAO libroDAO;
             }
         });
         jPanel1.add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 190, -1, -1));
+
+        jbltotalLibros.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jbltotalLibros.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.add(jbltotalLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 260, 70, 20));
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel14.setText("TOTAL DE INVENTARIO");
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 260, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -581,6 +613,18 @@ limpiarCampos();    }//GEN-LAST:event_btnLimpiarActionPerformed
         javax.swing.SwingUtilities.getWindowAncestor(this).dispose(); // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+       javax.swing.JFrame frame = new javax.swing.JFrame("ventana de inicio");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.inicio()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
+    }//GEN-LAST:event_btnInicioActionPerformed
+
     private void cargarCategorias() {
         try {
             cbxCategoria.removeAllItems();
@@ -690,6 +734,13 @@ private void tblLibrosMouseClicked(java.awt.event.MouseEvent evt) {
     });
 }
 
+// En el método donde inicializas o actualizas el dashboard
+public void actualizarEstadisticas() {
+    LibroDAO lectorDAO = new LibroDAO();
+    int totalEjemplares = lectorDAO.contarLibros();
+    jbltotalLibros.setText(String.valueOf(totalEjemplares));
+}
+
 private void buscarAnioPublicacion(String isbn) {
     Object[] libro = libroDAO.buscarLibroPorISBN(isbn);
     if (libro != null && libro.length > 4) {
@@ -718,7 +769,8 @@ private void buscarAnioPublicacion(String isbn) {
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JComboBox<Categoria> cbxCategoria;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -733,6 +785,8 @@ private void buscarAnioPublicacion(String isbn) {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel jbltotalLibros;
+    private javax.swing.JLabel lblNombreBibliotecario;
     private javax.swing.JTable tblLibros;
     private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtAñoPublicacion;

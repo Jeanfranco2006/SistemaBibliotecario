@@ -7,6 +7,7 @@ package SistemaBibliotecario.vistaBlibliotecario;
 import SistemaBibliotecario.Conexion.ConexionMySQL;
 import SistemaBibliotecario.Dao.BibliotecarioDAO;
 import SistemaBibliotecario.Dao.LectorDAO;
+import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.VistaLogin.login;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,6 +33,12 @@ private LectorDAO lectorDAO;
         lectorDAO = new LectorDAO();
          cargarLectores(); // ✅ Cargar datos al iniciar
         mostrarTotalLector(); 
+        
+        if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
+        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
+    } else {
+        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
+    }
     }
 
     /**
@@ -53,6 +60,7 @@ private LectorDAO lectorDAO;
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
         btnLibros = new javax.swing.JButton();
+        lblNombreBibliotecario = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -102,7 +110,7 @@ private LectorDAO lectorDAO;
                 btnPrestamosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 240, 80));
+        jPanel2.add(btnPrestamos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         btnUsuarios.setBackground(new java.awt.Color(0, 0, 0));
         btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -113,12 +121,17 @@ private LectorDAO lectorDAO;
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 240, 80));
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
 
         btnInicio.setBackground(new java.awt.Color(0, 51, 102));
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("INICIO");
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInicioActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
 
         btnReportes.setBackground(new java.awt.Color(0, 51, 102));
@@ -130,7 +143,7 @@ private LectorDAO lectorDAO;
                 btnReportesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 240, 80));
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -155,7 +168,14 @@ private LectorDAO lectorDAO;
                 btnLibrosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 240, 80));
+        jPanel2.add(btnLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 240, 80));
+
+        lblNombreBibliotecario.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        lblNombreBibliotecario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreBibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreBibliotecario.setText("                                ");
+        lblNombreBibliotecario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(lblNombreBibliotecario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 569, 240, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
@@ -222,7 +242,12 @@ private LectorDAO lectorDAO;
         btnBuscar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 240, -1, -1));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 240, -1, -1));
 
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -484,16 +509,125 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
     }//GEN-LAST:event_tblUsuariosMouseClicked
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
+String dniOriginal = txtDni.getText().trim();
+    String nombre = txtNombre.getText().trim();
+    String apellidoP = txtApellidoP.getText().trim();
+    String apellidoM = txtApellidoM.getText().trim();
+    String direccion = txtDireccion.getText().trim();
+    String telefono = txtTelefono.getText().trim();
+    String email = txtEmail.getText().trim();
+
+    // Validar campos obligatorios
+    if (dniOriginal.isEmpty() || nombre.isEmpty() || apellidoP.isEmpty() || 
+        apellidoM.isEmpty() || direccion.isEmpty() || telefono.isEmpty() || email.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", 
+            "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Confirmar actualización
+    int confirmacion = JOptionPane.showConfirmDialog(this,
+        "¿Está seguro de que desea actualizar los datos del lector?",
+        "Confirmar Actualización", JOptionPane.YES_NO_OPTION);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        boolean exito = lectorDAO.actualizarLector(dniOriginal, dniOriginal, nombre, 
+            apellidoP, apellidoM, direccion, telefono, email);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "✅ Lector actualizado correctamente.");
+            cargarLectores(); // Refrescar tabla
+            limpiarCampos(); // Limpiar formulario
+        } else {
+            JOptionPane.showMessageDialog(this, "❌ Error al actualizar el lector.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+String dni = txtDni.getText().trim();
+    
+    if (dni.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Seleccione un lector de la tabla para eliminar.", 
+            "Advertencia", JOptionPane.WARNING_MESSAGE);
+        return;
+    }
+
+    // Confirmar eliminación
+    int confirmacion = JOptionPane.showConfirmDialog(this,
+        "¿Está seguro de que desea eliminar al lector con DNI: " + dni + "?\n" +
+        "Esta acción no se puede deshacer.",
+        "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+    if (confirmacion == JOptionPane.YES_OPTION) {
+        boolean exito = lectorDAO.eliminarLector(dni);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "✅ Lector eliminado correctamente.");
+            cargarLectores(); // Refrescar tabla
+            mostrarTotalLector(); // Actualizar contador
+            limpiarCampos(); // Limpiar formulario
+        } else {
+            JOptionPane.showMessageDialog(this, "❌ Error al eliminar el lector.", 
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        // TODO add your handling code here:
+
+    limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+ String criterio = jTextField7.getText().trim();
+    
+    if (criterio.isEmpty()) {
+        cargarLectores(); // Si está vacío, cargar todos
+        return;
+    }
+
+    try {
+        DefaultTableModel model = (DefaultTableModel) tblUsuarios.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        
+        List<Object[]> lectores = lectorDAO.buscarLectorPorDniEmailNombre(criterio);
+        
+        if (lectores.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron lectores con ese criterio.", 
+                "Información", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (Object[] lector : lectores) {
+                Object[] filaMostrar = new Object[5];
+                filaMostrar[0] = lector[1]; // Nombre
+                filaMostrar[1] = lector[2]; // Apellidos
+                filaMostrar[2] = lector[3]; // Email
+                filaMostrar[3] = lector[4]; // Fecha Creación
+                filaMostrar[4] = lector[5]; // Último Acceso
+                model.addRow(filaMostrar);
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al buscar lectores: " + e.getMessage(), 
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
+        javax.swing.JFrame frame = new javax.swing.JFrame("ventana de inicio");
+    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.inicio()); // agrega el panel
+    frame.pack(); // ajusta al tamaño preferido
+    frame.setLocationRelativeTo(null); // centra la ventana
+    frame.setVisible(true); // muestra la nueva ventana
+
+    // Cierra la ventana actual
+    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();  // TODO add your handling code here:
+    }//GEN-LAST:event_btnInicioActionPerformed
 
     
     private void buscarDatosCompletosPorEmail(String email) {
@@ -612,6 +746,7 @@ private void cargarLectores() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblNombreBibliotecario;
     private javax.swing.JLabel lblTotalLectores;
     private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtApellidoM;

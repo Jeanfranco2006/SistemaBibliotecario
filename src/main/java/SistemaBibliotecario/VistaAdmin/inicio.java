@@ -4,6 +4,8 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
+import SistemaBibliotecario.Dao.LibroDAO;
+import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.VistaLogin.login;
 
 /**
@@ -17,6 +19,14 @@ public class inicio extends javax.swing.JPanel {
      */
     public inicio() {
         initComponents();
+        mostrarLibrosRegistrados();
+        mostrarLectoresActivos();
+        mostrarPrestamosVigentes();
+        if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
+        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
+    } else {
+        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
+    }
     }
 
     /**
@@ -34,13 +44,13 @@ public class inicio extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        lblLibrosRegistrados = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        lblUsuariosActivos = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        lblPrestamosVigentes = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -58,6 +68,7 @@ public class inicio extends javax.swing.JPanel {
         btnReportes = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        lblNombreBibliotecario = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -82,9 +93,10 @@ public class inicio extends javax.swing.JPanel {
         jLabel5.setText("Libros Registrados");
         jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 7, -1, -1));
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
-        jLabel12.setText("1250");
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 55, -1, -1));
+        lblLibrosRegistrados.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
+        lblLibrosRegistrados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLibrosRegistrados.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel4.add(lblLibrosRegistrados, new org.netbeans.lib.awtextra.AbsoluteConstraints(62, 55, 120, 60));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 250, 140));
 
@@ -95,9 +107,10 @@ public class inicio extends javax.swing.JPanel {
         jLabel9.setText("Usuarios Activos");
         jPanel5.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 7, -1, -1));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
-        jLabel13.setText("1250");
-        jPanel5.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 61, -1, -1));
+        lblUsuariosActivos.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
+        lblUsuariosActivos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblUsuariosActivos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel5.add(lblUsuariosActivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 120, 60));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 130, 250, 140));
 
@@ -108,9 +121,10 @@ public class inicio extends javax.swing.JPanel {
         jLabel10.setText("Prestamos Vigentes");
         jPanel6.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 7, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
-        jLabel11.setText("1250");
-        jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(73, 55, -1, -1));
+        lblPrestamosVigentes.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
+        lblPrestamosVigentes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblPrestamosVigentes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel6.add(lblPrestamosVigentes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 120, 60));
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 130, 240, 140));
 
@@ -135,7 +149,7 @@ public class inicio extends javax.swing.JPanel {
         jLabel15.setText("1. Esto es la ventana de inicio donde se muestra el seguimiento diario de los libros, usuarios y prestamos");
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel16.setText("2. En la ventana Bibliotecarios se gestiona a los usuarios bibliotecarios para que puedan crear nuevos  ");
+        jLabel16.setText("2. En la ventana Administrador donde se gestiona a los bibliotecarios para que puedan crear nuevos  ");
 
         jLabel17.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel17.setText("4. En la ventana de Reportes se realiza reportes de libros, prestamos realizados y usuarios creados ");
@@ -144,7 +158,7 @@ public class inicio extends javax.swing.JPanel {
         jLabel18.setText("3. En la ventana Usuarios se visualiza a los usuarios creados por los bibliotecarios");
 
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel19.setText("nuevos libros e incluso generación de reportes");
+        jLabel19.setText("nuevos libros e incluso los lectores, generando reporte de prestamos");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -195,7 +209,7 @@ public class inicio extends javax.swing.JPanel {
                 btnBibliotecariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnBibliotecarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 185, 240, 80));
+        jPanel2.add(btnBibliotecarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
 
         btnUsuarios.setBackground(new java.awt.Color(0, 51, 102));
         btnUsuarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -206,7 +220,7 @@ public class inicio extends javax.swing.JPanel {
                 btnUsuariosActionPerformed(evt);
             }
         });
-        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 271, 240, 80));
+        jPanel2.add(btnUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, 240, 80));
 
         jButton3.setBackground(new java.awt.Color(0, 0, 0));
         jButton3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -223,7 +237,7 @@ public class inicio extends javax.swing.JPanel {
                 btnReportesActionPerformed(evt);
             }
         });
-        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 357, 240, 80));
+        jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -238,6 +252,13 @@ public class inicio extends javax.swing.JPanel {
             }
         });
         jPanel2.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
+
+        lblNombreBibliotecario.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
+        lblNombreBibliotecario.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreBibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreBibliotecario.setText("                                ");
+        lblNombreBibliotecario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.add(lblNombreBibliotecario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 569, 240, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
 
@@ -303,7 +324,23 @@ public class inicio extends javax.swing.JPanel {
     javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
+//MOSTRAR EN EL INICIO LA CANTIDAD DE LIBROS, USUARIOS Y PRESTAMOS
 
+    private void mostrarLibrosRegistrados() {
+     LibroDAO adminRoleDAO = new LibroDAO();
+    int totalLibros = adminRoleDAO.contarLibrosPorISBN();
+    lblLibrosRegistrados.setText(String.valueOf(totalLibros));
+}
+    private void mostrarLectoresActivos() {
+    LibroDAO adminRoleDAOLectores = new LibroDAO();
+    int totalLectoresActivos = adminRoleDAOLectores.contarLectoresActivos();
+    lblUsuariosActivos.setText(String.valueOf(totalLectoresActivos));
+}
+    private void mostrarPrestamosVigentes() {
+    LibroDAO dao = new LibroDAO();
+    int prestamosVigentes = dao.contarPrestamosVigentes();
+    lblPrestamosVigentes.setText(String.valueOf(prestamosVigentes));
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBibliotecarios;
     private javax.swing.JButton btnReportes;
@@ -312,9 +349,6 @@ public class inicio extends javax.swing.JPanel {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
@@ -335,6 +369,10 @@ public class inicio extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JLabel lblLibrosRegistrados;
+    private javax.swing.JLabel lblNombreBibliotecario;
+    private javax.swing.JLabel lblPrestamosVigentes;
+    private javax.swing.JLabel lblUsuariosActivos;
     // End of variables declaration//GEN-END:variables
 
  
