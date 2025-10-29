@@ -12,11 +12,13 @@ public class Libro {
     private int idCategoria;
     private Timestamp fechaCreacion;
     private Timestamp fechaActualizacion;
+    private int disponibles;
 
-    public Libro() {}
+    public Libro() {
+    }
 
     public Libro(int idLibro, String isbn, String titulo, int stock, String autor,
-                 int anioPublicacion, int idCategoria, Timestamp fechaCreacion, Timestamp fechaActualizacion) {
+            int anioPublicacion, int idCategoria, Timestamp fechaCreacion, Timestamp fechaActualizacion) {
         this.idLibro = idLibro;
         this.isbn = isbn;
         this.titulo = titulo;
@@ -29,30 +31,83 @@ public class Libro {
     }
 
     // Getters y setters
-    public int getIdLibro() { return idLibro; }
-    public void setIdLibro(int idLibro) { this.idLibro = idLibro; }
+    public int getIdLibro() {
+        return idLibro;
+    }
 
-    public String getIsbn() { return isbn; }
-    public void setIsbn(String isbn) { this.isbn = isbn; }
+    public void setIdLibro(int idLibro) {
+        this.idLibro = idLibro;
+    }
 
-    public String getTitulo() { return titulo; }
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public String getIsbn() {
+        return isbn;
+    }
 
-    public int getStock() { return stock; }
-    public void setStock(int stock) { this.stock = stock; }
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
-    public String getAutor() { return autor; }
-    public void setAutor(String autor) { this.autor = autor; }
+    public String getTitulo() {
+        return titulo;
+    }
 
-    public int getAnioPublicacion() { return anioPublicacion; }
-    public void setAnioPublicacion(int anioPublicacion) { this.anioPublicacion = anioPublicacion; }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-    public int getIdCategoria() { return idCategoria; }
-    public void setIdCategoria(int idCategoria) { this.idCategoria = idCategoria; }
+    public int getStock() {
+        return stock;
+    }
 
-    public Timestamp getFechaCreacion() { return fechaCreacion; }
-    public void setFechaCreacion(Timestamp fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
 
-    public Timestamp getFechaActualizacion() { return fechaActualizacion; }
-    public void setFechaActualizacion(Timestamp fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
+    public String getAutor() {
+        return autor;
+    }
+
+    public void setAutor(String autor) {
+        this.autor = autor;
+    }
+
+    public int getAnioPublicacion() {
+        return anioPublicacion;
+    }
+
+    public void setAnioPublicacion(int anioPublicacion) {
+        this.anioPublicacion = anioPublicacion;
+    }
+
+    public int getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(int idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public Timestamp getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Timestamp fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public Timestamp getFechaActualizacion() {
+        return fechaActualizacion;
+    }
+
+    public void setFechaActualizacion(Timestamp fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
+    }
+
+    public int getDisponibles() {
+        return disponibles;
+    }
+
+    public void setDisponibles(int disponibles) {
+        this.disponibles = disponibles;
+    }
 }

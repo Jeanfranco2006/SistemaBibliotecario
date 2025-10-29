@@ -233,7 +233,7 @@ public class login extends javax.swing.JFrame {
     case "lector": {
         JFrame frame = new JFrame("Lector");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new SistemaBibliotecario.vistaLector.inicio());
+        frame.setContentPane(new SistemaBibliotecario.vistaLector.InicioPanel());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
