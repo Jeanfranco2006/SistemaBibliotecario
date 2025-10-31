@@ -1,4 +1,4 @@
-package SistemaBibliotecario.Controladores;
+package SistemaBibliotecario.ControladorAdmin;
 
 import SistemaBibliotecario.Dao.LectorDAO;
 import SistemaBibliotecario.Modelos.SesionActual;

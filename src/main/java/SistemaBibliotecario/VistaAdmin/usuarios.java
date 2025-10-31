@@ -4,7 +4,7 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
-import SistemaBibliotecario.Controladores.UsuariosController;
+import SistemaBibliotecario.ControladorAdmin.UsuariosController;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;

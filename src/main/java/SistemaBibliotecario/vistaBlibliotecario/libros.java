@@ -4,39 +4,23 @@
  */
 package SistemaBibliotecario.vistaBlibliotecario;
 
-import java.util.List;
-
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-import SistemaBibliotecario.Dao.LectorDAO;
-import SistemaBibliotecario.Dao.LibroDAO;
+import SistemaBibliotecario.ControladorBilbliotecario.LibrosController;
 import SistemaBibliotecario.Modelos.Categoria;
-import SistemaBibliotecario.Modelos.SesionActual;
-import SistemaBibliotecario.VistaLogin.login;
 
 /**
  *
  * @author User
  */
 public class libros extends javax.swing.JPanel {
-private LibroDAO libroDAO;
+
+    private LibrosController controller;
+
     /**
      * Creates new form usuarios
      */
     public libros() {
         initComponents();
-        libroDAO = new LibroDAO();
-        cargarCategorias();
-    cargarLibros();
-    agregarListenerTabla();
-    actualizarEstadisticas();
-if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
-        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
-    } else {
-        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
-    }
-
+        controller = new LibrosController(this);
     }
 
     /**
@@ -210,9 +194,6 @@ if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblLibrosMouseClicked(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                tblLibrosMouseExited(evt);
-            }
         });
         jScrollPane1.setViewportView(tblLibros);
         if (tblLibros.getColumnModel().getColumnCount() > 0) {
@@ -351,27 +332,11 @@ if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPrestamosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrestamosActionPerformed
-javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Prestamos");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.prestamos()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
+        controller.navegarAPrestamos();
     }//GEN-LAST:event_btnPrestamosActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
-javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Usuarios");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.usuarios()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
+        controller.navegarAUsuarios();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLibrosActionPerformed
@@ -383,376 +348,86 @@ javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Usuarios");
     }//GEN-LAST:event_jTextField7ActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.reportes()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
+        controller.navegarAReportes();
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-// Diálogo para crear nueva categoría
-        String nombreCategoria = JOptionPane.showInputDialog(this, 
-            "Ingrese el nombre de la nueva categoría:",
-            "Crear Nueva Categoría",
-            JOptionPane.QUESTION_MESSAGE);
-        
-        if (nombreCategoria != null && !nombreCategoria.trim().isEmpty()) {
-            nombreCategoria = nombreCategoria.trim();
-            
-            if (libroDAO.agregarCategoria(nombreCategoria)) {
-                JOptionPane.showMessageDialog(this, "✅ Categoría '" + nombreCategoria + "' creada correctamente.");
-                cargarCategorias(); // Recargar las categorías
-            } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al crear la categoría.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } else if (nombreCategoria != null) {
-            JOptionPane.showMessageDialog(this, "El nombre de la categoría no puede estar vacío.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-
+        controller.crearCategoria();
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
-    private boolean agregarCategoria(String nombreCategoria) {
-    // Implementa este método en tu LibroDAO
-    return libroDAO.agregarCategoria(nombreCategoria);
-}
-
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String isbn = txtIsbn.getText().trim();
-        String titulo = txtTitulo.getText().trim();
-        String autor = txtAutor.getText().trim();
-        String stockStr = txtStock.getText().trim();
-        String anioStr = txtAñoPublicacion.getText().trim();
-        
-        // Validar campos vacíos
-        if (isbn.isEmpty() || titulo.isEmpty() || autor.isEmpty() || stockStr.isEmpty() || anioStr.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Validar que se haya seleccionado una categoría
-        if (cbxCategoria.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione una categoría.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        try {
-            int stock = Integer.parseInt(stockStr);
-            int anioPublicacion = Integer.parseInt(anioStr);
-            
-            // Validar año
-            if (anioPublicacion < 1000 || anioPublicacion > 2024) {
-                JOptionPane.showMessageDialog(this, "Por favor, ingrese un año válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Validar stock
-            if (stock < 0) {
-                JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // ✅ Obtener categoría seleccionada usando tu clase Categoria
-            Categoria categoriaSeleccionada = (Categoria) cbxCategoria.getSelectedItem();
-            int idCategoria = categoriaSeleccionada.getIdCategoria();
-            
-            // Agregar libro
-            if (libroDAO.agregarLibro(isbn, titulo, stock, autor, anioPublicacion, idCategoria)) {
-                JOptionPane.showMessageDialog(this, "✅ Libro agregado correctamente.");
-                limpiarCampos();
-                cargarLibros();
-            } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al agregar el libro.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Stock y Año deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        controller.agregarLibro();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-      String isbn = txtIsbn.getText().trim();
-    String titulo = txtTitulo.getText().trim();
-    String autor = txtAutor.getText().trim();
-    String stockStr = txtStock.getText().trim();
-    String anioStr = txtAñoPublicacion.getText().trim();
-    
-    // Validar que haya un libro seleccionado
-    if (isbn.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No hay libro seleccionado para actualizar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    // Validar campos vacíos
-    if (titulo.isEmpty() || autor.isEmpty() || stockStr.isEmpty() || anioStr.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    // Validar que se haya seleccionado una categoría
-    if (cbxCategoria.getSelectedItem() == null) {
-        JOptionPane.showMessageDialog(this, "Por favor, seleccione una categoría.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    try {
-        int stock = Integer.parseInt(stockStr);
-        int anioPublicacion = Integer.parseInt(anioStr);
-        
-        // Validar año
-        if (anioPublicacion < 1000 || anioPublicacion > 2024) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese un año válido.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Validar stock
-        if (stock < 0) {
-            JOptionPane.showMessageDialog(this, "El stock no puede ser negativo.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        // Obtener categoría seleccionada
-        Categoria categoriaSeleccionada = (Categoria) cbxCategoria.getSelectedItem();
-        int idCategoria = categoriaSeleccionada.getIdCategoria();
-        
-        // Actualizar libro
-        if (libroDAO.actualizarLibro(isbn, titulo, stock, autor, anioPublicacion, idCategoria)) {
-            JOptionPane.showMessageDialog(this, "✅ Libro actualizado correctamente.");
-            limpiarCampos();
-            cargarLibros();
-        } else {
-            JOptionPane.showMessageDialog(this, "❌ Error al actualizar el libro.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Stock y Año deben ser números válidos.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-        
+        controller.actualizarLibro();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-String isbn = txtIsbn.getText().trim();
-    
-    if (isbn.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "No hay libro seleccionado para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    int confirm = JOptionPane.showConfirmDialog(this, 
-        "¿Está seguro de eliminar el libro con ISBN: " + isbn + "?", 
-        "Confirmar Eliminación", 
-        JOptionPane.YES_NO_OPTION);
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        if (libroDAO.eliminarLibro(isbn)) {
-            JOptionPane.showMessageDialog(this, "✅ Libro eliminado correctamente.");
-            limpiarCampos();
-            cargarLibros();
-        } else {
-            JOptionPane.showMessageDialog(this, "❌ Error al eliminar el libro.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }    }//GEN-LAST:event_btnEliminarActionPerformed
+        controller.eliminarLibro();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-String isbn = jTextField7.getText().trim();
-    
-    if (isbn.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese un ISBN para buscar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-    
-    Object[] libro = libroDAO.buscarLibroPorISBN(isbn);
-    
-    if (libro != null) {
-        // Llenar los campos con los datos del libro encontrado
-        txtIsbn.setText((String) libro[0]);
-        txtTitulo.setText((String) libro[1]);
-        txtAutor.setText((String) libro[2]);
-        txtStock.setText(String.valueOf(libro[3]));
-        txtAñoPublicacion.setText(String.valueOf(libro[4]));
-        
-        // Seleccionar la categoría correcta en el combobox
-        int idCategoria = (Integer) libro[5];
-        boolean categoriaEncontrada = false;
-        
-        for (int i = 0; i < cbxCategoria.getItemCount(); i++) {
-            Categoria item = cbxCategoria.getItemAt(i);
-            if (item.getIdCategoria() == idCategoria) {
-                cbxCategoria.setSelectedIndex(i);
-                categoriaEncontrada = true;
-                break;
-            }
-        }
-        
-        if (!categoriaEncontrada) {
-            JOptionPane.showMessageDialog(this, "⚠️ Categoría no encontrada en la lista.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        }
-        
-        JOptionPane.showMessageDialog(this, "✅ Libro encontrado.");
-    } else {
-        JOptionPane.showMessageDialog(this, "❌ No se encontró un libro con ese ISBN.", "Error", JOptionPane.ERROR_MESSAGE);
-    }    }//GEN-LAST:event_btnBuscarActionPerformed
+        controller.buscarLibro();
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-limpiarCampos();    }//GEN-LAST:event_btnLimpiarActionPerformed
+        controller.limpiarCampos();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
-    private void tblLibrosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLibrosMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tblLibrosMouseExited
+    private void tblLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLibrosMouseClicked
+        controller.cargarDatosDesdeTabla();
+    }//GEN-LAST:event_tblLibrosMouseClicked
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        login view = new login();
-        view.setLocationRelativeTo(null); // Centrar la ventana
-        view.setVisible(true); // Mostrar el login
-
-        // Cerrar la ventana actual
-        javax.swing.SwingUtilities.getWindowAncestor(this).dispose(); // TODO add your handling code here:
+        controller.cerrarSesion();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-       javax.swing.JFrame frame = new javax.swing.JFrame("ventana de inicio");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.inicio()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
+        controller.navegarAInicio();
     }//GEN-LAST:event_btnInicioActionPerformed
 
-    private void cargarCategorias() {
-        try {
-            cbxCategoria.removeAllItems();
-            List<Object[]> categoriasData = libroDAO.obtenerCategorias();
-            
-            for (Object[] categoriaData : categoriasData) {
-                Categoria categoria = new Categoria();
-                categoria.setIdCategoria((Integer) categoriaData[0]);
-                categoria.setNombre((String) categoriaData[1]);
-                
-                cbxCategoria.addItem(categoria);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar categorías: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    // ========== MÉTODOS GETTER PARA EL CONTROLADOR ==========
+    
+    public javax.swing.JComboBox<Categoria> getCbxCategoria() { 
+        return cbxCategoria; 
     }
 
-      private void cargarLibros() {
-        try {
-            DefaultTableModel model = (DefaultTableModel) tblLibros.getModel();
-            model.setRowCount(0);
-            
-            List<Object[]> libros = libroDAO.listarLibros();
-            for (Object[] libro : libros) {
-                model.addRow(libro);
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar libros: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+    public javax.swing.JLabel getLblNombreBibliotecario() { 
+        return lblNombreBibliotecario; 
     }
 
-     private void limpiarCampos() {
-    txtIsbn.setText("");
-    txtTitulo.setText("");
-    txtAutor.setText("");
-    txtStock.setText("");
-    txtAñoPublicacion.setText("");
-    if (cbxCategoria.getItemCount() > 0) {
-        cbxCategoria.setSelectedIndex(0);
+    public javax.swing.JTextField getTxtIsbn() { 
+        return txtIsbn; 
     }
-    jTextField7.setText("");
-    tblLibros.clearSelection(); // Limpiar selección de la tabla
-}
-private void tblLibrosMouseClicked(java.awt.event.MouseEvent evt) {                                   
-    if (tblLibros.getSelectedRow() != -1) {
-        int selectedRow = tblLibros.getSelectedRow();
-        DefaultTableModel model = (DefaultTableModel) tblLibros.getModel();
-        
-        // Obtener datos de la fila seleccionada
-        String isbn = model.getValueAt(selectedRow, 0).toString();
-        String titulo = model.getValueAt(selectedRow, 1).toString();
-        String categoriaNombre = model.getValueAt(selectedRow, 2).toString();
-        String autor = model.getValueAt(selectedRow, 3).toString();
-        String stock = model.getValueAt(selectedRow, 4).toString();
-        
-        // Llenar los campos con los datos del libro seleccionado
-        txtIsbn.setText(isbn);
-        txtTitulo.setText(titulo);
-        txtAutor.setText(autor);
-        txtStock.setText(stock);
-        
-        // Buscar y seleccionar la categoría correspondiente
-        for (int i = 0; i < cbxCategoria.getItemCount(); i++) {
-            Categoria categoria = (Categoria) cbxCategoria.getItemAt(i);
-            if (categoria.getNombre().equals(categoriaNombre)) {
-                cbxCategoria.setSelectedIndex(i);
-                break;
-            }
-        }
-        
-        // Buscar el año de publicación
-        buscarAnioPublicacion(isbn);
+
+    public javax.swing.JTextField getTxtTitulo() { 
+        return txtTitulo; 
     }
-}      
 
-    private void agregarListenerTabla() {
-    tblLibros.getSelectionModel().addListSelectionListener(event -> {
-        if (!event.getValueIsAdjusting() && tblLibros.getSelectedRow() != -1) {
-            int selectedRow = tblLibros.getSelectedRow();
-            DefaultTableModel model = (DefaultTableModel) tblLibros.getModel();
-            
-            // Obtener datos de la fila seleccionada
-            String isbn = model.getValueAt(selectedRow, 0).toString();
-            String titulo = model.getValueAt(selectedRow, 1).toString();
-            String autor = model.getValueAt(selectedRow, 2).toString();
-            String categoriaNombre = model.getValueAt(selectedRow, 3).toString();
-            String stock = model.getValueAt(selectedRow, 4).toString();
-            
-            // Llenar los campos con los datos del libro seleccionado
-            txtIsbn.setText(isbn);
-            txtTitulo.setText(titulo);
-            txtAutor.setText(autor);
-            txtStock.setText(stock);
-            
-            // Buscar y seleccionar la categoría correspondiente
-            for (int i = 0; i < cbxCategoria.getItemCount(); i++) {
-                Categoria categoria = cbxCategoria.getItemAt(i);
-                if (categoria.getNombre().equals(categoriaNombre)) {
-                    cbxCategoria.setSelectedIndex(i);
-                    break;
-                }
-            }
-            
-            // Buscar el año de publicación (necesitarías modificar tu DAO para incluir este dato)
-            buscarAnioPublicacion(isbn);
-        }
-    });
-}
-
-// En el método donde inicializas o actualizas el dashboard
-public void actualizarEstadisticas() {
-    LibroDAO lectorDAO = new LibroDAO();
-    int totalEjemplares = lectorDAO.contarLibros();
-    jbltotalLibros.setText(String.valueOf(totalEjemplares));
-}
-
-private void buscarAnioPublicacion(String isbn) {
-    Object[] libro = libroDAO.buscarLibroPorISBN(isbn);
-    if (libro != null && libro.length > 4) {
-        txtAñoPublicacion.setText(String.valueOf(libro[4]));
+    public javax.swing.JTextField getTxtAutor() { 
+        return txtAutor; 
     }
-}
 
+    public javax.swing.JTextField getTxtStock() { 
+        return txtStock; 
+    }
 
+    public javax.swing.JTextField getTxtAñoPublicacion() { 
+        return txtAñoPublicacion; 
+    }
 
-    // Clase interna para manejar las categorías en el JComboBox
- 
+    public javax.swing.JTextField getTxtBuscar() { 
+        return jTextField7; 
+    }
 
+    public javax.swing.JTable getTblLibros() { 
+        return tblLibros; 
+    }
+
+    public javax.swing.JLabel getJbltotalLibros() { 
+        return jbltotalLibros; 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;

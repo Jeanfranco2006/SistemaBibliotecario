@@ -4,42 +4,29 @@
  */
 package SistemaBibliotecario.VistaAdmin;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-
-import SistemaBibliotecario.Conexion.ConexionMySQL;
+import javax.swing.JTable;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import SistemaBibliotecario.ControladorAdmin.BibliotecariosController;
 import SistemaBibliotecario.Dao.BibliotecarioDAO;
-import SistemaBibliotecario.Modelos.SesionActual;
-import SistemaBibliotecario.VistaLogin.login;
 
 /**
  *
  * @author User
  */
 public class bibliotecarios extends javax.swing.JPanel {
-      private BibliotecarioDAO bibliotecarioDAO;
+    private BibliotecarioDAO bibliotecarioDAO;
+    private BibliotecariosController controller;
 
     /**
      * Creates new form bibliotecarios
      */
     public bibliotecarios() {
         initComponents();
-        bibliotecarioDAO = new BibliotecarioDAO(); // Inicializar el DAO
-        cargarBibliotecarios();
-        mostrarTotalBibliotecarios();
-        
-        if (SesionActual.nombre != null && !SesionActual.nombre.isEmpty()) {
-        lblNombreBibliotecario.setText(" " + SesionActual.nombre);
-    } else {
-        lblNombreBibliotecario.setText("Bienvenido: Bibliotecario");
-    }
+        bibliotecarioDAO = new BibliotecarioDAO();
+        controller = new BibliotecariosController(this);
+        // El controlador ahora maneja la inicialización automáticamente
     }
 
     /**
@@ -342,364 +329,94 @@ public class bibliotecarios extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInicioActionPerformed
-       javax.swing.JFrame frame = new javax.swing.JFrame("Inicio");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new inicio()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();   // TODO add your handling code here:
+        controller.navegarAInicio();
     }//GEN-LAST:event_btnInicioActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
- javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Usuarios");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new usuarios()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();         // TODO add your handling code here:
+        controller.navegarAUsuarios();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        javax.swing.JFrame frame = new javax.swing.JFrame("Gestión de Reportes");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new reportes()); // agrega el panel
-    frame.pack(); // ajusta al tamaño preferido
-    frame.setLocationRelativeTo(null); // centra la ventana
-    frame.setVisible(true); // muestra la nueva ventana
-
-    // Cierra la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();  // TODO add your handling code here:
+        controller.navegarAReportes();
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        login view = new login();  
-    view.setLocationRelativeTo(null); // Centrar la ventana
-    view.setVisible(true); // Mostrar el login
-
-    // Cerrar la ventana actual
-    javax.swing.SwingUtilities.getWindowAncestor(this).dispose();        // TODO add your handling code here:
+        controller.cerrarSesion();
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       String dni = txtDni.getText().trim();
-    String nombre = txtNombre.getText().trim();
-    String apellidoP = txtApellidoP.getText().trim();
-    String apellidoM = txtApellidoM.getText().trim();
-    String direccion = txtDireccion.getText().trim();
-    String telefono = txtTelefono.getText().trim();
-    String email = txtEmail.getText().trim();
-    String contrasena = txtContrasena.getText().trim();
-    String rol = "bibliotecario"; // Rol por defecto
-
-    if (dni.isEmpty() || nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() ||
-        direccion.isEmpty() || telefono.isEmpty() || email.isEmpty() || contrasena.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    Connection conn = null;
-    PreparedStatement psPersona = null;
-    PreparedStatement psUsuario = null;
-    ResultSet rs = null;
-
-    try {
-        conn = ConexionMySQL.getInstancia().getConexion();
-        conn.setAutoCommit(false); // 🔒 inicia transacción
-
-        // 1️⃣ Insertar persona
-        String sqlPersona = "INSERT INTO persona (dni, nombre, apellido_p, apellido_m, direccion, telefono, email) "
-                          + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        psPersona = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
-        psPersona.setString(1, dni);
-        psPersona.setString(2, nombre);
-        psPersona.setString(3, apellidoP);
-        psPersona.setString(4, apellidoM);
-        psPersona.setString(5, direccion);
-        psPersona.setString(6, telefono);
-        psPersona.setString(7, email);
-        psPersona.executeUpdate();
-
-        // Obtener id_persona generado
-        rs = psPersona.getGeneratedKeys();
-        int idPersona = 0;
-        if (rs.next()) {
-            idPersona = rs.getInt(1);
-        }
-
-        // 2️⃣ Insertar usuario
-        String sqlUsuario = "INSERT INTO usuario (id_persona, contrasena, rol) VALUES (?, ?, ?)";
-        psUsuario = conn.prepareStatement(sqlUsuario);
-        psUsuario.setInt(1, idPersona);
-        psUsuario.setString(2, contrasena);
-        psUsuario.setString(3, rol);
-        psUsuario.executeUpdate();
-
-        conn.commit(); // ✅ Confirmar transacción
-        JOptionPane.showMessageDialog(this, "✅ Bibliotecario agregado correctamente.");
-
-        // Limpiar campos
-        txtDni.setText("");
-        txtNombre.setText("");
-        txtApellidoP.setText("");
-        txtApellidoM.setText("");
-        txtDireccion.setText("");
-        txtTelefono.setText("");
-        txtEmail.setText("");
-        txtContrasena.setText("");
-
-        cargarBibliotecarios();
-        mostrarTotalBibliotecarios();
-
-    } catch (SQLException e) {
-        try {
-            if (conn != null) conn.rollback(); // ❌ revertir si hay error
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        JOptionPane.showMessageDialog(this, "❌ Error al agregar bibliotecario: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        try {
-            if (rs != null) rs.close();
-            if (psPersona != null) psPersona.close();
-            if (psUsuario != null) psUsuario.close();
-            if (conn != null) conn.setAutoCommit(true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }// TODO add your handling code here:
+        controller.agregarBibliotecario();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-       int fila = tblBibliotecarios.getSelectedRow();
-    if (fila < 0) {
-        JOptionPane.showMessageDialog(this, "Seleccione un bibliotecario de la tabla para actualizar.");
-        return;
-    }
-
-    String nombre = txtNombre.getText().trim();
-    String apellidoP = txtApellidoP.getText().trim();
-    String apellidoM = txtApellidoM.getText().trim();
-    String email = txtEmail.getText().trim();
-
-    try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
-        String sql = "UPDATE persona p " +
-                     "JOIN usuario u ON p.id_persona = u.id_persona " +
-                     "SET p.nombre=?, p.apellido_p=?, p.apellido_m=?, p.email=? " +
-                     "WHERE p.nombre=? AND p.apellido_p=? AND p.apellido_m=?";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.setString(1, nombre);
-        ps.setString(2, apellidoP);
-        ps.setString(3, apellidoM);
-        ps.setString(4, email);
-        ps.setString(5, tblBibliotecarios.getValueAt(fila, 0).toString());
-        String[] apellidos = tblBibliotecarios.getValueAt(fila, 1).toString().split(" ");
-        ps.setString(6, apellidos[0]);
-        ps.setString(7, apellidos.length >= 2 ? apellidos[1] : "");
-
-        int filasAfectadas = ps.executeUpdate();
-
-        if (filasAfectadas > 0) {
-            JOptionPane.showMessageDialog(this, "✅ Datos actualizados correctamente.");
-            cargarBibliotecarios(); // Recarga la tabla
-        } else {
-            JOptionPane.showMessageDialog(this, "⚠️ No se encontró el registro a actualizar.");
-        }
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "❌ Error al actualizar: " + e.getMessage());
-    } // TODO add your handling code here:
+        controller.actualizarBibliotecario();
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void tblBibliotecariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblBibliotecariosMouseClicked
-       int fila = tblBibliotecarios.getSelectedRow();
-    if (fila >= 0) {
-        String email = tblBibliotecarios.getValueAt(fila, 2).toString();
-
-        try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
-            String sql = """
-                SELECT p.dni, p.nombre, p.apellido_p, p.apellido_m, 
-                       p.direccion, p.telefono, p.email, u.contrasena
-                FROM persona p
-                JOIN usuario u ON p.id_persona = u.id_persona
-                WHERE p.email = ?
-            """;
-
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                txtDni.setText(rs.getString("dni"));
-                txtNombre.setText(rs.getString("nombre"));
-                txtApellidoP.setText(rs.getString("apellido_p"));
-                txtApellidoM.setText(rs.getString("apellido_m"));
-                txtDireccion.setText(rs.getString("direccion"));
-                txtTelefono.setText(rs.getString("telefono"));
-                txtEmail.setText(rs.getString("email"));
-                txtContrasena.setText(rs.getString("contrasena"));
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "❌ Error al cargar datos: " + e.getMessage());
-        }
-    } // TODO add your handling code here:
+        controller.cargarDatosDesdeTabla();
     }//GEN-LAST:event_tblBibliotecariosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-          int fila = tblBibliotecarios.getSelectedRow();
-    if (fila == -1) {
-        JOptionPane.showMessageDialog(this, "⚠️ Selecciona un bibliotecario para eliminar.");
-        return;
-    }
-
-    String email = tblBibliotecarios.getValueAt(fila, 2).toString();
-
-    int confirmar = JOptionPane.showConfirmDialog(
-        this,
-        "¿Estás seguro de eliminar al bibliotecario con email: " + email + "?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION
-    );
-
-    if (confirmar == JOptionPane.YES_OPTION) {
-        try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
-            conn.setAutoCommit(false);
-
-            // 1️⃣ Eliminar primero de usuario (porque depende de persona)
-            String sqlUsuario = """
-                DELETE FROM usuario 
-                WHERE id_persona = (SELECT id_persona FROM persona WHERE email = ?)
-            """;
-            PreparedStatement psUsuario = conn.prepareStatement(sqlUsuario);
-            psUsuario.setString(1, email);
-            psUsuario.executeUpdate();
-
-            // 2️⃣ Luego eliminar de persona
-            String sqlPersona = "DELETE FROM persona WHERE email = ?";
-            PreparedStatement psPersona = conn.prepareStatement(sqlPersona);
-            psPersona.setString(1, email);
-            psPersona.executeUpdate();
-
-            conn.commit();
-            JOptionPane.showMessageDialog(this, "✅ Bibliotecario eliminado correctamente.");
-
-            // 3️⃣ Refrescar tabla
-            cargarBibliotecarios();
-            mostrarTotalBibliotecarios();
-
-            // 4️⃣ Limpiar campos
-            limpiarCampos();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "❌ Error al eliminar: " + e.getMessage());
-        }
-    }// TODO add your handling code here:
+        controller.eliminarBibliotecario();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
-        limpiarCampos();
-    tblBibliotecarios.clearSelection(); // Quita la selección de la tabla
-    JOptionPane.showMessageDialog(this, "🧹 Campos limpiados correctamente."); // TODO add your handling code here:
+        controller.limpiarCampos();
     }//GEN-LAST:event_btnLimpiarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        String criterio = jTextField7.getText().trim();
-    
-    if (criterio.isEmpty()) {
-        cargarBibliotecarios(); // Si está vacío, mostrar todos
-        return;
-    }
-    
-    try {
-        DefaultTableModel model = (DefaultTableModel) tblBibliotecarios.getModel();
-        model.setRowCount(0);
-        
-        BibliotecarioDAO dao = new BibliotecarioDAO();
-        List<Object[]> bibliotecarios = dao.buscarBibliotecarioPorDniEmailNombre(criterio);
-        
-        if (bibliotecarios.isEmpty()) {
-            JOptionPane.showMessageDialog(this, 
-                "No se encontraron bibliotecarios con: " + criterio, 
-                "Búsqueda", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            for (Object[] bibliotecario : bibliotecarios) {
-                // Crear nueva fila con solo las 5 columnas visibles
-                Object[] filaMostrar = new Object[5];
-                filaMostrar[0] = bibliotecario[1]; // Nombre
-                filaMostrar[1] = bibliotecario[2]; // Apellidos
-                filaMostrar[2] = bibliotecario[3]; // Email
-                filaMostrar[3] = bibliotecario[4]; // Fecha Ingreso
-                filaMostrar[4] = bibliotecario[5]; // Último Acceso
-                
-                model.addRow(filaMostrar);
-            }
-            
-            JOptionPane.showMessageDialog(this, 
-                "Se encontraron " + bibliotecarios.size() + " bibliotecario(s)", 
-                "Búsqueda exitosa", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error en la búsqueda: " + e.getMessage(), 
-            "Error", JOptionPane.ERROR_MESSAGE);
-    }
-        
-// TODO add your handling code here:
+        controller.buscarBibliotecarios();
     }//GEN-LAST:event_btnBuscarActionPerformed
-    private void cargarBibliotecarios() {
-    DefaultTableModel model = (DefaultTableModel) tblBibliotecarios.getModel();
-    model.setRowCount(0); // limpia la tabla
 
-    BibliotecarioDAO dao = new BibliotecarioDAO();
-    List<Object[]> lista = dao.listarBibliotecarios();
-
-    for (Object[] bibliotecario : lista) {
-        // Crear nueva fila con solo las 5 columnas visibles
-        Object[] filaMostrar = new Object[5];
-        filaMostrar[0] = bibliotecario[1]; // Nombre
-        filaMostrar[1] = bibliotecario[2]; // Apellidos
-        filaMostrar[2] = bibliotecario[3]; // Email
-        filaMostrar[3] = bibliotecario[4]; // Fecha Ingreso
-        filaMostrar[4] = bibliotecario[5]; // Último Acceso
-        
-        model.addRow(filaMostrar);
+    // ========== MÉTODOS GETTER PARA EL CONTROLADOR ==========
+    
+    public JTable getTblBibliotecarios() { 
+        return tblBibliotecarios; 
     }
-}
-
-private void limpiarCampos() {
-    txtDni.setText("");
-    txtNombre.setText("");
-    txtApellidoP.setText("");
-    txtApellidoM.setText("");
-    txtDireccion.setText("");
-    txtTelefono.setText("");
-    txtEmail.setText("");
-    txtContrasena.setText("");
-}
-
-private void mostrarTotalBibliotecarios() {
-    String sql = "SELECT COUNT(*) FROM usuario WHERE rol = 'bibliotecario'";
-    try (Connection conn = ConexionMySQL.getInstancia().getConexion();
-         PreparedStatement ps = conn.prepareStatement(sql);
-         ResultSet rs = ps.executeQuery()) {
-
-        if (rs.next()) {
-            int total = rs.getInt(1);
-            lblTotalBibliotecarios.setText(String.valueOf(total));
-            lblTotalBibliotecarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER); // Centrar texto
-        }
-    } catch (SQLException e) {
-        System.err.println("❌ Error al contar bibliotecarios: " + e.getMessage());
+    
+    public JLabel getLblTotalBibliotecarios() { 
+        return lblTotalBibliotecarios; 
     }
-}
-
-
+    
+    public JLabel getLblNombreBibliotecario() { 
+        return lblNombreBibliotecario; 
+    }
+    
+    public JTextField getTxtDni() { 
+        return txtDni; 
+    }
+    
+    public JTextField getTxtNombre() { 
+        return txtNombre; 
+    }
+    
+    public JTextField getTxtApellidoP() { 
+        return txtApellidoP; 
+    }
+    
+    public JTextField getTxtApellidoM() { 
+        return txtApellidoM; 
+    }
+    
+    public JTextField getTxtDireccion() { 
+        return txtDireccion; 
+    }
+    
+    public JTextField getTxtTelefono() { 
+        return txtTelefono; 
+    }
+    
+    public JTextField getTxtEmail() { 
+        return txtEmail; 
+    }
+    
+    public JTextField getTxtContrasena() { 
+        return txtContrasena; 
+    }
+    
+    public JTextField getTxtBuscar() { 
+        return jTextField7; 
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
