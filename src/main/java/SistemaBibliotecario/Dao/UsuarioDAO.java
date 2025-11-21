@@ -4,13 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import SistemaBibliotecario.Modelos.PasswordUtil; // Asegúrate de importar
 
 import SistemaBibliotecario.Conexion.ConexionMySQL;
 import SistemaBibliotecario.Modelos.Usuario;
 
 public class UsuarioDAO {
 
-    public Usuario validarLogin(String dni, String contrasena) {
+    public Usuario validarLogin(String dni, String contrasenaIngresada) {
         Usuario usuario = null;
         Connection conn = ConexionMySQL.getInstancia().getConexion();
 
@@ -27,31 +28,38 @@ public class UsuarioDAO {
                         p.apellido_m
                     FROM usuario u
                     INNER JOIN persona p ON u.id_persona = p.id_persona
-                    WHERE p.dni = ? AND u.contrasena = ?
+                    WHERE p.dni = ?
                 """;
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, dni);
-            stmt.setString(2, contrasena);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
+                String passwordHashBD = rs.getString("contrasena");
+
+                // 👉 Verificar contraseña con BCrypt
+                if (!PasswordUtil.verifyPassword(contrasenaIngresada, passwordHashBD)) {
+                    return null; // ❌ contraseña incorrecta
+                }
+
+                // 👉 Si coincide, construimos el usuario
                 usuario = new Usuario();
                 usuario.setIdUsuario(rs.getInt("id_usuario"));
                 usuario.setIdPersona(rs.getInt("id_persona"));
-                usuario.setContrasena(rs.getString("contrasena"));
                 usuario.setRol(rs.getString("rol"));
+                usuario.setContrasena(passwordHashBD);
                 usuario.setFechaCreacion(rs.getTimestamp("fecha_creacion"));
                 usuario.setFechaActualizacion(rs.getTimestamp("fecha_actualizacion"));
 
-                // ✅ CONCATENAR NOMBRE COMPLETO
-                String nombre = rs.getString("nombre");
-                String apellidoP = rs.getString("apellido_p");
-                String apellidoM = rs.getString("apellido_m");
-                String nombreCompleto = nombre + " " + apellidoP + " " + apellidoM;
+                String nombreCompleto = rs.getString("nombre") + " " +
+                        rs.getString("apellido_p") + " " +
+                        rs.getString("apellido_m");
 
                 SistemaBibliotecario.Modelos.SesionActual.nombre = nombreCompleto;
             }
+
         } catch (SQLException e) {
             System.err.println("❌ Error al validar login: " + e.getMessage());
         }
@@ -65,8 +73,11 @@ public class UsuarioDAO {
         try (Connection conn = ConexionMySQL.getInstancia().getConexion();
                 PreparedStatement ps = conn.prepareStatement(sql)) {
 
+            // 👉 Encriptar ANTES de guardar
+            String passwordHash = PasswordUtil.hashPassword(usuario.getContrasena());
+
             ps.setInt(1, usuario.getIdPersona());
-            ps.setString(2, usuario.getContrasena());
+            ps.setString(2, passwordHash); // Guardas el HASH, no la clave real
             ps.setString(3, usuario.getRol());
 
             return ps.executeUpdate() > 0;
