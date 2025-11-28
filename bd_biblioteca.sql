@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2025 a las 23:04:54
+-- Tiempo de generación: 28-11-2025 a las 21:00:05
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,13 +39,11 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`id_categoria`, `nombre`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, 'Literatura Infantil', '2025-10-26 16:10:49', '2025-10-26 16:10:49'),
-(2, 'Novela', '2025-10-26 16:10:49', '2025-10-26 16:10:49'),
-(3, 'Ciencia Ficción', '2025-10-26 16:10:49', '2025-10-26 16:10:49'),
-(4, 'Clásicos', '2025-10-26 16:10:49', '2025-10-26 16:10:49'),
-(5, 'Misterio', '2025-10-26 16:11:22', '2025-10-26 16:11:22'),
-(6, 'zz', '2025-10-26 18:26:01', '2025-10-26 18:26:01'),
-(7, 'Suspenso', '2025-10-26 21:45:53', '2025-10-26 21:45:53');
+(1, 'Literatura Infantil', '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(2, 'Novela', '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(3, 'Ciencia Ficción', '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(4, 'Clásicos', '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(5, 'Misterio', '2025-11-28 17:36:39', '2025-11-28 17:36:39');
 
 -- --------------------------------------------------------
 
@@ -66,12 +64,9 @@ CREATE TABLE `detalle_prestamo` (
 --
 
 INSERT INTO `detalle_prestamo` (`id_prestamo`, `id_libro`, `cantidad`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(9, 63, 1, '2025-10-26 18:11:33', '2025-10-26 18:11:33'),
-(10, 82, 1, '2025-10-26 21:50:14', '2025-10-26 21:50:14'),
-(11, 74, 1, '2025-10-26 21:51:45', '2025-10-26 21:51:45'),
-(12, 61, 1, '2025-10-26 21:56:59', '2025-10-26 21:56:59'),
-(13, 62, 1, '2025-10-26 21:56:59', '2025-10-26 21:56:59'),
-(14, 63, 1, '2025-10-26 21:56:59', '2025-10-26 21:56:59');
+(1, 16, 1, '2025-11-28 18:32:57', '2025-11-28 18:32:57'),
+(2, 14, 1, '2025-11-28 19:27:37', '2025-11-28 19:27:37'),
+(5, 7, 1, '2025-11-28 19:43:01', '2025-11-28 19:43:01');
 
 -- --------------------------------------------------------
 
@@ -96,28 +91,26 @@ CREATE TABLE `libro` (
 --
 
 INSERT INTO `libro` (`id_libro`, `isbn`, `titulo`, `stock`, `autor`, `anio_publicacion`, `id_categoria`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(61, '9780000000001', 'El Principito', 11, 'Antoine de Saint-Exupéry', 1943, 1, '2025-10-26 16:11:29', '2025-10-26 21:59:34'),
-(62, '9780000000002', 'Cien Años de Soledad', 8, 'Gabriel García Márquez', 1967, 2, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(63, '9780000000003', '1984', 12, 'George Orwell', 1949, 3, '2025-10-26 16:11:29', '2025-10-26 18:14:02'),
-(64, '9780000000004', 'Don Quijote de la Mancha', 5, 'Miguel de Cervantes', 1605, 1, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(65, '9780000000005', 'La Odisea', 8, 'infante', 2001, 4, '2025-10-26 16:11:29', '2025-10-26 18:23:40'),
-(66, '9780000000006', 'Hamlet', 6, 'William Shakespeare', 1603, 3, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(67, '9780000000007', 'Crimen y Castigo', 4, 'Fiódor Dostoyevski', 1866, 6, '2025-10-26 16:11:29', '2025-10-26 18:26:04'),
-(68, '9780000000008', 'Orgullo y Prejuicio', 11, 'Jane Austen', 1813, 2, '2025-10-26 16:11:29', '2025-10-26 17:29:28'),
-(69, '9780000000009', 'El Gran Gatsby', 11, 'F. Scott Fitzgerald', 1925, 3, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(70, '9780000000010', 'Moby Dick', 4, 'Herman Melville', 1851, 4, '2025-10-26 16:11:29', '2025-10-26 17:31:14'),
-(71, '9780000000011', 'La Metamorfosis', 8, 'Franz Kafka', 1915, 3, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(72, '9780000000012', 'El Hobbit', 10, 'J.R.R. Tolkien', 1937, 1, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(73, '9780000000013', 'Fahrenheit 451', 7, 'Ray Bradbury', 1953, 3, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(74, '9780000000014', 'Drácula', 5, 'Bram Stoker', 1897, 2, '2025-10-26 16:11:29', '2025-10-26 21:53:35'),
-(75, '9780000000015', 'El Retrato de Dorian Gray', 6, 'Oscar Wilde', 1890, 2, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(76, '9780000000016', 'Alicia en el País de las Maravillas', 9, 'Lewis Carroll', 1865, 1, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(77, '9780000000017', 'Viaje al Centro de la Tierra', 7, 'Julio Verne', 1864, 4, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(78, '9780000000018', 'La Iliada', 4, 'Homero', -750, 4, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(79, '9780000000019', 'Los Miserables', 5, 'Victor Hugo', 1862, 2, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(80, '9780000000020', 'El Código Da Vinci', 12, 'Dan Brown', 2003, 5, '2025-10-26 16:11:29', '2025-10-26 16:11:29'),
-(81, '9780000000005', 'La Odisea', 8, 'infante', 2001, 4, '2025-10-26 18:18:43', '2025-10-26 18:23:40'),
-(82, '9780000000044', 'El maldito de las matematicas', 10, 'Shekpeare', 1942, 7, '2025-10-26 21:46:23', '2025-10-26 21:51:17');
+(1, '9780000000001', 'El Principito', 10, 'Antoine de Saint-Exupéry', 1943, 1, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(2, '9780000000002', 'Cien Años de Soledad', 8, 'Gabriel García Márquez', 1967, 2, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(3, '9780000000003', '1984', 12, 'George Orwell', 1949, 3, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(4, '9780000000004', 'Don Quijote de la Mancha', 4, 'Miguel de Cervantes', 1605, 1, '2025-11-28 17:36:39', '2025-11-28 19:31:06'),
+(5, '9780000000005', 'La Odisea', 7, 'Homero', -800, 4, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(6, '9780000000006', 'Hamlet', 6, 'William Shakespeare', 1603, 3, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(7, '9780000000007', 'Crimen y Castigo', 3, 'Fiódor Dostoyevski', 1866, 2, '2025-11-28 17:36:39', '2025-11-28 19:43:01'),
+(8, '9780000000008', 'Orgullo y Prejuicio', 9, 'Jane Austen', 1813, 2, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(9, '9780000000009', 'El Gran Gatsby', 11, 'F. Scott Fitzgerald', 1925, 3, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(10, '9780000000010', 'Moby Dick', 3, 'Herman Melville', 1851, 4, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(11, '9780000000011', 'La Metamorfosis', 8, 'Franz Kafka', 1915, 3, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(12, '9780000000012', 'El Hobbit', 10, 'J.R.R. Tolkien', 1937, 1, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(13, '9780000000013', 'Fahrenheit 451', 7, 'Ray Bradbury', 1953, 3, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(14, '9780000000014', 'Drácula', 3, 'Bram Stoker', 1897, 2, '2025-11-28 17:36:39', '2025-11-28 19:37:30'),
+(15, '9780000000015', 'El Retrato de Dorian Gray', 6, 'Oscar Wilde', 1890, 2, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(16, '9780000000016', 'Alicia en el País de las Maravillas', 8, 'Lewis Carroll', 1865, 1, '2025-11-28 17:36:39', '2025-11-28 18:32:57'),
+(17, '9780000000017', 'Viaje al Centro de la Tierra', 7, 'Julio Verne', 1864, 4, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(18, '9780000000018', 'La Iliada', 4, 'Homero', -750, 4, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(19, '9780000000019', 'Los Miserables', 5, 'Victor Hugo', 1862, 2, '2025-11-28 17:36:39', '2025-11-28 17:36:39'),
+(20, '9780000000020', 'El Código Da Vinci', 12, 'Dan Brown', 2003, 5, '2025-11-28 17:36:39', '2025-11-28 17:36:39');
 
 -- --------------------------------------------------------
 
@@ -133,13 +126,6 @@ CREATE TABLE `multa` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `multa`
---
-
-INSERT INTO `multa` (`id_multa`, `id_prestamo`, `monto`, `fecha_pago`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, 12, 8.00, NULL, '2025-10-26 21:59:34', '2025-10-26 21:59:34');
 
 -- --------------------------------------------------------
 
@@ -165,12 +151,9 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`id_persona`, `dni`, `nombre`, `apellido_p`, `apellido_m`, `direccion`, `telefono`, `email`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, '12345678', 'Carlos', 'Ramírez', 'Gómez', 'Av. Los Olivos 123', '987654321', 'carlos.ramirez@example.com', '2025-10-26 16:12:54', '2025-10-26 16:12:54'),
-(2, '74883636', 'María', 'Torres', 'Pérez', 'Jr. San Martín 456', '912345678', 'maria.torres@example.com', '2025-10-26 16:12:54', '2025-10-26 16:13:31'),
-(3, '74883675', 'Luis', 'Fernández', 'Rojas', 'Calle Lima 789', '998877665', 'luis.fernandez@example.com', '2025-10-26 16:12:54', '2025-10-26 16:13:04'),
-(4, '45678901', 'Ana', 'Mendoza', 'Castro', 'Av. Arequipa 321', '976543210', 'ana.mendoza@example.com', '2025-10-26 16:12:54', '2025-10-26 16:12:54'),
-(5, '56789012', 'Jorge', 'Sánchez', 'Flores', 'Jr. Grau 654', '934561278', 'jorge.sanchez@example.com', '2025-10-26 16:12:54', '2025-10-26 16:12:54'),
-(6, '74883633', 'Jean', 'Chamorro', 'Granados', 'Av. Arequipa 321', '976543210', 'jean@example.com', '2025-10-26 21:30:50', '2025-10-26 21:48:36');
+(6, '74888812', 'Jean', 'c', 'g', 'Lima', '945623652', 'jeancg025@gmail.com', '2025-11-28 17:37:52', '2025-11-28 17:37:52'),
+(9, '74883636', 'Jean', 'c', 'g', 'ss', '987456541', 'jhean@gmail.com', '2025-11-28 17:44:51', '2025-11-28 17:44:51'),
+(10, '74883625', 'Lucia', 'F', 'G', 'Lima - Ate', '987789654', 'Lucia@gmail.com', '2025-11-28 18:22:57', '2025-11-28 18:22:57');
 
 -- --------------------------------------------------------
 
@@ -184,7 +167,7 @@ CREATE TABLE `prestamo` (
   `id_bibliotecario` int(11) NOT NULL,
   `fecha_prestamo` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_devolucion` timestamp NULL DEFAULT NULL,
-  `estado` enum('activo','devuelto','vencido') NOT NULL DEFAULT 'activo',
+  `estado` varchar(15) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -194,12 +177,9 @@ CREATE TABLE `prestamo` (
 --
 
 INSERT INTO `prestamo` (`id_prestamo`, `id_usuario`, `id_bibliotecario`, `fecha_prestamo`, `fecha_devolucion`, `estado`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(9, 5, 2, '2025-10-26 18:11:33', '2025-11-02 18:11:33', 'devuelto', '2025-10-26 18:11:33', '2025-10-26 18:14:02'),
-(10, 4, 5, '2025-10-26 21:50:14', '2025-11-02 21:50:14', 'devuelto', '2025-10-26 21:50:14', '2025-10-26 21:51:17'),
-(11, 4, 5, '2025-10-26 21:51:45', '2025-11-02 21:51:45', 'devuelto', '2025-10-26 21:51:45', '2025-10-26 21:53:35'),
-(12, 3, 2, '2025-10-15 15:00:00', '2025-10-22 15:00:00', 'devuelto', '2025-10-26 21:56:01', '2025-10-26 21:59:34'),
-(13, 3, 2, '2025-10-14 20:30:00', '2025-10-21 20:30:00', 'vencido', '2025-10-26 21:56:01', '2025-10-26 21:57:43'),
-(14, 3, 2, '2025-10-13 14:00:00', '2025-10-20 14:00:00', 'vencido', '2025-10-26 21:56:01', '2025-10-26 21:57:53');
+(1, 9, 8, '2025-11-28 18:32:57', '2025-12-05 19:27:55', 'activo', '2025-11-28 18:32:57', '2025-11-28 19:27:55'),
+(2, 9, 8, '2025-11-28 19:27:37', '2025-12-05 19:30:37', 'activo', '2025-11-28 19:27:37', '2025-11-28 19:30:37'),
+(5, 9, 8, '2025-11-28 19:43:01', '2025-12-05 19:43:01', 'activo', '2025-11-28 19:43:01', '2025-11-28 19:43:01');
 
 -- --------------------------------------------------------
 
@@ -230,7 +210,7 @@ CREATE TABLE `usuario` (
   `rol` enum('administrador','bibliotecario','lector') NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
   `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `ultimo_acceso` datetime DEFAULT NULL
+  `ultimo_acceso` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -238,12 +218,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `id_persona`, `contrasena`, `rol`, `fecha_creacion`, `fecha_actualizacion`, `ultimo_acceso`) VALUES
-(1, 1, 'admin123', 'administrador', '2025-10-26 16:12:54', '2025-10-26 21:38:04', '2025-10-26 16:38:04'),
-(2, 2, '123456', 'bibliotecario', '2025-10-26 16:12:54', '2025-10-26 21:57:09', '2025-10-26 16:57:09'),
-(3, 3, '12345678', 'lector', '2025-10-26 16:12:54', '2025-10-26 21:37:27', '2025-10-26 16:37:27'),
-(4, 4, 'lector101', 'lector', '2025-10-26 16:12:54', '2025-10-26 18:55:45', '2025-10-26 13:55:45'),
-(5, 5, '123456', 'bibliotecario', '2025-10-26 16:12:54', '2025-10-26 21:49:08', '2025-10-26 16:49:08'),
-(6, 6, '12345678', 'lector', '2025-10-26 21:30:50', '2025-10-26 21:30:50', NULL);
+(6, 6, '$2a$10$7GLtgE/mrx2WtIlziRpqpuqT8bsBbMahSPGWwbLf3oFjMy/.pXjFC', 'administrador', '2025-11-28 17:37:52', '2025-11-28 18:24:26', '2025-11-28 18:24:26'),
+(8, 9, '$2a$10$V9wKIWwdMUrdrUI8Rk5Ck.Dx0EigLwbOUyY33LduPUKaZf9x.tc1C', 'bibliotecario', '2025-11-28 17:44:51', '2025-11-28 17:50:02', '2025-11-28 17:50:02'),
+(9, 10, '$2a$10$ruEznKl2ptn9lyiQF39oFOtPKrwQXLRww9TnmUmWDBEoYhh4qZRpW', 'lector', '2025-11-28 18:22:57', '2025-11-28 19:53:12', '2025-11-28 19:53:12');
 
 --
 -- Índices para tablas volcadas
@@ -267,6 +244,7 @@ ALTER TABLE `detalle_prestamo`
 --
 ALTER TABLE `libro`
   ADD PRIMARY KEY (`id_libro`),
+  ADD UNIQUE KEY `unique_isbn` (`isbn`),
   ADD KEY `id_categoria` (`id_categoria`);
 
 --
@@ -314,31 +292,31 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_categoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id_libro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `multa`
 --
 ALTER TABLE `multa`
-  MODIFY `id_multa` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_multa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `prestamo`
 --
 ALTER TABLE `prestamo`
-  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_prestamo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `reserva`
@@ -350,7 +328,7 @@ ALTER TABLE `reserva`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
@@ -394,18 +372,6 @@ ALTER TABLE `reserva`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`);
-
-DELIMITER $$
---
--- Eventos
---
-CREATE DEFINER=`root`@`localhost` EVENT `actualizar_prestamos_vencidos` ON SCHEDULE EVERY 1 DAY STARTS '2025-10-26 11:56:19' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE prestamo 
-    SET estado = 'vencido', 
-        fecha_actualizacion = CURRENT_TIMESTAMP
-    WHERE estado = 'activo' 
-    AND fecha_devolucion < CURRENT_TIMESTAMP$$
-
-DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -78,6 +78,7 @@ public class bibliotecarios extends javax.swing.JPanel {
         btnLimpiar = new javax.swing.JButton();
         lblTotalBibliotecarios = new javax.swing.JLabel();
 
+        jPanel1.setBackground(new java.awt.Color(236, 240, 241));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -109,6 +110,7 @@ public class bibliotecarios extends javax.swing.JPanel {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 900, 30));
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

@@ -82,6 +82,7 @@ public class prestamos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("GESTION DE BIBLIOTECARIOS");
 
+        jPanel1.setBackground(new java.awt.Color(236, 240, 241));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

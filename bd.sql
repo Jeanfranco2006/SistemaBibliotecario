@@ -98,6 +98,26 @@ CREATE TABLE multa (
 );
 
 
+---HISTORIAL DE PRÉSTAMOS
+CREATE TABLE historial_prestamos (
+  id_historial INT PRIMARY KEY AUTO_INCREMENT,
+  dni_lector VARCHAR(8) NOT NULL,
+  nombre_lector VARCHAR(100) NOT NULL,
+  titulo_libro VARCHAR(100) NOT NULL,
+  isbn_libro VARCHAR(13) NOT NULL,
+  fecha_prestamo TIMESTAMP NOT NULL,
+  fecha_devolucion TIMESTAMP NULL,
+  fecha_devolucion_real TIMESTAMP NULL,
+  estado_final VARCHAR(20) NOT NULL,
+  dias_retraso INT DEFAULT 0,
+  multa_generada DECIMAL(10,2) DEFAULT 0,
+  fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Índices para mejor performance
+CREATE INDEX idx_historial_dni ON historial_prestamos(dni_lector);
+CREATE INDEX idx_historial_fecha ON historial_prestamos(fecha_prestamo);
+
 
 INSERT INTO persona (dni, nombre, apellido_p, apellido_m, direccion, telefono, email)
 VALUES

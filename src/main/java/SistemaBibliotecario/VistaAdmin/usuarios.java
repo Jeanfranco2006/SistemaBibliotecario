@@ -24,6 +24,8 @@ public class usuarios extends javax.swing.JPanel {
         initComponents();
         // Inicializar el controlador
         new UsuariosController(this);
+            setCamposSoloLectura();
+
     }
 
     /**
@@ -33,7 +35,7 @@ public class usuarios extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
@@ -74,6 +76,7 @@ public class usuarios extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("GESTION DE BIBLIOTECARIOS");
 
+        jPanel1.setBackground(new java.awt.Color(236, 240, 241));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -84,6 +87,10 @@ public class usuarios extends javax.swing.JPanel {
         btnBibliotecarios.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnBibliotecarios.setForeground(new java.awt.Color(255, 255, 255));
         btnBibliotecarios.setText("BIBLIOTECARIOS");
+        btnBibliotecarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            }
+        });
         jPanel2.add(btnBibliotecarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 240, 80));
 
         jButton2.setBackground(new java.awt.Color(0, 0, 0));
@@ -96,12 +103,20 @@ public class usuarios extends javax.swing.JPanel {
         btnInicio.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnInicio.setForeground(new java.awt.Color(255, 255, 255));
         btnInicio.setText("INICIO");
+        btnInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            }
+        });
         jPanel2.add(btnInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 99, 240, 80));
 
         btnReportes.setBackground(new java.awt.Color(0, 51, 102));
         btnReportes.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
         btnReportes.setText("REPORTES");
+        btnReportes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            }
+        });
         jPanel2.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, 240, 80));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Emoji", 1, 24)); // NOI18N
@@ -111,14 +126,17 @@ public class usuarios extends javax.swing.JPanel {
 
         jButton9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jButton9.setText("SALIR");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            }
+        });
         jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 621, 240, 44));
 
         lblNombreBibliotecario.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
         lblNombreBibliotecario.setForeground(new java.awt.Color(255, 255, 255));
         lblNombreBibliotecario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblNombreBibliotecario.setText("                                ");
-        lblNombreBibliotecario
-                .setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        lblNombreBibliotecario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.add(lblNombreBibliotecario, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 569, 240, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 700));
@@ -135,20 +153,23 @@ public class usuarios extends javax.swing.JPanel {
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addComponent(jLabel5)
-                                .addContainerGap(866, Short.MAX_VALUE)));
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel5)
+                .addContainerGap(866, Short.MAX_VALUE))
+        );
         jPanel3Layout.setVerticalGroup(
-                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(8, Short.MAX_VALUE)
-                                .addComponent(jLabel5)
-                                .addContainerGap()));
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(8, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addContainerGap())
+        );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 910, 30));
 
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -191,15 +212,20 @@ public class usuarios extends javax.swing.JPanel {
 
         tblUsuarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][] {
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null },
-                        { null, null, null, null, null }
-                },
-                new String[] {
-                        "Nombre", "Apellidos", "Email", "Fecha Creación ", "Ultimo Acceso"
-                }));
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Nombre", "Apellidos", "Email", "Fecha Creación ", "Ultimo Acceso"
+            }
+        ));
+        tblUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 890, 460));
@@ -209,6 +235,10 @@ public class usuarios extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+            }
+        });
         jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 180, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -219,14 +249,24 @@ public class usuarios extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING,
-                                javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void setCamposSoloLectura() {
+    txtDni.setEditable(false);
+    txtNombre.setEditable(false);
+    txtApellidoP.setEditable(false);
+    txtApellidoM.setEditable(false);
+    txtDireccion.setEditable(false);
+    txtTelefono.setEditable(false);
+    txtEmail.setEditable(false);
+}
 
     // Getters para el controlador
     public JButton getBtnBibliotecarios() {

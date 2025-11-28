@@ -74,6 +74,7 @@ public class libros extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("GESTION DE BIBLIOTECARIOS");
 
+        jPanel1.setBackground(new java.awt.Color(236, 240, 241));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -187,12 +188,14 @@ public class libros extends javax.swing.JPanel {
                 {null, null, null, null, null, null}
             },
             new String [] {
-                "Isbn", "Titulo", "Categoria", "Autor", "Stock", "Fecha Ingreso"
+                "Isbn", "Titulo", "Autor", "Categoria", "Stock", "Fecha Ingreso"
             }
         ));
         tblLibros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblLibrosMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
             }
         });
         jScrollPane1.setViewportView(tblLibros);
@@ -209,6 +212,7 @@ public class libros extends javax.swing.JPanel {
         });
         jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 390, 30));
 
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

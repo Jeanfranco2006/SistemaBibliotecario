@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
 
 import SistemaBibliotecario.Conexion.ConexionMySQL;
 import SistemaBibliotecario.Dao.BibliotecarioDAO;
+import SistemaBibliotecario.Modelos.PasswordUtil;
 import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.VistaAdmin.bibliotecarios;
 import SistemaBibliotecario.VistaAdmin.inicio;
@@ -94,67 +95,72 @@ public class BibliotecariosController {
     }
     
     public void agregarBibliotecario() {
-        if (!validarCamposObligatorios()) {
-            mostrarAdvertencia("Por favor, complete todos los campos.");
-            return;
-        }
-
-        Connection conn = null;
-        PreparedStatement psPersona = null;
-        PreparedStatement psUsuario = null;
-        ResultSet rs = null;
-
-        try {
-            conn = ConexionMySQL.getInstancia().getConexion();
-            conn.setAutoCommit(false);
-
-            // Insertar persona
-            String sqlPersona = "INSERT INTO persona (dni, nombre, apellido_p, apellido_m, direccion, telefono, email) "
-                              + "VALUES (?, ?, ?, ?, ?, ?, ?)";
-            psPersona = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
-            psPersona.setString(1, vista.getTxtDni().getText().trim());
-            psPersona.setString(2, vista.getTxtNombre().getText().trim());
-            psPersona.setString(3, vista.getTxtApellidoP().getText().trim());
-            psPersona.setString(4, vista.getTxtApellidoM().getText().trim());
-            psPersona.setString(5, vista.getTxtDireccion().getText().trim());
-            psPersona.setString(6, vista.getTxtTelefono().getText().trim());
-            psPersona.setString(7, vista.getTxtEmail().getText().trim());
-            psPersona.executeUpdate();
-
-            // Obtener id_persona generado
-            rs = psPersona.getGeneratedKeys();
-            int idPersona = 0;
-            if (rs.next()) {
-                idPersona = rs.getInt(1);
-            }
-
-            // Insertar usuario
-            String sqlUsuario = "INSERT INTO usuario (id_persona, contrasena, rol) VALUES (?, ?, ?)";
-            psUsuario = conn.prepareStatement(sqlUsuario);
-            psUsuario.setInt(1, idPersona);
-            psUsuario.setString(2, vista.getTxtContrasena().getText().trim());
-            psUsuario.setString(3, "bibliotecario");
-            psUsuario.executeUpdate();
-
-            conn.commit();
-            mostrarExito("Bibliotecario agregado correctamente.");
-
-            // Actualizar vista
-            limpiarCampos();
-            cargarBibliotecarios();
-            mostrarTotalBibliotecarios();
-
-        } catch (SQLException e) {
-            try {
-                if (conn != null) conn.rollback();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            mostrarError("Error al agregar bibliotecario: " + e.getMessage());
-        } finally {
-            cerrarRecursos(rs, psPersona, psUsuario, conn);
-        }
+    if (!validarCamposObligatorios()) {
+        mostrarAdvertencia("Por favor, complete todos los campos.");
+        return;
     }
+
+    Connection conn = null;
+    PreparedStatement psPersona = null;
+    PreparedStatement psUsuario = null;
+    ResultSet rs = null;
+
+    try {
+        conn = ConexionMySQL.getInstancia().getConexion();
+        conn.setAutoCommit(false);
+
+        // Insertar persona
+        String sqlPersona = "INSERT INTO persona (dni, nombre, apellido_p, apellido_m, direccion, telefono, email) "
+                          + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        psPersona = conn.prepareStatement(sqlPersona, Statement.RETURN_GENERATED_KEYS);
+        psPersona.setString(1, vista.getTxtDni().getText().trim());
+        psPersona.setString(2, vista.getTxtNombre().getText().trim());
+        psPersona.setString(3, vista.getTxtApellidoP().getText().trim());
+        psPersona.setString(4, vista.getTxtApellidoM().getText().trim());
+        psPersona.setString(5, vista.getTxtDireccion().getText().trim());
+        psPersona.setString(6, vista.getTxtTelefono().getText().trim());
+        psPersona.setString(7, vista.getTxtEmail().getText().trim());
+        psPersona.executeUpdate();
+
+        // Obtener id_persona generado
+        rs = psPersona.getGeneratedKeys();
+        int idPersona = 0;
+        if (rs.next()) {
+            idPersona = rs.getInt(1);
+        }
+
+        // Insertar usuario CON CONTRASEÑA ENCRIPTADA
+        String sqlUsuario = "INSERT INTO usuario (id_persona, contrasena, rol) VALUES (?, ?, ?)";
+        psUsuario = conn.prepareStatement(sqlUsuario);
+        psUsuario.setInt(1, idPersona);
+        
+        // 👉 ENCRIPTAR LA CONTRASEÑA ANTES DE GUARDAR
+        String contrasenaPlana = vista.getTxtContrasena().getText().trim();
+        String contrasenaHash = PasswordUtil.hashPassword(contrasenaPlana);
+        psUsuario.setString(2, contrasenaHash); // Guardar el HASH
+        
+        psUsuario.setString(3, "bibliotecario");
+        psUsuario.executeUpdate();
+
+        conn.commit();
+        mostrarExito("Bibliotecario agregado correctamente.");
+
+        // Actualizar vista
+        limpiarCampos();
+        cargarBibliotecarios();
+        mostrarTotalBibliotecarios();
+
+    } catch (SQLException e) {
+        try {
+            if (conn != null) conn.rollback();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        mostrarError("Error al agregar bibliotecario: " + e.getMessage());
+    } finally {
+        cerrarRecursos(rs, psPersona, psUsuario, conn);
+    }
+}
     
     public void actualizarBibliotecario() {
         int fila = vista.getTblBibliotecarios().getSelectedRow();
@@ -275,39 +281,39 @@ public class BibliotecariosController {
     }
     
     public void cargarDatosDesdeTabla() {
-        int fila = vista.getTblBibliotecarios().getSelectedRow();
-        if (fila >= 0) {
-            String email = vista.getTblBibliotecarios().getValueAt(fila, 2).toString();
+    int fila = vista.getTblBibliotecarios().getSelectedRow();
+    if (fila >= 0) {
+        String email = vista.getTblBibliotecarios().getValueAt(fila, 2).toString();
 
-            try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
-                String sql = """
-                    SELECT p.dni, p.nombre, p.apellido_p, p.apellido_m, 
-                           p.direccion, p.telefono, p.email, u.contrasena
-                    FROM persona p
-                    JOIN usuario u ON p.id_persona = u.id_persona
-                    WHERE p.email = ?
-                """;
+        try (Connection conn = ConexionMySQL.getInstancia().getConexion()) {
+            String sql = """
+                SELECT p.dni, p.nombre, p.apellido_p, p.apellido_m, 
+                       p.direccion, p.telefono, p.email
+                FROM persona p
+                JOIN usuario u ON p.id_persona = u.id_persona
+                WHERE p.email = ?
+            """;
 
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ps.setString(1, email);
-                ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
 
-                if (rs.next()) {
-                    vista.getTxtDni().setText(rs.getString("dni"));
-                    vista.getTxtNombre().setText(rs.getString("nombre"));
-                    vista.getTxtApellidoP().setText(rs.getString("apellido_p"));
-                    vista.getTxtApellidoM().setText(rs.getString("apellido_m"));
-                    vista.getTxtDireccion().setText(rs.getString("direccion"));
-                    vista.getTxtTelefono().setText(rs.getString("telefono"));
-                    vista.getTxtEmail().setText(rs.getString("email"));
-                    vista.getTxtContrasena().setText(rs.getString("contrasena"));
-                }
-
-            } catch (SQLException e) {
-                mostrarError("Error al cargar datos: " + e.getMessage());
+            if (rs.next()) {
+                vista.getTxtDni().setText(rs.getString("dni"));
+                vista.getTxtNombre().setText(rs.getString("nombre"));
+                vista.getTxtApellidoP().setText(rs.getString("apellido_p"));
+                vista.getTxtApellidoM().setText(rs.getString("apellido_m"));
+                vista.getTxtDireccion().setText(rs.getString("direccion"));
+                vista.getTxtTelefono().setText(rs.getString("telefono"));
+                vista.getTxtEmail().setText(rs.getString("email"));
+                vista.getTxtContrasena().setText(""); // No mostrar contraseña
             }
+
+        } catch (SQLException e) {
+            mostrarError("Error al cargar datos: " + e.getMessage());
         }
     }
+}
     
     public void limpiarCampos() {
         vista.getTxtDni().setText("");

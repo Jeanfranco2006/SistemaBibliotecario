@@ -748,4 +748,83 @@ public class PrestamoDAO {
 
         return historial;
     }
+
+    // En tu clase PrestamoDAO
+public boolean eliminarDelHistorial(String dni, String libro, String fechaPrestamo) {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    
+    try {
+        conn = ConexionMySQL.getInstancia().getConexion();
+        conn.setAutoCommit(false); // Iniciar transacción
+        
+        // Primero necesitamos obtener el id_prestamo para eliminar
+        String sqlSelect = "SELECT p.id_prestamo " +
+                "FROM prestamo p " +
+                "INNER JOIN usuario u ON p.id_usuario = u.id_usuario " +
+                "INNER JOIN persona per ON u.id_persona = per.id_persona " +
+                "INNER JOIN detalle_prestamo dp ON p.id_prestamo = dp.id_prestamo " +
+                "INNER JOIN libro l ON dp.id_libro = l.id_libro " +
+                "WHERE per.dni = ? AND l.titulo = ? AND p.fecha_prestamo = ?";
+        
+        pstmt = conn.prepareStatement(sqlSelect);
+        pstmt.setString(1, dni);
+        pstmt.setString(2, libro);
+        pstmt.setString(3, fechaPrestamo);
+        
+        ResultSet rs = pstmt.executeQuery();
+        
+        if (!rs.next()) {
+            System.err.println("No se encontró el préstamo para eliminar");
+            return false;
+        }
+        
+        int idPrestamo = rs.getInt("id_prestamo");
+        pstmt.close();
+        
+        // Eliminar de detalle_prestamo primero (por la clave foránea)
+        String sqlDeleteDetalle = "DELETE FROM detalle_prestamo WHERE id_prestamo = ?";
+        pstmt = conn.prepareStatement(sqlDeleteDetalle);
+        pstmt.setInt(1, idPrestamo);
+        pstmt.executeUpdate();
+        pstmt.close();
+        
+        // Verificar si hay multas asociadas y eliminarlas
+        String sqlDeleteMulta = "DELETE FROM multa WHERE id_prestamo = ?";
+        pstmt = conn.prepareStatement(sqlDeleteMulta);
+        pstmt.setInt(1, idPrestamo);
+        pstmt.executeUpdate();
+        pstmt.close();
+        
+        // Finalmente eliminar el préstamo
+        String sqlDeletePrestamo = "DELETE FROM prestamo WHERE id_prestamo = ?";
+        pstmt = conn.prepareStatement(sqlDeletePrestamo);
+        pstmt.setInt(1, idPrestamo);
+        int filasAfectadas = pstmt.executeUpdate();
+        
+        conn.commit(); // Confirmar transacción
+        
+        return filasAfectadas > 0;
+        
+    } catch (SQLException e) {
+        try {
+            if (conn != null) conn.rollback(); // Revertir en caso de error
+        } catch (SQLException ex) {
+            System.err.println("Error en rollback: " + ex.getMessage());
+        }
+        System.err.println("Error al eliminar del historial: " + e.getMessage());
+        e.printStackTrace();
+        return false;
+    } finally {
+        try {
+            if (pstmt != null) pstmt.close();
+            if (conn != null) {
+                conn.setAutoCommit(true);
+                conn.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al cerrar conexión: " + e.getMessage());
+        }
+    }
+}
 }
