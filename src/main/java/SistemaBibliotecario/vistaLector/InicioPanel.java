@@ -295,7 +295,17 @@ public class InicioPanel extends javax.swing.JPanel {
             }
         });
 
-        btnSalir.addActionListener(evt -> System.exit(0));
+        btnSalir.addActionListener(evt -> {
+            // 1. Crear y mostrar la ventana de Login nuevamente
+            SistemaBibliotecario.VistaLogin.login loginWindow = new SistemaBibliotecario.VistaLogin.login();
+            loginWindow.setVisible(true);
+
+            // 2. Obtener la ventana que contiene este panel y cerrarla
+            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (window != null) {
+                window.dispose();
+            }
+        });
     }
 
     // <editor-fold defaultstate="collapsed" desc="Declaraciones de variables">

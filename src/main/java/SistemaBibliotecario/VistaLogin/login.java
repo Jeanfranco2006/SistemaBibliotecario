@@ -1,315 +1,333 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package SistemaBibliotecario.VistaLogin;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import SistemaBibliotecario.vistaBlibliotecario.*;
-import SistemaBibliotecario.VistaAdmin.*;
-import SistemaBibliotecario.vistaLector.*;
-
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import SistemaBibliotecario.Dao.UsuarioDAO;
 import SistemaBibliotecario.Modelos.SesionActual;
 import SistemaBibliotecario.Modelos.Usuario;
+import SistemaBibliotecario.VistaAdmin.*;
+import SistemaBibliotecario.vistaLector.*;
+import SistemaBibliotecario.vistaBlibliotecario.*;
 
-/**
- *
- * @author User
- */
-public class login extends javax.swing.JFrame {
+public class login extends JFrame {
 
-    /**
-     * Creates new form login
-     */
+    // --- Componentes ---
+    private JPanel panelPrincipal, panelIzquierdo, panelDerecho;
+    private JTextField txtDni;
+    private JPasswordField txtContrasena;
+    private JButton btnIngresar, btnRegistrarse;
+    private JLabel lblMostrarPassword;
+
+    // --- Paleta de Colores (Solo para el Login) ---
+    private final Color COLOR_PRIMARY = new Color(20, 40, 80); // Azul oscuro
+    private final Color COLOR_HOVER = new Color(40, 70, 120); // Hover suave
+    private final Color COLOR_ACCENT = new Color(52, 152, 219); // Borde al escribir
+    private final Color COLOR_TEXT_DARK = new Color(44, 62, 80);
+    private final Color COLOR_BORDER_GRAY = new Color(200, 200, 200);
+
+    // Fuentes
+    private final Font FONT_BOLD = new Font("Segoe UI", Font.BOLD, 14);
+
     public login() {
         initComponents();
-       setLocationRelativeTo(this);
-
-
-       
+        setTitle("Acceso al Sistema");
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
-    
+
+    private void initComponents() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // Panel Principal
+        panelPrincipal = new JPanel(new GridLayout(1, 2));
+        panelPrincipal.setPreferredSize(new Dimension(950, 550));
+
+        // Construir paneles
+        crearPanelIzquierdo();
+        crearPanelDerecho();
+
+        panelPrincipal.add(panelIzquierdo);
+        panelPrincipal.add(panelDerecho);
+
+        add(panelPrincipal);
+        pack();
+    }
+
+    // -------------------------------------------------------------------------
+    // PANEL IZQUIERDO (Decorativo)
+    // -------------------------------------------------------------------------
+    private void crearPanelIzquierdo() {
+        panelIzquierdo = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                // Gradiente oscuro solo para el login
+                GradientPaint gp = new GradientPaint(0, 0, COLOR_PRIMARY, 0, getHeight(), new Color(10, 20, 40));
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+            }
+        };
+
+        panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+        panelIzquierdo.setBorder(new EmptyBorder(0, 40, 0, 40));
+
+        panelIzquierdo.add(Box.createVerticalGlue());
+
+        agregarTextoCentrado(panelIzquierdo, "📚", new Font("Segoe UI Emoji", Font.PLAIN, 90));
+        panelIzquierdo.add(Box.createRigidArea(new Dimension(0, 20)));
+        agregarTextoCentrado(panelIzquierdo, "SISTEMA", new Font("Segoe UI", Font.BOLD, 36));
+        agregarTextoCentrado(panelIzquierdo, "BIBLIOTECARIO", new Font("Segoe UI", Font.PLAIN, 28));
+
+        panelIzquierdo.add(Box.createVerticalGlue());
+    }
+
+    private void agregarTextoCentrado(JPanel panel, String texto, Font fuente) {
+        JLabel label = new JLabel(texto);
+        label.setFont(fuente);
+        label.setForeground(Color.WHITE);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(label);
+    }
+
+    // -------------------------------------------------------------------------
+    // PANEL DERECHO (Formulario)
+    // -------------------------------------------------------------------------
+    private void crearPanelDerecho() {
+        panelDerecho = new JPanel();
+        panelDerecho.setBackground(Color.WHITE);
+        panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+        panelDerecho.setBorder(new EmptyBorder(50, 60, 50, 60));
+
+        JLabel lblTitulo = new JLabel("Bienvenido");
+        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        lblTitulo.setForeground(COLOR_TEXT_DARK);
+        lblTitulo.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel lblSub = new JLabel("Inicia sesión para continuar");
+        lblSub.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblSub.setForeground(Color.GRAY);
+        lblSub.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // --- Inputs ---
+        JLabel lblDni = new JLabel("Usuario / DNI");
+        lblDni.setFont(FONT_BOLD);
+        lblDni.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        txtDni = new JTextField();
+        configurarCampoTexto(txtDni);
+
+        JLabel lblPass = new JLabel("Contraseña");
+        lblPass.setFont(FONT_BOLD);
+        lblPass.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Contenedor password
+        JPanel panelPassContainer = new JPanel(new BorderLayout());
+        panelPassContainer.setBackground(Color.WHITE);
+        panelPassContainer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+
+        txtContrasena = new JPasswordField();
+        configurarCampoTexto(txtContrasena);
+
+        lblMostrarPassword = new JLabel("👁");
+        lblMostrarPassword.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 18));
+        lblMostrarPassword.setBorder(new EmptyBorder(0, 10, 0, 0));
+        lblMostrarPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblMostrarPassword.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                alternarVisibilidadPassword();
+            }
+        });
+
+        panelPassContainer.add(txtContrasena, BorderLayout.CENTER);
+        panelPassContainer.add(lblMostrarPassword, BorderLayout.EAST);
+        panelPassContainer.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+
+        // --- Botones (Ambos oscuros y mismo estilo) ---
+        btnIngresar = crearBoton("INGRESAR");
+        btnIngresar.addActionListener(this::btnIngresarActionPerformed);
+
+        btnRegistrarse = crearBoton("REGISTRARME");
+        btnRegistrarse.addActionListener(this::btnRegistrarseActionPerformed);
+
+        // --- Armado ---
+        panelDerecho.add(Box.createVerticalGlue());
+        panelDerecho.add(lblTitulo);
+        panelDerecho.add(Box.createVerticalStrut(5));
+        panelDerecho.add(lblSub);
+        panelDerecho.add(Box.createVerticalStrut(40));
+
+        panelDerecho.add(lblDni);
+        panelDerecho.add(Box.createVerticalStrut(5));
+        panelDerecho.add(txtDni);
+        panelDerecho.add(Box.createVerticalStrut(20));
+
+        panelDerecho.add(lblPass);
+        panelDerecho.add(Box.createVerticalStrut(5));
+        panelDerecho.add(panelPassContainer);
+        panelDerecho.add(Box.createVerticalStrut(40));
+
+        panelDerecho.add(btnIngresar);
+        panelDerecho.add(Box.createVerticalStrut(15));
+        panelDerecho.add(btnRegistrarse);
+        panelDerecho.add(Box.createVerticalGlue());
+    }
 
     /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
+     * Crea botones oscuros uniformes.
      */
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private JButton crearBoton(String texto) {
+        JButton btn = new JButton(texto);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setForeground(Color.WHITE);
+        btn.setBackground(COLOR_PRIMARY); // Fondo Oscuro
+        btn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
+        btn.setFocusPainted(false);
+        // Quitamos el borde pintado por defecto para que se vea plano y moderno
+        btn.setBorderPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btn.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        txtDni = new javax.swing.JTextField();
-        txtContrasena = new javax.swing.JPasswordField();
-        btnIngresar = new javax.swing.JButton();
-        btnRegistrarse = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        // Hover solo para ESTOS botones del login
+        btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btn.setBackground(COLOR_HOVER);
+            }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
-
-        jPanel1.setBackground(new java.awt.Color(19, 38, 76));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel2.setBackground(new java.awt.Color(236, 240, 241));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        jLabel1.setFont(new java.awt.Font("Sitka Text", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(19, 38, 76));
-        jLabel1.setText("INICIAR SESION");
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Symbol", 1, 18)); // NOI18N
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user.png"))); // NOI18N
-        jLabel2.setText("Usuario");
-
-        txtDni.setFont(new java.awt.Font("Segoe UI Emoji", 1, 14)); // NOI18N
-        txtDni.setForeground(new java.awt.Color(0, 51, 153));
-
-        btnIngresar.setBackground(new java.awt.Color(19, 38, 76));
-        btnIngresar.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
-        btnIngresar.setForeground(new java.awt.Color(255, 255, 255));
-        btnIngresar.setText("INGRESAR");
-        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIngresarActionPerformed(evt);
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btn.setBackground(COLOR_PRIMARY);
             }
         });
+        return btn;
+    }
 
-        btnRegistrarse.setBackground(new java.awt.Color(19, 38, 76));
-        btnRegistrarse.setFont(new java.awt.Font("Segoe UI Historic", 1, 18)); // NOI18N
-        btnRegistrarse.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrarse.setText("REGISTRARSE");
-        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarseActionPerformed(evt);
+    private void configurarCampoTexto(JComponent campo) {
+        campo.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+        campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        campo.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(COLOR_BORDER_GRAY, 1),
+                BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+
+        campo.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                campo.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(COLOR_ACCENT, 2),
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)));
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                campo.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(COLOR_BORDER_GRAY, 1),
+                        BorderFactory.createEmptyBorder(5, 10, 5, 10)));
             }
         });
+    }
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo.jpeg"))); // NOI18N
+    private void alternarVisibilidadPassword() {
+        if (txtContrasena.getEchoChar() == '●') {
+            txtContrasena.setEchoChar((char) 0);
+            lblMostrarPassword.setForeground(COLOR_ACCENT);
+        } else {
+            txtContrasena.setEchoChar('●');
+            lblMostrarPassword.setForeground(Color.BLACK);
+        }
+    }
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Symbol", 1, 18)); // NOI18N
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pass.png"))); // NOI18N
-        jLabel3.setText("Contraseña");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(141, 141, 141))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(btnRegistrarse))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(154, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(100, 100, 100))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(235, 235, 235))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnIngresar)
-                        .addGap(244, 244, 244))))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel2Layout.createSequentialGroup()
-                    .addGap(74, 74, 74)
-                    .addComponent(jLabel3)
-                    .addContainerGap(387, Short.MAX_VALUE)))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(txtDni, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112)
-                .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(btnIngresar)
-                .addGap(65, 65, 65)
-                .addComponent(btnRegistrarse)
-                .addGap(23, 23, 23))
-            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                    .addContainerGap(403, Short.MAX_VALUE)
-                    .addComponent(jLabel3)
-                    .addGap(247, 247, 247)))
-        );
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 0, 610, 700));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+    // --- LÓGICA ---
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {
         String dni = txtDni.getText().trim();
-    String contrasena = new String(txtContrasena.getPassword()).trim();
+        String contrasena = new String(txtContrasena.getPassword()).trim();
 
-    if (dni.isEmpty() || contrasena.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
-        return;
+        // 1. Validar que no estén vacíos
+        if (dni.isEmpty() || contrasena.isEmpty()) {
+            mostrarMensaje("Por favor, complete todos los campos.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+
+        // 2. Validar credenciales
+        // Al ejecutarse esto, tu DAO ya llenó 'SesionActual.nombre' con el nombre
+        // completo
+        Usuario usuario = usuarioDAO.validarLogin(dni, contrasena);
+
+        if (usuario == null) {
+            mostrarMensaje("Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // 3. Actualizar acceso
+        usuarioDAO.actualizarUltimoAcceso(dni);
+
+        // 4. Guardar datos restantes en Sesión
+        SesionActual.dni = dni;
+        SesionActual.rol = usuario.getRol();
+        // Nota: SesionActual.nombre ya fue guardado automáticamente por tu DAO
+
+        // ✅ 5. MOSTRAR EL MENSAJE QUE QUIERES (Aquí está la magia)
+        String mensaje = "¡Bienvenido al Sistema!\n\n" +
+                "👤 Usuario: " + SesionActual.nombre + "\n" +
+                "🔑 Rol: " + usuario.getRol();
+
+        mostrarMensaje(mensaje, "Acceso Correcto", JOptionPane.INFORMATION_MESSAGE);
+
+        // 6. Redirigir según rol
+        switch (usuario.getRol().toLowerCase()) {
+            case "administrador":
+                abrirVentana(new SistemaBibliotecario.VistaAdmin.inicio(), "Administrador");
+                break;
+            case "bibliotecario":
+                abrirVentana(new SistemaBibliotecario.vistaBlibliotecario.inicio(), "Bibliotecario");
+                break;
+            case "lector":
+                abrirVentana(new SistemaBibliotecario.vistaLector.InicioPanel(), "Lector");
+                break;
+            default:
+                mostrarMensaje("Rol desconocido", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    
-
-    UsuarioDAO usuarioDAO = new UsuarioDAO();
-    Usuario usuario = usuarioDAO.validarLogin(dni, contrasena);
-
-    if (usuario == null) {
-        JOptionPane.showMessageDialog(this, "Credenciales incorrectas.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    
-    // ✅ ACTUALIZAR ÚLTIMO ACCESO - AGREGAR ESTO
-    boolean accesoActualizado = usuarioDAO.actualizarUltimoAcceso(dni);
-    if (!accesoActualizado) {
-        System.err.println("⚠️ No se pudo actualizar el último acceso, pero el login continúa");
-    }
-    
-    // 🟢 Guardar usuario en sesión
-    SesionActual.dni = txtDni.getText().trim();
-    SesionActual.rol = usuario.getRol();
-
-    JOptionPane.showMessageDialog(this,
-        "Bienvenido " + usuario.getRol() + "!",
-        "Acceso concedido",
-        JOptionPane.INFORMATION_MESSAGE);
-
-
-    // Redirigir según el rol del usuario
-    switch (usuario.getRol().toLowerCase()) {
-    case "administrador": {
-        JFrame frame = new JFrame("Administrador");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new SistemaBibliotecario.VistaAdmin.inicio());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        break;
-    }
-    case "bibliotecario": {
-        JFrame frame = new JFrame("Bibliotecario");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new SistemaBibliotecario.vistaBlibliotecario.inicio());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        break;
-    }
-    case "lector": {
-        JFrame frame = new JFrame("Lector");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setContentPane(new SistemaBibliotecario.vistaLector.InicioPanel());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        break;
-    }
-    default:
-        JOptionPane.showMessageDialog(this, "Rol no reconocido: " + usuario.getRol(), "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-}
-
-this.dispose(); // Cierra el login // Cierra el login// Cierra el login
-    }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {
-    // Crear nueva ventana de registro
-    javax.swing.JFrame frame = new javax.swing.JFrame("Registro");
-    frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-    frame.setContentPane(new Register()); // agrega el panel
-    frame.pack();
-    frame.setLocationRelativeTo(null);
-    frame.setVisible(true);
-
-    // Cierra la ventana actual usando el botón que disparó el evento
-    javax.swing.SwingUtilities.getWindowAncestor((java.awt.Component) evt.getSource()).dispose();
-}
-                                              
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new login().setVisible(true);
-            }
-        });
+        // Asumiendo que existe tu clase Register
+        JFrame frame = new JFrame("Registro");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(new Register());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        this.dispose();
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIngresar;
-    private javax.swing.JButton btnRegistrarse;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField txtContrasena;
-    private javax.swing.JTextField txtDni;
-    // End of variables declaration//GEN-END:variables
+    private void abrirVentana(JPanel panelContenido, String titulo) {
+        JFrame frame = new JFrame(titulo);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(panelContenido);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        this.dispose();
+    }
+
+    private void mostrarMensaje(String mensaje, String titulo, int tipo) {
+        JOptionPane.showMessageDialog(this, mensaje, titulo, tipo);
+    }
+
+    public static void main(String args[]) {
+        // ⚠️ AQUÍ ESTÁ EL CAMBIO IMPORTANTE:
+        // He eliminado el 'UIManager.setLookAndFeel(...)'
+        // Esto evita que cambie el estilo de tus botones dentro del sistema.
+
+        java.awt.EventQueue.invokeLater(() -> new login().setVisible(true));
+    }
 }

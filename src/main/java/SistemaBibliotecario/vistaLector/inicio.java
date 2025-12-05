@@ -68,13 +68,13 @@ public class inicio extends javax.swing.JPanel {
                     tblTusPrestamos.setModel(model);
                 }
             } else {
-                 if (tblTusPrestamos != null) {
-                    tblTusPrestamos.setModel(new DefaultTableModel(null, new String[]{"LIBRO", "FECHA"}));
-                 }
+                if (tblTusPrestamos != null) {
+                    tblTusPrestamos.setModel(new DefaultTableModel(null, new String[] { "LIBRO", "FECHA" }));
+                }
             }
         } else {
             if (tblTusPrestamos != null) {
-                tblTusPrestamos.setModel(new DefaultTableModel(null, new String[]{"LIBRO", "FECHA"}));
+                tblTusPrestamos.setModel(new DefaultTableModel(null, new String[] { "LIBRO", "FECHA" }));
             }
         }
     }
@@ -168,7 +168,7 @@ public class inicio extends javax.swing.JPanel {
         // --- CONTENIDO DE LA PANTALLA DE INICIO ---
         inicioContentPanel = new JPanel();
         inicioContentPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        
+
         jLabel4 = new javax.swing.JLabel();
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo.jpeg"))); // NOI18N
         inicioContentPanel.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 40, 110, 80));
@@ -187,7 +187,7 @@ public class inicio extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        
+
         jLabel5 = new javax.swing.JLabel();
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setText("TUS PRESTAMOS");
@@ -203,8 +203,7 @@ public class inicio extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTusPrestamos = new javax.swing.JTable();
         tblTusPrestamos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {}, new String [] {"LIBRO", "FECHA"}
-        ));
+                new Object[][] {}, new String[] { "LIBRO", "FECHA" }));
         jScrollPane1.setViewportView(tblTusPrestamos);
         jPanel4.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 340, 150));
         inicioContentPanel.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 180, 380, 320));
@@ -229,8 +228,7 @@ public class inicio extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblRecomendados = new javax.swing.JTable();
         tblRecomendados.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {}, new String [] {"LIBRO", "CATEGORIA"}
-        ));
+                new Object[][] {}, new String[] { "LIBRO", "CATEGORIA" }));
         jScrollPane2.setViewportView(tblRecomendados);
         jPanel5.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 370, 150));
         inicioContentPanel.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 400, 320));
@@ -248,7 +246,7 @@ public class inicio extends javax.swing.JPanel {
             jLabel2.setText("Libros");
             setButtonSelected(btnLibros);
         });
-                btnMisPrestamos.addActionListener(evt -> {
+        btnMisPrestamos.addActionListener(evt -> {
             prestamosPanel.cargarPrestamos();
             showPanel(prestamosPanel);
             jLabel2.setText("Mis Préstamos");
@@ -259,8 +257,9 @@ public class inicio extends javax.swing.JPanel {
             jLabel2.setText("Historial");
             setButtonSelected(btnHistorial);
         });
-        
-        // El botÃ³n "Ver mÃ¡s libros" de la pantalla de inicio tambiÃ©n debe navegar a la secciÃ³n de libros
+
+        // El botÃ³n "Ver mÃ¡s libros" de la pantalla de inicio tambiÃ©n debe navegar a
+        // la secciÃ³n de libros
         btnVerLibros.addActionListener(evt -> {
             showPanel(librosPanel);
             jLabel2.setText("Libros");
@@ -293,14 +292,25 @@ public class inicio extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Renovacion exitosa por 7 dias desde hoy.");
                 cargarDatosPrestamos();
             } else {
-                JOptionPane.showMessageDialog(this, "No es posible renovar. Verifique que el prestamo no haya vencido.");
+                JOptionPane.showMessageDialog(this,
+                        "No es posible renovar. Verifique que el prestamo no haya vencido.");
             }
         });
 
-        btnSalir.addActionListener(evt -> System.exit(0));
+        btnSalir.addActionListener(evt -> {
+            // 1. Crear y mostrar la ventana de Login nuevamente
+            SistemaBibliotecario.VistaLogin.login loginWindow = new SistemaBibliotecario.VistaLogin.login();
+            loginWindow.setVisible(true);
+
+            // 2. Obtener la ventana que contiene este panel y cerrarla
+            java.awt.Window window = javax.swing.SwingUtilities.getWindowAncestor(this);
+            if (window != null) {
+                window.dispose();
+            }
+        });
     }
 
-    //<editor-fold defaultstate="collapsed" desc="Declaraciones de variables">
+    // <editor-fold defaultstate="collapsed" desc="Declaraciones de variables">
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnInicio;
     private javax.swing.JButton btnLibros;
@@ -323,6 +333,5 @@ public class inicio extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblRecomendados;
     private javax.swing.JTable tblTusPrestamos;
-    //</editor-fold>
+    // </editor-fold>
 }
-
